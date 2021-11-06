@@ -19,7 +19,7 @@ class TextFieldGlobal extends StatelessWidget{
     textDirection: TextDirection.rtl,
       child:
        TextField(
-        style:GoogleFonts.cairo(fontSize: 14,color:Colors.black12,fontWeight: FontWeight.bold),
+        style:GoogleFonts.cairo(fontSize: 10,color:Colors.black12,fontWeight: FontWeight.bold),
 
         autocorrect: true,
         focusNode: myFocusNode,

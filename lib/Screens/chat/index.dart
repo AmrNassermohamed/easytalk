@@ -26,8 +26,9 @@ int x=20;
               // count of events
               //final int eventCount = snapshot.data!.docs.length;
               //print(snapshot.data!.docs[0].data());
-              if (snapshot.hasError)
+              if (snapshot.hasError) {
                 return  Text('Error: ${snapshot.error}');
+              }
               switch (snapshot.connectionState){
                 case ConnectionState.waiting:
                   return const Center(child: CircularProgressIndicator());
@@ -48,7 +49,7 @@ return
                         return true;
                       },
                       child: ListView.builder(
-                        physics: ClampingScrollPhysics(),
+                        physics: const ClampingScrollPhysics(),
                         itemBuilder: (_, i) => ListTile(title: Text('Item $i')),
                         itemCount: x,
                       ),

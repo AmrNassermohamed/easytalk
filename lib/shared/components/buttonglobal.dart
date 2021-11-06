@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:translationchat/constants/colors.dart';
 import 'package:translationchat/shared/components/textglobal.dart';
 
-Widget buttonGlobal({required BuildContext context,text}){
+Widget buttonGlobal({required BuildContext context,text,expanded}){
 return  Padding(
     padding: const EdgeInsets.only(left: 20,right: 20),
     child: Container(decoration: BoxDecoration(
@@ -14,7 +14,7 @@ return  Padding(
       padding:const  EdgeInsets.all(10)         ,
       child: Row(mainAxisAlignment: MainAxisAlignment.center,children: [
 
-      Expanded(child:   textGlobalWhiteBold12(context: context,text:text)),
+      textGlobalWhiteBold12(context: context,text:text),
 
       ],),
     )),

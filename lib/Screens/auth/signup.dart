@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:translationchat/Screens/auth/components/textfieldphonenumber.dart';
 import 'package:translationchat/constants/colors.dart';
 import 'package:translationchat/constants/images.dart';
+import 'package:translationchat/shared/components/navigator.dart';
 import 'package:translationchat/shared/components/sizedboxglobal.dart';
 import 'package:translationchat/shared/components/textfieldglobal.dart';
 import 'package:translationchat/shared/components/textglobal.dart';
 
+import 'codenumber.dart';
 import 'components/buttonsendemail.dart';
 
 class SignUp extends StatefulWidget {
@@ -66,19 +68,24 @@ class SignUpState extends State<SignUp> {
 
 
 
-      Padding(
-        padding: const EdgeInsets.all(30.0),
-        child: Container(decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(20)),
-            color: darkCyan
-        ),child: Padding(
-          padding:const  EdgeInsets.all(10)         ,
-          child: Row(mainAxisAlignment: MainAxisAlignment.center,children: [
+      GestureDetector(
+        onTap: (){
+          AppNavigator.navigateTo(context,const CodeNumber());
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(30.0),
+          child: Container(decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(20)),
+              color: darkCyan
+          ),child: Padding(
+            padding:const  EdgeInsets.all(10)         ,
+            child: Row(mainAxisAlignment: MainAxisAlignment.center,children: [
 
-            textGlobalWhiteBold14(context: context,text: "تسجيل"),
+              textGlobalWhiteBold14(context: context,text: "تسجيل"),
 
-          ],),
-        )),
+            ],),
+          )),
+        ),
       ),textGlobalGreyBold13(context: context,text: "تمتلك حساب بالفعل سجل .... الدخول  ")
 
       //GlobalTextField(controller: controller, hint: hint)

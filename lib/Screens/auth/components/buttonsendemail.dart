@@ -1,14 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:translationchat/Screens/auth/codenumber.dart';
 import 'package:translationchat/constants/colors.dart';
 import 'package:translationchat/constants/images.dart';
+import 'package:translationchat/shared/components/navigator.dart';
 import 'package:translationchat/shared/components/sizedboxglobal.dart';
 import 'package:translationchat/shared/components/textglobal.dart';
 
 Widget componentSend({required BuildContext context,icon,image,text,backgroundColor,color}){
  return GestureDetector(
    onTap: (){
-
+AppNavigator.navigateTo(context,const CodeNumber());
    },
    child: Container(decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(20)),
@@ -30,7 +32,7 @@ Widget componentSend({required BuildContext context,icon,image,text,backgroundCo
 }Widget componentSend2({required BuildContext context,icon,image,text,backgroundColor,color}){
   return GestureDetector(
     onTap: (){
-
+      AppNavigator.navigateTo(context,const CodeNumber());
     },
     child: Container(decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(20))

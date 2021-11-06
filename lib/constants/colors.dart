@@ -14,4 +14,7 @@ final Color lightCyan=HexColor("#38ACA8");
 final Color orange=HexColor("#FFAC06");
 final Color darkGrey=HexColor("#707070");
 final Color darkCyan=HexColor("#38ACA8");
+final Color cyan=HexColor("#506978");
+
 final Color lightGrey=HexColor("#38ACA8");
+

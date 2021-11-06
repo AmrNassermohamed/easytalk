@@ -24,8 +24,14 @@ Widget textGlobal({text,required BuildContext context,double? fontSize,required 
 textGlobalWhiteBold20({required BuildContext context,text}){
   return textGlobal(text:text ,context: context,fontSize: 20.0,color:Colors.white,bold: true);
 }
-textGlobalWhiteBold24({required BuildContext context,text}){
+textGlobalYellowBold24({required BuildContext context,text}){
   return textGlobal(text:text ,context: context,fontSize: 20.0,color:Colors.yellow,bold: true);
+}
+textGlobalWhiteBold24({required BuildContext context,text}){
+  return textGlobal(text:text ,context: context,fontSize: 20.0,color:Colors.white,bold: true);
+}
+textGlobalWhiteBold28({required BuildContext context,text}){
+  return textGlobal(text:text ,context: context,fontSize: 26.0,color:Colors.white,bold: true);
 }
 textGlobalBlack20({required BuildContext context,text}){
   return textGlobal(text:text ,context: context,fontSize: 20.0,color:black,bold: true);
@@ -36,6 +42,9 @@ textGlobalOrangeBold14({required BuildContext context,text}){
 }
 textGlobalNormal14({required BuildContext context,text}){
   return textGlobal(text:text ,context: context,fontSize: 14.0,color:Colors.orange.shade700,bold: false);
+}
+textGlobalNormalWhite14({required BuildContext context,text}){
+  return textGlobal(text:text ,context: context,fontSize: 14.0,color:Colors.white,bold: false);
 }
 textGlobalWhiteBold14({required BuildContext context,text}){
   return textGlobal(text:text ,context: context,fontSize: 14.0,color:Colors.white,bold: true);
@@ -48,6 +57,9 @@ textGlobalBlackBold14({required BuildContext context,text}){
 }
 textGlobalWhiteBold12({required BuildContext context,text}){
   return textGlobal(text:text ,context: context,fontSize: 12.0,color:Colors.white,bold: true);
+}
+textGlobalLightCyanNormal12({required BuildContext context,text}){
+  return textGlobal(text:text ,context: context,fontSize: 12.0,color:lightCyan,bold: false);
 }
 textGlobalOrangeBold17({required BuildContext context,text}){
   return textGlobal(text:text ,context: context,fontSize: 17.0,color:Colors.deepOrange,bold: true);
@@ -72,6 +84,9 @@ textGlobalBlack12Bold16({required BuildContext context,text}){
 
 textGlobalGreyBold13({required BuildContext context,text}){
   return textGlobal(text:text ,context: context,fontSize: 13.0,color:Colors.grey,bold: true);
+}
+textGlobalDarkCyanBold13({required BuildContext context,text}){
+  return textGlobal(text:text ,context: context,fontSize: 13.0,color:blueDark,bold: true);
 }
 textGlobalGreyBold8({required BuildContext context,text}){
   return textGlobal(text:text ,context: context,fontSize: 7.0,color:Colors.grey,bold: true);

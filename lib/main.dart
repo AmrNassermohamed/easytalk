@@ -1,14 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:translationchat/Screens/auth/signup.dart';
+import 'package:translationchat/Screens/chat/chatscreen.dart';
+import 'package:translationchat/Screens/chat/roomscreen.dart';
+import 'Screens/about_us/aboutus.dart';
 
-
-import 'Screens/auth/codenumber.dart';
 import 'Screens/auth/login.dart';
-import 'Screens/auth/sucesscode.dart';
-import 'Screens/chat/index.dart';
-import 'Screens/contactus/contactus.dart';
+import 'Screens/checknumberphone/checknumberphone.dart';
+import 'Screens/settings/settings.dart';
 import 'Screens/splashScreen/splash.dart';
 
 Future<void> main() async {
@@ -36,18 +35,9 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             title: 'Flutter Demo',
             theme: ThemeData(
-              // This is the theme of your application.
-              //
-              // Try running your application with "flutter run". You'll see the
-              // application has a blue toolbar. Then, without quitting the app, try
-              // changing the primarySwatch below to Colors.green and then invoke
-              // "hot reload" (press "r" in the console where you ran "flutter run",
-              // or simply save your changes to "hot reload" in a Flutter IDE).
-              // Notice that the counter didn't reset back to zero; the application
-              // is not restarted.
               primarySwatch: Colors.blue,
             ),
-            home:   const SucCode(),
+            home:   const Login  (),
               debugShowCheckedModeBanner: false
           );
         }

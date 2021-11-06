@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart' show BorderRadius, BoxDecoration,  BuildContext, Center, Column, Container, EdgeInsets,Image, Key, MainAxisAlignment,  Radius, Row, SingleChildScrollView, State, StatefulWidget, TextEditingController, Widget;
 import 'package:flutter/material.dart';
 import 'package:translationchat/Screens/auth/components/textfieldphonenumber.dart';
+import 'package:translationchat/Screens/auth/signup.dart';
 import 'package:translationchat/constants/colors.dart';
 import 'package:translationchat/constants/images.dart';
+import 'package:translationchat/shared/components/navigator.dart';
 import 'package:translationchat/shared/components/sizedboxglobal.dart';
 import 'package:translationchat/shared/components/textfieldglobal.dart';
 import 'package:translationchat/shared/components/textglobal.dart';
@@ -57,19 +59,24 @@ class LoginState extends State<Login> {
 
 
 
-                    Padding(
-                      padding: const EdgeInsets.only(left: 30,right: 30),
-                      child: Container(decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(Radius.circular(20)),
-                          color: darkCyan
-                      ),child: Padding(
-                        padding:const  EdgeInsets.all(10)         ,
-                        child: Row(mainAxisAlignment: MainAxisAlignment.center,children: [
+                    GestureDetector(
+                    onTap: (){
+                      AppNavigator.navigateTo(context,const SignUp());
+                    },
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 30,right: 30),
+                        child: Container(decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.all(Radius.circular(20)),
+                            color: darkCyan
+                        ),child: Padding(
+                          padding:const  EdgeInsets.all(10)         ,
+                          child: Row(mainAxisAlignment: MainAxisAlignment.center,children: [
 
-                          textGlobalWhiteBold14(context: context,text: "  تسجيل دخول"),
+                            textGlobalWhiteBold14(context: context,text: "  تسجيل دخول"),
 
-                        ],),
-                      )),
+                          ],),
+                        )),
+                      ),
                     ),
                     sizedBoxGlobalHeight10(),
                     textGlobalGreyBold13(context: context,text: "تمتلك حساب بالفعل سجل .... الدخول  ")
