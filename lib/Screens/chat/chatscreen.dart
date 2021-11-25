@@ -131,9 +131,9 @@ else{
                   ),
                     child: Padding(padding: const EdgeInsets.all(10.0),
                         child: validationService.messageList[index].from==7182
-                            ?GestureDetector(onTap: (){
-                              validationService.translateWord(target: "en",message: validationService.messageList[index].message);
-
+                            ?GestureDetector(onTap: () async {
+                        String word    =await  validationService.translateWord(target: "en",message: validationService.messageList[index].message);
+validationService.addMessage(addOrUpdate: false, text: word, type: 1, from: 7182, to: 8182, documentId: "", docField:validationService.messageList[index].documentId );
                         },child: textGlobalDarkCyanBold13(
                             context: context, text: validationService.messageList[index].message))
                             : textGlobalWhiteBold14(
@@ -186,7 +186,8 @@ sizedBoxGlobalWidth10(),
 
 
 
-          validationService.addMessage(addOrUpdate: true,text: controller.text, type: 0, from: 7182, to: 8182, documentId: "dd", docField: "ff");
+          validationService.addMessage(addOrUpdate: true,text: controller.text, type: 0,
+              from: 7182, to: 8182, documentId: "dd", docField: "ff");
         },child: Image.asset("assests/Icon ionic-ios-send.png",width: 20,)),
 
       ],),

@@ -1,67 +1,48 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 
-class FireStoreServices{
-  Stream  getDataStream({required collectionName,documentId,bool? where,whereKey,whereValue}) {
-    CollectionReference getCollection = FirebaseFirestore.instance.collection(collectionName);
-    try {
-      if (documentId != null) {
-        return getCollection.doc(documentId).snapshots();
-      }
-      else {
-        if(where==true) {
-          return getCollection.where(whereKey,isEqualTo:whereValue).snapshots();
-        }else{
-          return getCollection.snapshots();
+import 'package:firebase_auth/firebase_auth.dart';
+class FirebaseHandler{
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+  Future phoneAuth( number) async {
+    String ? verificationIdd;
+    await FirebaseAuth.instance.verifyPhoneNumber(
+      phoneNumber: "+2001150061654",
+      verificationCompleted: (PhoneAuthCredential credential) {
+
+      },
+      verificationFailed: (FirebaseAuthException e) {},
+
+      codeAutoRetrievalTimeout: (String verificationId) {},
+      codeSent: (String verificationId, int? forceResendingToken) {
+       print(verificationId);
+        verificationIdd=verificationId;
+
+      },
+    );
+print(verificationIdd);
+return verificationIdd;
+  }
+  Future <bool> checkCode(smsCode, String  verificationId) async {
+    bool value=false;
+    try{
+      PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.credential(verificationId: verificationId, smsCode: smsCode);
+      final FirebaseAuth auth = FirebaseAuth.instance;
+      await auth.signInWithCredential(phoneAuthCredential).then((valuee) {
+
+        if(valuee.user!.emailVerified==true){
+          value=true;
         }
-      }
-    } catch (ex) {
+      });
+      return value;
+      //await auth.signInWithCredential(phoneAuthCredential);
+    }catch(ex){
 
-      throw ex;
+      return value;
     }
-  }
-  getData({required collectionName,documentId,bool? where,whereKey,whereValue}) {
-    CollectionReference getCollection = FirebaseFirestore.instance.collection(collectionName);
-    try {
-      if (documentId != null) {
-        return getCollection.doc(documentId).get();
-      }
-      else {
-        if(where==true) {
-          return getCollection.where(whereKey,isEqualTo:whereValue).get();
-        }else{
-          return getCollection.get();
-        }
-      }
-    } catch (ex) {
-      throw ex;
-    }
-  }
 
 
 
-  updateCollection({required Map<String,dynamic> map, required String doc,required String? docField,required collectionName}){
-try {
-  CollectionReference getCollection = FirebaseFirestore.instance.collection(
-      collectionName);
-  if (docField != null) {
-    return getCollection
-        .doc(doc)
-        .set({
-      docField: map
-    }, SetOptions(merge: true)).then((value) {
-      //Do your stuff.
-    });
-  } else {
-    return getCollection.doc(doc).set(map, SetOptions(merge: true)).then((
-        value) {
-      //Do your stuff.
-    });
   }
-}catch(ex){
-  print(ex);
-  throw ex;
-}
-  }
+
 
 }

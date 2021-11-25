@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart' show BorderRadius, BoxDecoration,  BuildContext, Center, Column, Container, EdgeInsets,Image, Key, MainAxisAlignment,  Radius, Row, SingleChildScrollView, State, StatefulWidget, TextEditingController, Widget;
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:translationchat/Screens/auth/components/textfieldphonenumber.dart';
 import 'package:translationchat/Screens/auth/signup.dart';
 import 'package:translationchat/constants/colors.dart';
 import 'package:translationchat/constants/images.dart';
+import 'package:translationchat/provider/userprovider.dart';
 import 'package:translationchat/shared/components/navigator.dart';
 import 'package:translationchat/shared/components/sizedboxglobal.dart';
 import 'package:translationchat/shared/components/textfieldglobal.dart';
@@ -23,6 +25,8 @@ class LoginState extends State<Login> {
   late final TextEditingController controller =TextEditingController();
   @override
   Widget build(BuildContext context) {
+
+     final validationService = Provider.of<UserProvider>(context);
     return  SafeArea(
       child: Scaffold(
           body:SingleChildScrollView(
@@ -61,6 +65,8 @@ class LoginState extends State<Login> {
 
                     GestureDetector(
                     onTap: (){
+
+                      validationService.sendMobileNumber();
                       AppNavigator.navigateTo(context,const SignUp());
                     },
                       child: Padding(

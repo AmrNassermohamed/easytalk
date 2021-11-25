@@ -5,12 +5,14 @@ import 'package:provider/provider.dart';
 import 'package:translationchat/Screens/chat/chatscreen.dart';
 import 'package:translationchat/Screens/chat/roomscreen.dart';
 import 'package:translationchat/provider/chatprovider.dart';
+import 'package:translationchat/provider/userprovider.dart';
 import 'Screens/about_us/aboutus.dart';
 
 import 'Screens/auth/login.dart';
 import 'Screens/checknumberphone/checknumberphone.dart';
 import 'Screens/settings/settings.dart';
 import 'Screens/splashScreen/splash.dart';
+import 'contacts/contacts.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,8 +22,8 @@ Future<void> main() async {
   runApp(MultiProvider(
     providers: [
 
-      ChangeNotifierProvider(create: (_) => ChatProvider(),)
-
+      ChangeNotifierProvider(create: (_) => ChatProvider(),),
+      ChangeNotifierProvider(create: (_) => UserProvider(),)
       //create: (_) => LocalizationProvider(),
     ],
     child: const MyApp(),
@@ -47,7 +49,7 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),
-            home:   const ChatScreen (),
+            home:    Login  (),
               debugShowCheckedModeBanner: false
           );
         }

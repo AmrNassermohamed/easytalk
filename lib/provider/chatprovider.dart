@@ -23,7 +23,8 @@ class ChatProvider extends ChangeNotifier{
   translateWord({target,message}) async {
     try{
   String word   = await chatData.translateWord(target, message);
-  print(word);
+ return word;
+
     }catch(ex){
       rethrow;
     }

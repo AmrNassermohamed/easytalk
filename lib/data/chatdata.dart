@@ -1,4 +1,4 @@
-import 'package:translationchat/services/firebasehandler.dart';
+import 'package:translationchat/services/firestorehandler.dart';
 import 'package:translationchat/services/services_handler.dart';
 
 class ChatData{
@@ -12,13 +12,15 @@ ServicesHandler service = ServicesHandler();
       "type": "text",
       "from": from,
       "to": to,
-    } : {
+    } :type==1? {
       "creationDt": DateTime.now(),
 
       "type": "image",
       "message": text,
       "from": from,
       "to": to,
+    }:{
+      "message": text,
     } ;
     print(data);
     if(text.toString().isNotEmpty) {
@@ -49,17 +51,26 @@ getMessage(doc)  {
 }
 Future translateWord(String target,String message) async{
  var headers = {
-    'Authorization': 'Bearer 5|8D5ZdLIVPD30XK8bwoLw4OztHaqxRqH9vvSr9Qdf'
+    'Authorization': 'Bearer 3|wVykW6dZNhW3gYWEi3kmYjTmn99YjGxcT20KW2Mj'
   };
 var response= await service.
   postService(headers: headers,urlSuffix: "translate?target=${target.toString()}&message={$message}",returnBody: true ).then((value) => value);
-print("///////////////////////");
+
  String word=response["translated_message"];
  final withoutEquals =word .replaceAll(RegExp('}'), '').replaceAll(RegExp('{'), '');
  print(withoutEquals);
  return withoutEquals;
 }
 
+updateLastMessage(String lastMessage) async {
+  var response= await service.putService
+  (urlSuffix: "chats/1?last_message_received=${lastMessage.toString()}").then((value) => value);
+  return response;
+
+}
+addChat(){
+
+}
 
 
 }
