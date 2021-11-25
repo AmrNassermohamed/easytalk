@@ -1,8 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:translationchat/Screens/chat/chatscreen.dart';
 import 'package:translationchat/Screens/chat/roomscreen.dart';
+import 'package:translationchat/provider/chatprovider.dart';
 import 'Screens/about_us/aboutus.dart';
 
 import 'Screens/auth/login.dart';
@@ -15,7 +17,15 @@ Future<void> main() async {
   await Firebase.initializeApp();
   SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.manual, overlays: [SystemUiOverlay.bottom, SystemUiOverlay.top]);
-  runApp(const MyApp());
+  runApp(MultiProvider(
+    providers: [
+
+      ChangeNotifierProvider(create: (_) => ChatProvider(),)
+
+      //create: (_) => LocalizationProvider(),
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -37,7 +47,7 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),
-            home:   const Login  (),
+            home:   const ChatScreen (),
               debugShowCheckedModeBanner: false
           );
         }

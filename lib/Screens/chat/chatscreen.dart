@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart' show   BuildContext, Center, Column, EdgeInsets,Key, State, StatefulWidget, TextEditingController, Widget;
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:translationchat/constants/colors.dart';
+import 'package:translationchat/provider/chatprovider.dart';
 import 'package:translationchat/shared/components/sizedboxglobal.dart';
 import 'package:translationchat/shared/components/textfieldglobal.dart';
 import 'package:translationchat/shared/components/textglobal.dart';
@@ -15,10 +18,18 @@ class ChatScreen extends StatefulWidget {
 
 class ChatScreenState extends State<ChatScreen> {
   // const _SignUpState({Key? key}) : super(key: key);const MyHomePage({Key? key, required this.title}) : super(key: key);
-
+  ScrollController ? _controller ;
   late final TextEditingController controller =TextEditingController();
   @override
+  void initState() {
+    super.initState();
+_controller=ScrollController();
+  }
+
+
+  @override
   Widget build(BuildContext context) {
+    final validationService = Provider.of<ChatProvider>(context);
     return  SafeArea(
       child: Scaffold(
         backgroundColor: cyan,
@@ -41,10 +52,10 @@ class ChatScreenState extends State<ChatScreen> {
                        ),
                       sizedBoxGlobalHeight10(),
 
-                      Expanded(child: Container(width: MediaQuery.of(context).size.width,decoration:BoxDecoration(
-  borderRadius:BorderRadius.only(
-      topLeft:  const  Radius.circular(30.0),
-      topRight: const  Radius.circular(30.0)),
+                      Expanded(child: Container(decoration:BoxDecoration(
+  borderRadius:const BorderRadius.only(
+      topLeft:  Radius.circular(30.0),
+      topRight: Radius.circular(30.0)),
 
   color: Colors.grey.shade100,
                           ),
@@ -73,24 +84,71 @@ child: Column(children: [
       ],),),
     ),
   ),
-  Expanded(child:  ListView.builder(
-    shrinkWrap: true,
-    padding: const EdgeInsets.all(10),
-      itemCount: 15,
-      itemBuilder: (BuildContext context,int index){
-        return Directionality(
-         textDirection: index%2==0?TextDirection.rtl:TextDirection.ltr,
-          child: Row(children: [
-           circleAvatarImage(),
-            sizedBoxGlobalWidth10(),
-            Container(        decoration: BoxDecoration(
-              color: index%2==0?Colors.white: lightCyan,
-              borderRadius: const BorderRadius.only(bottomLeft:Radius.circular(15),topRight:Radius.circular(15) ),
-            ),child:Padding(padding:const EdgeInsets.all(10.0),child:index%2==0? textGlobalDarkCyanBold13(context: context,text: "gggggf"):textGlobalWhiteBold14(context: context,text: "gggggggggggggg") ),)
-          ],),
-        );
+    StreamBuilder<DocumentSnapshot>(
+    stream:validationService.getMessage(8182,7182),
+    builder: (BuildContext context,
+    AsyncSnapshot<DocumentSnapshot> snapshot) {
+    if (!snapshot.hasData) {
+      return  const Center(
+        child: CircularProgressIndicator(
+          backgroundColor: Colors.green,
+          // #to_do handling the progess bar to be stop if there no connecction
+          // or error happened
+        ),
+
+      );
+    } //end
+     else if (snapshot.hasError) {
+        return new Text("");
+        // #to_do handling the progess bar to be stop if there no connecction
+        // or error happened
       }
-  ),),
+
+else{
+    if (snapshot.data != null) {
+
+      validationService.printMessage(snapshot);
+
+      return Expanded(child: ListView.builder(
+          shrinkWrap: true,
+          reverse: true,
+          controller: _controller,
+          padding: const EdgeInsets.all(10),
+          itemCount: validationService.messageList.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Directionality(
+              textDirection: validationService.messageList[index].from==7182? TextDirection.rtl : TextDirection
+                  .ltr,
+              child: Row(children: [
+                circleAvatarImage(),
+                sizedBoxGlobalWidth10(),
+                Expanded(
+                  child: Container(decoration: BoxDecoration(
+                    color: validationService.messageList[index].from==7182? Colors.white : lightCyan,
+                    borderRadius: const BorderRadius.only(
+                        bottomLeft: Radius.circular(15),
+                        topRight: Radius.circular(15)),
+                  ),
+                    child: Padding(padding: const EdgeInsets.all(10.0),
+                        child: validationService.messageList[index].from==7182
+                            ?GestureDetector(onTap: (){
+                              validationService.translateWord(target: "en",message: validationService.messageList[index].message);
+
+                        },child: textGlobalDarkCyanBold13(
+                            context: context, text: validationService.messageList[index].message))
+                            : textGlobalWhiteBold14(
+                            context: context, text: validationService.messageList[index].message))),
+                ),
+              ],),
+            );
+          }
+      ),);
+    }else{
+      return Text("");
+    }
+
+    }})
+   ,
   comButton(context),
 ],),)),
 
@@ -104,6 +162,7 @@ child: Column(children: [
 
 }
 Widget comButton(BuildContext context){
+  final validationService = Provider.of<ChatProvider>(context);
   TextEditingController controller = TextEditingController(text: "");
 return  Padding(
     padding: const EdgeInsets.only(left: 20,right: 20,bottom: 10.0,top: 10.0),
@@ -122,7 +181,13 @@ return  Padding(
         sizedBoxGlobalWidth10(),
         const Icon(Icons.image,color: Colors.white,),
 sizedBoxGlobalWidth10(),
-        Image.asset("assests/Icon ionic-ios-send.png",width: 20,),
+        GestureDetector(onTap: (){
+
+
+
+
+          validationService.addMessage(addOrUpdate: true,text: controller.text, type: 0, from: 7182, to: 8182, documentId: "dd", docField: "ff");
+        },child: Image.asset("assests/Icon ionic-ios-send.png",width: 20,)),
 
       ],),
     ),),
