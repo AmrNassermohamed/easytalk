@@ -10,3 +10,7 @@ getRandomString(){
   return randomString;
 
 }
+class appl {
+  static int chatId = 01;
+  static String message="";
+}

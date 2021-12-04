@@ -32,4 +32,31 @@ class SharedPreferenceHandler {
     }
   }
 
+  static setVerificationId(String verificationId,) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString("verificationId", verificationId);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+
+
+
+  static getVerificationId() async {
+    try {
+      //SharedPreferences.setMockInitialValues({});
+      SharedPreferences  prefs = await SharedPreferences.getInstance();
+
+      if(prefs!=null){
+        return prefs.getString('verificationId');
+      }else{
+        return "null";
+      }
+    } catch (e) {
+      print("get token err :$e");
+    }
+  }
+
 }

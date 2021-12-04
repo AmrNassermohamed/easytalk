@@ -8,7 +8,7 @@
     <uses-permission android:name='android.requestLegacyExternalStorage="true"' />
 
     <application
-        android:label="translationchat"
+        android:label="easytalk"
         android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">
         <activity

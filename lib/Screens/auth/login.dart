@@ -6,11 +6,14 @@ import 'package:translationchat/Screens/auth/signup.dart';
 import 'package:translationchat/constants/colors.dart';
 import 'package:translationchat/constants/images.dart';
 import 'package:translationchat/provider/userprovider.dart';
+import 'package:translationchat/shared/components/displaysnackbar.dart';
 import 'package:translationchat/shared/components/navigator.dart';
 import 'package:translationchat/shared/components/sizedboxglobal.dart';
 import 'package:translationchat/shared/components/textfieldglobal.dart';
 import 'package:translationchat/shared/components/textglobal.dart';
+import 'package:translationchat/utils/sharedprefence.dart';
 
+import 'codenumber.dart';
 import 'components/buttonsendemail.dart';
 
 class Login extends StatefulWidget {
@@ -40,13 +43,22 @@ class LoginState extends State<Login> {
                     Container(
                       padding: const EdgeInsets.only(left: 30,right: 30),
                       child: Column(children: [
-                        TextFieldGlobal(controller:controller ,hint: "الاسم باللغه العربيه كاملا",label: darkCyan,widthBorder: 2.0,),
-                        TextFieldGlobal(controller:controller ,hint: "البريد الالكتروني",label: darkCyan,widthBorder: 2.0,),
-                        textFieldPhoneNumber(controller),
-                        sizedBoxGlobalHeight10(),
-                        emailSend(context),
-                        sizedBoxGlobalHeight10(),
-                        phoneSend(context),
+                    //    TextFieldGlobal(controller:controller ,hint: "الاسم باللغه العربيه كاملا",label: darkCyan,widthBorder: 2.0,),
+                      //  TextFieldGlobal(controller:controller ,hint: "البريد الالكتروني",label: darkCyan,widthBorder: 2.0,),
+                        textFieldPhoneNumber(controller,context),
+                        //sizedBoxGlobalHeight10(),
+                        //emailSend(context,(){}),
+                        //sizedBoxGlobalHeight10(),
+                        phoneSend(context,() async {
+                          validationService.mobileNumber=controller.text;
+                          var response   = validationService.sendMobileNumber(mobileNumber: controller.text);
+                          if(response==0) {
+                            AppNavigator.navigateTo(context, const CodeNumber());
+                          }else{
+                            displaySnackBar(context, "يرجي مراجعه رقم التليقون");
+                          }
+
+                        }),
                         Divider(color: darkCyan,thickness: 5,),
                       ],),
 
@@ -63,11 +75,15 @@ class LoginState extends State<Login> {
 
 
 
-                    GestureDetector(
+                /*    GestureDetector(
                     onTap: (){
 
-                      validationService.sendMobileNumber();
-                      AppNavigator.navigateTo(context,const SignUp());
+                  var response   = validationService.sendMobileNumber(mobileNumber: controller.text);
+                    if(response==0) {
+                      AppNavigator.navigateTo(context, const CodeNumber());
+                    }else{
+                      displaySnackBar(context, "يرجي مراجعه رقم التليقون");
+                    }
                     },
                       child: Padding(
                         padding: const EdgeInsets.only(left: 30,right: 30),
@@ -83,10 +99,13 @@ class LoginState extends State<Login> {
                           ],),
                         )),
                       ),
-                    ),
+                    ),*/
                     sizedBoxGlobalHeight10(),
-                    textGlobalGreyBold13(context: context,text: "تمتلك حساب بالفعل سجل .... الدخول  ")
-                  ],)))),
+         GestureDetector(onTap: (){
+           AppNavigator.navigateOfAll(context,const SignUp());
+         },child:           textGlobalGreyBold13(context: context,text: "لا تمتلك حساب بالفعل سجل .... الدخول   ")
+           ),
+           ],)))),
     );
 
   }

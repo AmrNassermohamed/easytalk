@@ -4,9 +4,11 @@ DateTime creationDt;
 String? type;
 int ? from;
 int ?to;
+String ? translateMessage;
 String documentId;
 
 Message({
+  required this.translateMessage,
   required this.documentId,
    required this.type,
     required this.message,

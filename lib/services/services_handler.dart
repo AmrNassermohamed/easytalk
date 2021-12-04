@@ -97,36 +97,33 @@ class ServicesHandler {
         print("Raw response");
         print(response.body);
 
-        if (response.statusCode == 200) {
+
+        if (response.statusCode == 200&&response.statusCode == 201) {
         if(returnBody==true){
-          return json.decode(utf8.decode(response.bodyBytes));
+          print(response.body);
+         // return json.decode(utf8.decode(response.bodyBytes));
+        //  return response;
         }else {
+
           return 200;
         }
 
-        } else if (response.statusCode >= 200 && response.statusCode < 500) {
+        } else if (response.statusCode > 201 && response.statusCode < 500) {
           // If that call was not successful, throw an error.
 
-          // return json.decode(response.body);
+          return json.decode(response.body);
           throw Exception(json.decode(response.body));
         } else {
+          return json.decode(utf8.decode(response.bodyBytes));
 
-          throw ({
-            "errorCode": 500,
-            "errorMessage": "Failed to connect to server",
-            "status": "Error"
-          });
-
-//return jsonDecode(response.body);
-          throw Exception(["Failed to connect to server!"]);
+//throw jsonDecode(response.body);
+//          throw Exception(["Failed to connect to server!"]);
         }
       }
     } on SocketException catch (error) {
 
       //  print("llllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll");
-      throw Exception({"errorCode": 500,
-        "errorMessage": "Please check your internet connection",
-        "status": "Error"});
+     throw error;
       //  print("");
 
       /*    return {

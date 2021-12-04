@@ -7,10 +7,10 @@ import 'package:translationchat/shared/components/navigator.dart';
 import 'package:translationchat/shared/components/sizedboxglobal.dart';
 import 'package:translationchat/shared/components/textglobal.dart';
 
-Widget componentSend({required BuildContext context,icon,image,text,backgroundColor,color}){
+Widget componentSend({required BuildContext context,icon,image,text,backgroundColor,color,required Function callBack}){
  return GestureDetector(
    onTap: (){
-AppNavigator.navigateTo(context,const CodeNumber());
+     callBack();
    },
    child: Container(decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(20)),
@@ -29,11 +29,11 @@ AppNavigator.navigateTo(context,const CodeNumber());
  );
 
 
-}Widget componentSend2({required BuildContext context,icon,image,text,backgroundColor,color}){
+}Widget componentSend2({required Function callBack,required BuildContext context,icon,image,text,backgroundColor,color}){
   return GestureDetector(
-    onTap: (){
-      AppNavigator.navigateTo(context,const CodeNumber());
-    },
+    onTap:(){
+      callBack();
+    } ,
     child: Container(decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(20))
 
@@ -56,13 +56,13 @@ AppNavigator.navigateTo(context,const CodeNumber());
 
 
 
-Widget emailSend(BuildContext context){
-  return componentSend(context: context,text: "ارسال رساله عبر البريد الالكتروني",
-      image: emailIcon,backgroundColor: darkCyan,icon: Icons.email);
+Widget emailSend(BuildContext context,Function callback){
+  return componentSend(context: context,text: "تسجيل عبر البريد الالكتروني",
+      image: emailIcon,backgroundColor: darkCyan,icon: Icons.email,callBack: callback);
 }
-Widget phoneSend(BuildContext context){
+Widget phoneSend(BuildContext context,Function callback){
   return componentSend2(context: context,icon: Icons.phone,image:emailIcon,
-    backgroundColor: white,text: "ارسال رساله عبر الهاتف المحمول" );
+    backgroundColor: white,text: "تسجيل عبر الهاتف المحمول" ,callBack: callback);
 }
 
 

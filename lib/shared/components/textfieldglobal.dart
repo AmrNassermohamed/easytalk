@@ -18,8 +18,9 @@ class TextFieldGlobal extends StatelessWidget{
     return Directionality(
     textDirection: TextDirection.rtl,
       child:
-       TextField(
-        style:GoogleFonts.cairo(fontSize: 10,color:Colors.black12,fontWeight: FontWeight.bold),
+       TextFormField(
+
+        style:GoogleFonts.cairo(fontSize: 10,color:Colors.black,fontWeight: FontWeight.bold),
 
         autocorrect: true,
         focusNode: myFocusNode,

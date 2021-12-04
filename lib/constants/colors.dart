@@ -4,6 +4,7 @@ import 'package:hexcolor/hexcolor.dart';
 
 final Color white2= HexColor("#F5F5F5");
 final Color white=Colors.white;
+final Color back12s=HexColor("#67FFFA");
 final Color black= HexColor("#000000");
 final Color green=HexColor("#51A8AB");
 final Color blueDark=HexColor("#392E49");

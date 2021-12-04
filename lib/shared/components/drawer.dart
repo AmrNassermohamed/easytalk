@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:translationchat/Screens/auth/login.dart';
 import 'package:translationchat/Screens/checknumberphone/checknumberphone.dart';
 import 'package:translationchat/Screens/contactus/contactus.dart';
 import 'package:translationchat/Screens/settings/settings.dart';
 import 'package:translationchat/constants/colors.dart';
+import 'package:translationchat/provider/userprovider.dart';
 import 'package:translationchat/shared/components/sizedboxglobal.dart';
 import 'package:translationchat/shared/components/textglobal.dart';
 import 'package:translationchat/shared/widgets/circleavatatimage.dart';
@@ -74,8 +77,11 @@ context: context,
                 context: context,
                 icon: Icons.exit_to_app,
                 text: 'تسجيل الخروج',
-                onTap: (){
-                  AppNavigator.navigateTo(context,const Login());
+                onTap: () async {
+                  final pref = await SharedPreferences.getInstance();
+                await pref.clear();
+                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Login(),), (route) => false);
+
                 }
 
             ),sizedBoxGlobalHeight20(),
@@ -104,6 +110,9 @@ context: context,
 }
 Widget createImageItem(
     {required BuildContext context, required GestureTapCallback onTap}) {
+  final validationService2 = Provider.of<UserProvider>(
+      context, listen: false);
+  if(validationService2.listUserProfileGeneralState.hasData==true){
   return ListTile(
     title: Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -111,13 +120,16 @@ Widget createImageItem(
        circleAvatarImage(),
         Padding(
           padding:const EdgeInsets.only(left: 35.0),
-          child: textGlobalWhiteBold14(context: context,text: "ايه محمد"),
+          child: textGlobalWhiteBold14(context: context,text: validationService2.listUserProfileGeneralState.data!.name),
         ),
         sizedBoxGlobalWidth20(),
       ],
     ),
     onTap: onTap,
   );
+}else{
+    return Text("");
+  }
 }
 Widget createDrawerHeader(BuildContext context) {
   return

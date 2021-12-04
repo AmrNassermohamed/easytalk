@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart' show   BuildContext, Center, Column, Container, Key, MainAxisAlignment, Row, State, StatefulWidget, TextEditingController, Widget;
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:translationchat/Screens/auth/sucesscode.dart';
+import 'package:translationchat/provider/userprovider.dart';
 import 'package:translationchat/shared/components/buttonglobal.dart';
+import 'package:translationchat/shared/components/displaysnackbar.dart';
 import 'package:translationchat/shared/components/navigator.dart';
 import 'package:translationchat/shared/components/sizedboxglobal.dart';
 import 'package:translationchat/shared/components/textglobal.dart';
@@ -23,7 +26,7 @@ class CodeNumberState extends State<CodeNumber> {
 
   @override
   Widget build(BuildContext context) {
-
+    final validationService = Provider.of<UserProvider>(context);
     return  SafeArea(
       child: Scaffold(
           body:
@@ -43,12 +46,18 @@ class CodeNumberState extends State<CodeNumber> {
                          ],),
 
                       codeNumber(context: context,controller: controller),
-                      textGlobalBlackBold16(context: context,text: "اعاده ارسال الرمز"),
+                     // textGlobalBlackBold16(context: context,text: "اعاده ارسال الرمز"),
                        sizedBoxGlobalHeight40(),
                       sizedBoxGlobalHeight40(),
-                    GestureDetector(onTap: (){
-                      AppNavigator.navigateTo(context,const SucCode());
+                    GestureDetector(onTap: () async {
 
+                    var value  =await validationService.checkCode(controller.text);
+                    if(value==true) {
+                      AppNavigator.navigateTo(
+                          context, SucCode(mobileNumber: "",));
+                    }else{
+                    displaySnackBar(context, "يرجي مراجعه الكود");
+                    }
                     },child: buttonGlobalText(context: context,text: "ارسل"))
 
 

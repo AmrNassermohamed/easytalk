@@ -1,43 +1,57 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:translationchat/utils/sharedprefence.dart';
 class FirebaseHandler{
   FirebaseAuth auth = FirebaseAuth.instance;
 
   Future phoneAuth( number) async {
     String ? verificationIdd;
+    print(number);
     await FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber: "+2001150061654",
+      phoneNumber: number,
       verificationCompleted: (PhoneAuthCredential credential) {
 
       },
       verificationFailed: (FirebaseAuthException e) {},
 
       codeAutoRetrievalTimeout: (String verificationId) {},
-      codeSent: (String verificationId, int? forceResendingToken) {
-       print(verificationId);
-        verificationIdd=verificationId;
+      codeSent: (String verificationId, int? forceResendingToken) async {
+        print(verificationId);
+         await SharedPreferenceHandler.setVerificationId(verificationId);
 
       },
     );
-print(verificationIdd);
-return verificationIdd;
-  }
-  Future <bool> checkCode(smsCode, String  verificationId) async {
-    bool value=false;
-    try{
-      PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.credential(verificationId: verificationId, smsCode: smsCode);
-      final FirebaseAuth auth = FirebaseAuth.instance;
-      await auth.signInWithCredential(phoneAuthCredential).then((valuee) {
 
-        if(valuee.user!.emailVerified==true){
+
+  }
+  Future <bool> checkCode(smsCode) async {
+    //bool value=false;
+    try{
+    String  verificationId =await SharedPreferenceHandler.getVerificationId();
+    print(verificationId);
+      PhoneAuthCredential phoneAuthCredential =
+      PhoneAuthProvider.credential(smsCode: smsCode, verificationId: verificationId,);
+      final FirebaseAuth auth = FirebaseAuth.instance;
+     var value=await auth.signInWithCredential(phoneAuthCredential);
+     if(value!=null){
+       return true;
+     }else{
+       return false;
+     }
+
+     /* await auth.signInWithCredential(phoneAuthCredential).then((valuee) {
+print(valuee);
+        if(valuee.user!.uid!=null){
           value=true;
+        }else{
+          value=false;
         }
-      });
-      return value;
+      });*/
+
       //await auth.signInWithCredential(phoneAuthCredential);
     }catch(ex){
 
-      return value;
+      rethrow;
     }
 
 
