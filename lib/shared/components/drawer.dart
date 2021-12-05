@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:translationchat/Screens/auth/login.dart';
+import 'package:translationchat/Screens/auth/updateprofile.dart';
 import 'package:translationchat/Screens/checknumberphone/checknumberphone.dart';
 import 'package:translationchat/Screens/contactus/contactus.dart';
 import 'package:translationchat/Screens/settings/settings.dart';
@@ -28,7 +29,9 @@ class navigationDrawer extends StatelessWidget {
 
             createDrawerHeader(context),
             sizedBoxGlobalHeight20(),
-createImageItem(context: context, onTap: (){}),
+createImageItem(context: context, onTap: (){
+  AppNavigator.navigateTo(context,const UpdateProfile ());
+}),
             createDrawerBodyItem(
 context: context,
               icon: Icons.vpn_key_sharp,
@@ -117,7 +120,7 @@ Widget createImageItem(
     title: Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-       circleAvatarImage(),
+       circleAvatarImage(null,false),
         Padding(
           padding:const EdgeInsets.only(left: 35.0),
           child: textGlobalWhiteBold14(context: context,text: validationService2.listUserProfileGeneralState.data!.name),

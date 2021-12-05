@@ -9,6 +9,7 @@ import 'package:translationchat/constants/colors.dart';
 import 'package:translationchat/constants/strring.dart';
 import 'package:translationchat/provider/chatprovider.dart';
 import 'package:translationchat/provider/userprovider.dart';
+import 'package:translationchat/shared/components/bottomsheetglobal.dart';
 import 'package:translationchat/shared/components/drawer.dart';
 import 'package:translationchat/shared/components/navigator.dart';
 import 'package:translationchat/shared/components/progress.dart';
@@ -117,7 +118,7 @@ sizedBoxGlobalHeight10(),
     Padding(
     padding:const EdgeInsets.all(5),
     child: Column(children: [
-    circleAvatarImage(),
+    circleAvatarImage(null,false),
     textGlobalNormalWhite14(context: context,text: provider.listFavGeneralState.data![index].name)
     ],),
     )
@@ -168,7 +169,10 @@ sizedBoxGlobalHeight10(),
                                             },
                                             child: Container(
                                               child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [
-                                                Row(children: [   circleAvatarImage(),
+                                                Row(children: [   GestureDetector(onTap: (){
+                                                  bottomSheetProfile( context: context,roomModel:  provider.listRoomsGeneralState.data![index]);
+
+                                                },child: circleAvatarImage(provider.listRoomsGeneralState.data![index].imageUrl,false)),
                                                   sizedBoxGlobalWidth10(),
                                                   Column(children: [
                                                     textGlobalLightCyanNormal12(context: context,text: provider.listRoomsGeneralState.data![index].name),
@@ -181,7 +185,7 @@ sizedBoxGlobalHeight10(),
                                               ],),
                                             ),
                                           )
-                                          , Divider(color: Colors.grey,thickness: 1,)
+                                          , const Divider(color: Colors.grey,thickness: 1,)
                                         ],),
                                       ),
                                     );

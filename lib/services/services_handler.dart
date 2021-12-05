@@ -101,7 +101,7 @@ class ServicesHandler {
         if (response.statusCode == 200&&response.statusCode == 201) {
         if(returnBody==true){
           print(response.body);
-         // return json.decode(utf8.decode(response.bodyBytes));
+          return json.decode(utf8.decode(response.bodyBytes));
         //  return response;
         }else {
 
@@ -114,8 +114,11 @@ class ServicesHandler {
           return json.decode(response.body);
           throw Exception(json.decode(response.body));
         } else {
-          return json.decode(utf8.decode(response.bodyBytes));
-
+          if(returnBody==true) {
+            return json.decode(utf8.decode(response.bodyBytes));
+          }else{
+            return response.statusCode;
+          }
 //throw jsonDecode(response.body);
 //          throw Exception(["Failed to connect to server!"]);
         }
@@ -172,7 +175,27 @@ class ServicesHandler {
     }
   }
 
+uploadImage(File imageUrl) async {
 
+  String token=await SharedPreferenceHandler.getToken();
+  var headers = {
+    'Accept':"application/json",
+    'Authorization': 'Bearer ${token.toString()}'
+  };
+  var request = http.MultipartRequest('POST', Uri.parse('https://sheltered-savannah-98002.herokuapp.com/api/v1/update-profile'));
+  request.files.add(await http.MultipartFile.fromPath('image_path', imageUrl.path));
+  request.headers.addAll(headers);
+
+  http.StreamedResponse response = await request.send();
+
+  if (response.statusCode == 200) {
+  print(await response.stream.bytesToString());
+  }
+  else {
+  print(response.reasonPhrase);
+  }
+
+}
 
 
 }

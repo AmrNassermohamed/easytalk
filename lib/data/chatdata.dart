@@ -113,6 +113,7 @@ getContacts(contacts) async {
   });
   return listContact;
 }
+
 getChats() async {
     List <RoomModel> listRoom=[];
     String token=await SharedPreferenceHandler.getToken();
@@ -146,6 +147,45 @@ getFav() async {
     });
     return listFav;
   }
+
+  addFav(favId,firebaseChatId)async
+{
+
+  try {
+    String token=await SharedPreferenceHandler.getToken();
+    var headers = {
+      'Authorization': 'Bearer ${token.toString()}'
+
+    };
+    var response = await service.
+    postService(urlSuffix: "favorites?favorite_person_id=${favId.toString()}&&firebase_chat_id=${firebaseChatId.toString()}",
+        headers: headers,
+        returnBody: false).then((value) => value);
+    return response;
+  }catch(ex){
+    rethrow;
+  }
+}
+deleteFav(favId)async
+{
+
+  try {
+    String token=await SharedPreferenceHandler.getToken();
+    var headers = {
+      'Accept':"application/json",
+      'Authorization': 'Bearer ${token.toString()}'
+    };
+    var response = await service.
+    postService(urlSuffix: "delete-favorite?favorite_id=${favId.toString()}",
+        headers: headers,
+        returnBody: true).then((value) => value);
+    return response;
+  }catch(ex){
+    rethrow;
+  }
+}
+
+
 }
 
 

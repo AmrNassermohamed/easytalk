@@ -218,7 +218,7 @@ final TextEditingController controller = TextEditingController();
                                                 : TextDirection
                                                 .ltr,
                                             child: Row(children: [
-                                              circleAvatarImage(),
+                                              circleAvatarImage(null,false),
                                               sizedBoxGlobalWidth10(),
                                               Expanded(
                                                 child:

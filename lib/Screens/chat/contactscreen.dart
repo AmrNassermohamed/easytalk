@@ -79,19 +79,29 @@ var c=await validationService.getContact();
     itemBuilder: (BuildContext context,int index){
     return GestureDetector(
     onTap: (){
+      String firebaseChatId ;
       print(validationService2.listUserProfileGeneralState
           .data!.id);
     if(validationService2.listUserProfileGeneralState.hasData==true) {
+if(int.parse(validationService2.listUserProfileGeneralState
+    .data!.id)>provider.listContactsGeneralState.data![index]!.id){
+ firebaseChatId= validationService2.listUserProfileGeneralState
+      .data!.id + "ccc" +
+      provider.listContactsGeneralState.data![index]!.id.toString();
+}else{
+    firebaseChatId=provider.listContactsGeneralState.data![index]!.id.toString()  + "ccc"
+    +validationService2.listUserProfileGeneralState
+        .data!.id;
+    }
 
-      String firebaseChatId = validationService2.listUserProfileGeneralState
-          .data!.id + "ccc" +
-          provider.listContactsGeneralState.data![index]!.id.toString();
+
       AppNavigator.navigateTo(
-          context, ChatScreen(roomBool: false,roomModel: RoomModel(user2Id: provider
+          context, ChatScreen(roomBool: false,roomModel: RoomModel(favoriteId: 0,imageUrl: "",email: "",user2Id: provider
           .listContactsGeneralState.data![index].id.toString()
           ,
           fireBaseChatId: firebaseChatId,
           name: '',
+          mobileNumber: "",
           lastMessage: '',
           lastMessageTime: '',
           chatId: ''),
@@ -108,14 +118,14 @@ print(validationService2.listUserProfileGeneralState
      if(validationService2.listUserProfileGeneralState.hasData==true) {
      String  firebaseChatId = validationService2.listUserProfileGeneralState.data!.id+"_"+provider.listContactsGeneralState.data![index]!.id.toString();
        AppNavigator.navigateTo(
-           context, ChatScreen(roomBool: false,roomModel: RoomModel(user2Id:provider.listContactsGeneralState.data![index].id.toString()
+           context, ChatScreen(roomBool: false,roomModel: RoomModel(favoriteId:0 ,imageUrl: "",email: "",user2Id:provider.listContactsGeneralState.data![index].id.toString()
            ,fireBaseChatId:firebaseChatId,
-           name: '', lastMessage: '', lastMessageTime: '', chatId: ''),user1: validationService2.listUserProfileGeneralState.data!.id,));
+           name: '', lastMessage: '', lastMessageTime: '', chatId: '',mobileNumber: ""),user1: validationService2.listUserProfileGeneralState.data!.id,));
      }
     },
     child: Container(
     child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [
-    Row(children: [ circleAvatarImage(),
+    Row(children: [ circleAvatarImage(null,false),
     sizedBoxGlobalWidth10(),
     Column(children: [
     textGlobalLightCyanNormal12(context: context,text: validationService.listContactsGeneralState.data![index].name),

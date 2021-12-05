@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:translationchat/data/userdata.dart';
 
 import 'package:translationchat/models/providergeneralstate.dart';
@@ -47,6 +50,21 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
+  updateProfile(key,value) {
+    try {
+     return userData.updateProfile(key, value);
+    } catch (ex) {
+      rethrow;
+    }
+  }
+  mobileIsExist(mobileNumber) {
+    try {
+      return userData.checkMobileIsExist(mobileNumber);
+    } catch (ex) {
+      rethrow;
+    }
+  }
+
   logout() {
     try {
       userData.logOut();
@@ -73,6 +91,39 @@ return 0;
     }
   }
 
+  File? mainImage;
+  Future  uploadImage(bool cameraORGallery) async {
+    final picker = ImagePicker();
+    ImagePicker _picker = ImagePicker();
+    final PickedFile? file = await _picker.getImage(
+        source: cameraORGallery == true ? ImageSource.camera : ImageSource.gallery,
+        imageQuality: 50);
+    File tmpFile = File(file!.path);
+    print(tmpFile.path);
+    mainImage = tmpFile;
+userData.uploadImage(mainImage);
+    notifyListeners();
+  }
+  contactUS(
+      {required String name, required String email, required String message}) {
+    try {
+
+      email.trim();
+      if(validateEmail(email.replaceAll(" ", ""))) {
+        userData.contactUs(
+            name: name, email: email.replaceAll(' ', ''), message: message);
+        return 0;
+      }else{
+        return 1;
+      }
+    } catch (ex) {
+      rethrow;
+    }
+  }
+
+
+
+
   validateEmail(String value) {
     value=value.trim().toString();
     String pattern =
@@ -94,10 +145,7 @@ return 0;
         .replaceAll(" ", "")
         .isEmpty) {
       return false;
-    } else if (value
-        .replaceAll(" ", "")
-        .length != 11) {
-      return false;
+
     } else if (!regExp.hasMatch(value.replaceAll(" ", ""))) {
       return false;
     }
@@ -124,4 +172,6 @@ return 0;
         break;
     }
   }
+
+
 }

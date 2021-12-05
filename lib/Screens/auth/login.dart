@@ -51,12 +51,21 @@ class LoginState extends State<Login> {
                         //sizedBoxGlobalHeight10(),
                         phoneSend(context,() async {
                           validationService.mobileNumber=controller.text;
-                          var response   = validationService.sendMobileNumber(mobileNumber: controller.text);
-                          if(response==0) {
-                            AppNavigator.navigateTo(context, const CodeNumber());
-                          }else{
-                            displaySnackBar(context, "يرجي مراجعه رقم التليقون");
-                          }
+
+                         var result =await validationService.mobileIsExist(controller.text);
+                         print(result);
+                         if(result[0]=="success") {
+                           var response   = validationService.sendMobileNumber
+                             (mobileNumber: controller.text);
+                           if(response==0) {
+                             AppNavigator.navigateTo(context, const CodeNumber());
+                           }else{
+                             displaySnackBar(context, "يرجي مراجعه رقم التليقون");
+                           }
+                         }else{
+                           AppNavigator.navigateTo(context, const SignUp());
+                         }
+
 
                         }),
                         Divider(color: darkCyan,thickness: 5,),
@@ -102,7 +111,7 @@ class LoginState extends State<Login> {
                     ),*/
                     sizedBoxGlobalHeight10(),
          GestureDetector(onTap: (){
-           AppNavigator.navigateOfAll(context,const SignUp());
+           AppNavigator.navigateTo(context, const SignUp());
          },child:           textGlobalGreyBold13(context: context,text: "لا تمتلك حساب بالفعل سجل .... الدخول   ")
            ),
            ],)))),

@@ -1,7 +1,10 @@
 
 
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:translationchat/constants/strring.dart';
 import 'package:translationchat/data/chatdata.dart';
 import 'package:translationchat/models/ProviderGeneralState.dart';
@@ -35,6 +38,24 @@ class ChatProvider extends ChangeNotifier{
     try{
   String word   = await chatData.translateWord(target, message);
  return word;
+
+    }catch(ex){
+      rethrow;
+    }
+  }
+  addFav({fav,firebasehatId}) async {
+    try{
+    return chatData.addFav(fav,firebasehatId);
+
+
+    }catch(ex){
+      rethrow;
+    }
+  }
+  deleteFav({fav}) async {
+    try{
+    return chatData.deleteFav(fav);
+
 
     }catch(ex){
       rethrow;
@@ -83,6 +104,9 @@ addChat(user1,user2,chatId) async {
 final response= await chatData.addChat(user1:user1,user2:user2,chatId:chatId);
 return response;
 }
+
+
+
 getChats() async {
  try {
    List <RoomModel> getRoom = [];

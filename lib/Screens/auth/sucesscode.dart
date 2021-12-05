@@ -54,7 +54,7 @@ padding: const EdgeInsets.all(20),
                      Image.asset(iconActive),
                      textGlobalBlackBold16(context: context,text: "تم التحقق الرمز بالنجاح"),
                      sizedBoxGlobalHeight30(),
-                     textGlobalBlackBold13(context: context,text: "تم التاكيد علي حساب الجديد بالتطبيق"),
+                    // textGlobalBlackBold13(context: context,text: "تم التاكيد علي حساب الجديد بالتطبيق"),
                      textGlobalBlackBold16(context: context,text: " شكرا .."),
                      sizedBoxGlobalHeight30(),
                      GestureDetector(onTap: () async {
