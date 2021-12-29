@@ -8,7 +8,7 @@ import 'package:translationchat/shared/components/buttonglobal.dart';
 import 'package:translationchat/shared/components/displaysnackbar.dart';
 import 'package:translationchat/shared/components/sizedboxglobal.dart';
 import 'package:translationchat/shared/components/textfieldglobal.dart';
-import 'package:translationchat/shared/components/textglobal.dart';
+import 'package:translationchat/shared/text_global.dart';
 
 
 

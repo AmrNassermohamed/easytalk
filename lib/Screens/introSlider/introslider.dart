@@ -4,8 +4,8 @@ import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
 import 'package:intro_slider/scrollbar_behavior_enum.dart';
 import 'package:translationchat/constants/colors.dart';
-import 'package:translationchat/shared/components/textglobal.dart';
 
+import 'package:translationchat/shared/text_global.dart';
 
 
 

@@ -11,6 +11,6 @@ getRandomString(){
 
 }
 class appl {
-  static int chatId = 01;
+  static String chatId = "";
   static String message="";
 }

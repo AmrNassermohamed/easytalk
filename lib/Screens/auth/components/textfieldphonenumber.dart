@@ -7,7 +7,7 @@ import 'package:translationchat/provider/userprovider.dart';
 import 'package:translationchat/shared/components/countrypicker.dart';
 import 'package:translationchat/shared/components/sizedboxglobal.dart';
 import 'package:translationchat/shared/components/textfieldglobal.dart';
-import 'package:translationchat/shared/components/textglobal.dart';
+import 'package:translationchat/shared/text_global.dart';
 
 Widget textFieldPhoneNumber(TextEditingController controller,BuildContext context){
   final validationService = Provider.of<UserProvider>(context);

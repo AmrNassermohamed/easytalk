@@ -81,6 +81,7 @@ class ServicesHandler {
      //   String userToken = await SharedPreferenceHandler.getToken();
         headers ??= {
             "Content-Type": "application/json",
+          "Accept":"application/json"
           };
 
 

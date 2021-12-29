@@ -47,7 +47,7 @@ textGlobalNormalWhite14({required BuildContext context,text}){
   return textGlobal(text:text ,context: context,fontSize: 14.0,color:Colors.white,bold: false);
 }
 textGlobalWhiteBold14({required BuildContext context,text}){
-  return textGlobal(text:text ,context: context,fontSize: 14.0,color:Colors.white,bold: true);
+  return textGlobal(text:text ,context: context,fontSize: 14.0,color:Colors.white,bold: true,lines: 20);
 }
 textGlobalWhiteBold18({required BuildContext context,text}){
   return textGlobal(text:text ,context: context,fontSize: 18.0,color:Colors.white,bold: true);
@@ -86,7 +86,8 @@ textGlobalGreyBold13({required BuildContext context,text}){
   return textGlobal(text:text ,context: context,fontSize: 13.0,color:Colors.grey,bold: true);
 }
 textGlobalDarkCyanBold13({required BuildContext context,text}){
-  return textGlobal(text:text ,context: context,fontSize: 13.0,color:blueDark,bold: true);
+  return textGlobal(text:text ,context: context,fontSize: 13.0,color:blueDark,bold: true,
+      lines: 20);
 }
 textGlobalGreyBold8({required BuildContext context,text}){
   return textGlobal(text:text ,context: context,fontSize: 7.0,color:Colors.grey,bold: true);
@@ -126,5 +127,3 @@ textGlobalWhiteNormal16({required BuildContext context,text}){
 textGlobalBlackBold35({required BuildContext context,text}){
   return textGlobal(text:text ,context: context,fontSize: 35.0,color:white2,bold: true);
 }
-
-

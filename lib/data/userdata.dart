@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:translationchat/models/usermodel.dart';
 import 'package:translationchat/services/firebasehandler.dart';
 import 'package:translationchat/services/services_handler.dart';
@@ -8,16 +9,40 @@ class UserData {
   FirebaseHandler firebaseHandler=FirebaseHandler();
   Future  getToken(String mobileNumber) async {
  try {
+   String? tokenFcm = await FirebaseMessaging.instance.getToken();
+   print("/////////////////////////////////////////////");
+   print (tokenFcm);
+
    var response = await service.
-   postService(urlSuffix: "login?mobile_number=${mobileNumber.toString()}",
+   postService(urlSuffix: "login?mobile_number=${mobileNumber.toString()}&fcm_token=${tokenFcm.toString()}",
        returnBody: true).then((value) => value);
    String token = response["token"];
    await SharedPreferenceHandler.setToken(token);
-
+userIsOLine();
    return 0;
  }catch(ex){
    return 1;
  }
+  }
+
+
+  userIsOLine() async {
+    String token=await SharedPreferenceHandler.getToken();
+    var headers = {
+      'Accept':"application/json",
+      'Authorization': 'Bearer ${token.toString()}'
+    };
+    var response= await ServicesHandler().getService(urlSuffix:"online", ex: true,headers: headers);
+return response;
+  }
+  userIsOffline() async {
+    String token=await SharedPreferenceHandler.getToken();
+    var headers = {
+      'Accept':"application/json",
+      'Authorization': 'Bearer ${token.toString()}'
+    };
+    var response= await ServicesHandler().getService(urlSuffix:"offline", ex: true,);
+    return response;
   }
 
 
@@ -104,8 +129,11 @@ checkCode({smsCode}) async{
   }
  signUp({required String name,required String email,required String mobileNumber}) async {
    try {
+     String? tokenFcm = await FirebaseMessaging.instance.getToken();
+   print("/////////////////////////////////////////////");
+   print (tokenFcm);
      var response = await service.
-     postService(urlSuffix: "register?name=${name.toString()}&email=${email.toString()}&mobile_number=${mobileNumber.toString()}",
+     postService(urlSuffix: "register?fcm_token=${tokenFcm.toString()}&name=${name.toString()}&email=${email.toString()}&mobile_number=${mobileNumber.toString()}",
          returnBody: false).then((value) => value);
      return response;
    }catch(ex){

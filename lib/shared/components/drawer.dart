@@ -4,13 +4,14 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:translationchat/Screens/auth/login.dart';
 import 'package:translationchat/Screens/auth/updateprofile.dart';
-import 'package:translationchat/Screens/checknumberphone/checknumberphone.dart';
+
 import 'package:translationchat/Screens/contactus/contactus.dart';
+import 'package:translationchat/Screens/qr_code/checknumberphone.dart';
 import 'package:translationchat/Screens/settings/settings.dart';
 import 'package:translationchat/constants/colors.dart';
 import 'package:translationchat/provider/userprovider.dart';
 import 'package:translationchat/shared/components/sizedboxglobal.dart';
-import 'package:translationchat/shared/components/textglobal.dart';
+import 'package:translationchat/shared/text_global.dart';
 import 'package:translationchat/shared/widgets/circleavatatimage.dart';
 
 import 'navigator.dart';
@@ -36,7 +37,9 @@ createImageItem(context: context, onTap: (){
 context: context,
               icon: Icons.vpn_key_sharp,
               text: 'الحساب',
-              onTap: () =>(){}
+              onTap: () {
+                AppNavigator.navigateTo(context,const UpdateProfile ());
+              }
 
             ),
             createDrawerBodyItem(

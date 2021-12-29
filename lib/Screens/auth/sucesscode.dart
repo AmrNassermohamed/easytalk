@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart' show   BuildContext, Center, Column, Container, Key, MainAxisAlignment, State, StatefulWidget, TextEditingController, Widget;
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:translationchat/Screens/chat/roomscreen.dart';
+import 'package:translationchat/Screens/room/roomscreen.dart';
 import 'package:translationchat/constants/colors.dart';
 import 'package:translationchat/constants/images.dart';
 import 'package:translationchat/provider/userprovider.dart';
@@ -10,7 +11,7 @@ import 'package:translationchat/shared/components/displaysnackbar.dart';
 import 'package:translationchat/shared/components/navigator.dart';
 import 'package:translationchat/shared/components/sizedboxglobal.dart';
 import 'package:translationchat/shared/components/textfieldglobal.dart';
-import 'package:translationchat/shared/components/textglobal.dart';
+import 'package:translationchat/shared/text_global.dart';
 
 import 'login.dart';
 
@@ -58,18 +59,46 @@ padding: const EdgeInsets.all(20),
                      textGlobalBlackBold16(context: context,text: " شكرا .."),
                      sizedBoxGlobalHeight30(),
                      GestureDetector(onTap: () async {
+//validationService.getMobileToken();
+                     goToAction();
 
-            var x     =     await validationService.getToken(validationService.mobileNumber);
-                 if(x==0){
-                   await validationService.getUserProfile();
-                   Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => RoomScreen(),), (route) => false);
-                 }else{
-
-                 }
                      },child: buttonGlobalText(context: context,text: "موافق")),
                      sizedBoxGlobalHeight30(),
 
+                     TweenAnimationBuilder<Duration>(
 
+                         duration: Duration(seconds:15 ),
+                         tween: Tween(begin: Duration(seconds:15
+                         ), end:Duration.zero,
+
+
+
+
+                         ),
+                         onEnd: () async {
+                           goToAction();
+
+/*Navigator.push(
+                                       context,
+                                       MaterialPageRoute(
+                                         builder: (context) => NavigationBar(0),
+                                       ));*/
+
+                           print('Timer ended');
+                         },
+                         builder: (BuildContext ?context, Duration ?value, Widget ?child) {
+                           //    final days=value.inDays;
+
+                           return Align(
+                             alignment: Alignment.center,
+                             child:  Text("${value!.inSeconds%60%60}",style: GoogleFonts.tajawal(
+                               color: Colors.black38,
+                               //fontWeight: FontWeight.bold,
+
+                               fontSize:28 ,
+                             )),
+                           );
+                         })
                    ],),),
                  ),
 
@@ -81,4 +110,15 @@ padding: const EdgeInsets.all(20),
     );
 
   }
+  goToAction() async {
+    final validationService = Provider.of<UserProvider>(context,listen: false);
+    var x     =     await validationService.getToken(validationService.mobileNumber);
+    if(x==0){
+      await validationService.getUserProfile();
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => RoomScreen(),), (route) => false);
+    }else{
+      displaySnackBar(context, "حدث خطا ما");
+    }
+  }
+
 }

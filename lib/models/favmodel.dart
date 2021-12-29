@@ -1,18 +1,29 @@
+import 'package:translationchat/models/roommodel.dart';
+
 class FavModel{
 
-  late String chatId;
-  late String name;
+//  late String chatId;
+ // late String name;
 //  late String fireBaseChatId;
  // late String lastMessage="";
  // String lastMessageTime;
-  late String user2Id;
-
-  FavModel({required this.user2Id,required this.chatId,
-  required this.name });
+  //late String user2Id;
+RoomModel roomModel;
+  FavModel({
+  required this.roomModel });
 
 factory FavModel.fromJson(Map<String, dynamic> json){
 
-return FavModel(user2Id: json["favorite"]["id"].toString(),chatId: json["chat_id"].toString(),
-name: json["favorite"]["name"] );
+return FavModel(
+
+    roomModel:
+    RoomModel(user2Id:json["favorite"]["id"].toString(),
+      fireBaseChatId: json["firebase_chat_id"],
+      email: json["favorite"]["email"],
+      favoriteId: ["id"], chatId: json["firebase_chat_id"], imageUrl:
+      "",//json["favorite"]["image_url"],
+      lastMessageTime: '', name: json["favorite"]["name"], lastMessage: '', mobileNumber: '',
+
+    ) );
 }
 }

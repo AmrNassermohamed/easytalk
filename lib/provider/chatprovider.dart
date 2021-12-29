@@ -10,38 +10,109 @@ import 'package:translationchat/data/chatdata.dart';
 import 'package:translationchat/models/ProviderGeneralState.dart';
 import 'package:translationchat/models/contactmodel.dart';
 import 'package:translationchat/models/favmodel.dart';
+import 'package:translationchat/models/lang_model.dart';
 import 'package:translationchat/models/messagemodel.dart';
 import 'package:translationchat/models/roommodel.dart';
 import 'package:translationchat/utils/contacts.dart';
 
 class ChatProvider extends ChangeNotifier{
   ChatData chatData= ChatData();
+  bool  emojiShowing=true;
+  bool isKeyboardVisible = false;
   List <Message>   messageList = [];
   bool settingLang=true;
-  List <String> lang=["ar","en","fr","de","it"];
-  String chosenLang="en";
+  List <LangModel> langList=[LangModel(lang: "française", code: "fr"),LangModel(lang: "English",code: "en"),LangModel(lang: "العربيه", code: "ar"),LangModel(lang: "Idioma italiano",code: "it")];
+  LangModel chosenLangIndex=LangModel(lang: "العربيه", code: "ar");
+  late LangModel user=chosenLangIndex;
+  late LangModel anotherUser=chosenLangIndex;
+  bool switchRoom=false;
+  
   late ProviderGeneralState<List <ContactModel>> listContactsGeneralState=ProviderGeneralState(waiting: true);
   late ProviderGeneralState<List <RoomModel>> listRoomsGeneralState;
-  late ProviderGeneralState<List <FavModel>> listFavGeneralState;
-  addMessage({required bool addOrUpdate,required text,required  int type,required int from, required int to,required documentId,required docField}){
+  late ProviderGeneralState<List <FavModel>> listFavGeneralState=ProviderGeneralState(waiting: true);
+  late ProviderGeneralState<List <RoomModel>> listActiveState;
+  listen(){
+
+    notifyListeners();
+  }
+
+  changeLang(){
+    if(settingLang==true){
+      settingLang=false;
+    }else{
+      settingLang=true;
+    }
+    notifyListeners();
+  }
+
+  emojShowingBoolean(){
+    if(emojiShowing==true) {
+      emojiShowing = false;
+notifyListeners();
+    }else{
+      emojiShowing = true;
+notifyListeners();
+    }
+
+  }
+
+
+  addMessage({required String translate,required bool addOrUpdate,required text,required  int type,required int from, required int to,required documentId,required docField}){
     try{
+      print("///////");
+print(translate);
 
-
-      chatData.updateMessage(text: text, type: type,
+      chatData.updateMessage(translateMessage: translate,text: text, type: type,
           from: from, to: to, documentId: documentId, docField: addOrUpdate==true?getRandomString():docField);
 
     }catch(ex){
       rethrow;
     }
   }
+  updateLang({required LangModel langModel,chatId,user}) async {
+    try{
+  await chatData.updateLang(langModel:langModel,chatId: chatId,user1: user);
+    }catch(ex){
+      rethrow;
+    }
+  }
+
+
+
   translateWord({target,message}) async {
     try{
-  String word   = await chatData.translateWord(target, message);
- return word;
+      String word   = await chatData.translateWord(target, message);
+      return word;
 
     }catch(ex){
       rethrow;
     }
+  }
+
+ /* getLangList( documentSnapshot,userOne) async {
+    if (documentSnapshot.data != null) {
+      await documentSnapshot.data.data().forEach((key, value) {
+        if (key == userOne.toString()) {
+          user = LangModel(code: value["code"], lang: value["lang"]);
+       print(user);
+        } else {
+          anotherUser = LangModel(code: value["code"], lang: value["lang"]);
+       print(anotherUser);
+        }
+      });
+    }
+  }*/
+  changeSwitch(){
+    if(switchRoom==true){
+      switchRoom=false;
+      getChats();
+      notifyListeners();
+    }else{
+      switchRoom=true;
+      getActives();
+      notifyListeners();
+    }
+notifyListeners();
   }
   addFav({fav,firebasehatId}) async {
     try{
@@ -68,6 +139,14 @@ class ChatProvider extends ChangeNotifier{
          return chatData.getMessage(chatId);
     } catch (ex) {
 rethrow;
+    }
+  }
+  
+  getLang(chatId) {
+    try {
+      return chatData.getLang(chatId);
+    } catch (ex) {
+      rethrow;
     }
   }
   printMessage(documentSnapshot) async {
@@ -105,7 +184,17 @@ final response= await chatData.addChat(user1:user1,user2:user2,chatId:chatId);
 return response;
 }
 
+getActives() async {
 
+    List <RoomModel> getActive = [];
+    setWaiting(3);
+    getActive = await chatData.getActives();
+    listActiveState =
+        ProviderGeneralState(data: getActive, hasData: true);
+    notifyListeners();
+
+
+}
 
 getChats() async {
  try {
@@ -153,6 +242,9 @@ getChats() async {
         break;
       case 2:
         listFavGeneralState = ProviderGeneralState(waiting: true);
+        break;
+      case 3:
+        listActiveState = ProviderGeneralState(waiting: true);
         break;
 
 

@@ -18,11 +18,12 @@ class TextFieldGlobal extends StatelessWidget{
     return Directionality(
     textDirection: TextDirection.rtl,
       child:
-       TextField(
+       TextFormField(
+//textInputAction: TextInputAction.next,
 
         style:GoogleFonts.cairo(fontSize: 10,color:Colors.black,fontWeight: FontWeight.bold),
 
-        autocorrect: true,
+       // autocorrect: true,
         focusNode: myFocusNode,
           cursorColor: darkCyan,
 

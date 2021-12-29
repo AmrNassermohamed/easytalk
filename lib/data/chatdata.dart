@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:translationchat/models/contactmodel.dart';
 import 'package:translationchat/models/favmodel.dart';
+import 'package:translationchat/models/lang_model.dart';
 import 'package:translationchat/models/roommodel.dart';
 import 'package:translationchat/services/firestorehandler.dart';
 import 'package:translationchat/services/services_handler.dart';
@@ -11,11 +12,12 @@ import 'package:translationchat/utils/sharedprefence.dart';
 class ChatData{
 FireStoreServices fireStoreServices=FireStoreServices();
 ServicesHandler service = ServicesHandler();
-  updateMessage({required text,required  int type,required int from, required int to,required documentId,required docField}) {
+  updateMessage({required translateMessage,required text,required  int type,required int from, required int to,required documentId,required docField}) {
     Map<String, dynamic> data = type == 0
         ? {
+      "translateMessage":translateMessage,
       "message": text,
-      "translateMessage":text,
+
       "creationDt": DateTime.now(),
       "type": "text",
       "from": from,
@@ -46,12 +48,31 @@ ServicesHandler service = ServicesHandler();
     }
 
   }
+  updateLang({LangModel? langModel,user1,chatId}){
+    Map<String, dynamic> data= {
+      "lang":langModel!.lang,
+      "code":langModel!.code,
+    };
+    fireStoreServices.updateCollection(map: data,
+
+        doc: chatId,
+        docField:user1,
+        collectionName: "lang");
+  }
 
 getMessage(doc)  {
   try {
     return  fireStoreServices.getDataStream(documentId: doc,collectionName: "chat",where: false);
   }catch(ex){
   rethrow;
+  }
+}
+
+getLang(doc)  {
+  try {
+    return  fireStoreServices.getDataStream(documentId: doc,collectionName: "lang",where: false);
+  }catch(ex){
+    rethrow;
   }
 }
 Future translateWord(String target,String message) async{
@@ -93,7 +114,7 @@ addChat({user1,user2,chatId}) async {
   };
   var response= await service.postService
     (returnBody: true,headers: headers,urlSuffix: "chats?user1=${user1.toString()}&user2=${user2.toString()}&firebase_chat_id=${chatId.toString()}").then((value) => value);
-  return response["chat"]["id"];
+  return response["chat"]["firebase_chat_id"];
 }
 
 getContacts(contacts) async {
@@ -130,6 +151,28 @@ getChats() async {
   });
     return listRoom;
   }
+
+getActives() async {
+  List <RoomModel> listRoom=[];
+  String token=await SharedPreferenceHandler.getToken();
+  var headers = {
+    'Authorization': 'Bearer ${token.toString()}'
+  };
+  var response= await ServicesHandler().
+  postService(urlSuffix:"actives?",
+      headers: headers, returnBody: true);
+  response["actives"].forEach((v) {
+   print("vvvvvvvvvvvvvv");
+    print(v);
+    if(v!=null) {
+      RoomModel roomModel = RoomModel.fromJson(v);
+
+      listRoom.add(roomModel);
+    }
+    });
+  return listRoom;
+}
+
 getFav() async {
 
     List <FavModel> listFav=[];

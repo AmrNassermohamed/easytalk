@@ -5,7 +5,7 @@ import 'package:translationchat/constants/colors.dart';
 import 'package:translationchat/constants/images.dart';
 import 'package:translationchat/shared/components/navigator.dart';
 import 'package:translationchat/shared/components/sizedboxglobal.dart';
-import 'package:translationchat/shared/components/textglobal.dart';
+import 'package:translationchat/shared/text_global.dart';
 
 Widget componentSend({required BuildContext context,icon,image,text,backgroundColor,color,required Function callBack}){
  return GestureDetector(

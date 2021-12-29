@@ -11,8 +11,10 @@ import 'package:translationchat/shared/components/navigator.dart';
 import 'package:translationchat/shared/components/progress.dart';
 import 'package:translationchat/shared/components/sizedboxglobal.dart';
 
-import 'package:translationchat/shared/components/textglobal.dart';
+import 'package:translationchat/shared/text_global.dart';
 import 'package:translationchat/shared/widgets/circleavatatimage.dart';
+
+import 'chat_screen_copy.dart';
 
 
 
@@ -105,7 +107,7 @@ if(int.parse(validationService2.listUserProfileGeneralState
           lastMessage: '',
           lastMessageTime: '',
           chatId: ''),
-        user1: validationService2.listUserProfileGeneralState.data!.id,));
+        user1: validationService2.listUserProfileGeneralState.data!.idModify,));
     }   //   AppNavigator.navigateTo(context,const ChatScreen());
     },
     child: Padding(
@@ -113,14 +115,16 @@ if(int.parse(validationService2.listUserProfileGeneralState
     child: Column(children: [
     FlatButton(
     onPressed: (){
-print(validationService2.listUserProfileGeneralState
-    .data!.id);
+
      if(validationService2.listUserProfileGeneralState.hasData==true) {
      String  firebaseChatId = validationService2.listUserProfileGeneralState.data!.id+"_"+provider.listContactsGeneralState.data![index]!.id.toString();
        AppNavigator.navigateTo(
-           context, ChatScreen(roomBool: false,roomModel: RoomModel(favoriteId:0 ,imageUrl: "",email: "",user2Id:provider.listContactsGeneralState.data![index].id.toString()
+           context, ChatScreen(roomBool: false,roomModel:
+       RoomModel(favoriteId:0 ,imageUrl: "",email: "",
+           user2Id:provider.listContactsGeneralState.data![index].id.toString()
            ,fireBaseChatId:firebaseChatId,
-           name: '', lastMessage: '', lastMessageTime: '', chatId: '',mobileNumber: ""),user1: validationService2.listUserProfileGeneralState.data!.id,));
+           name: provider.listContactsGeneralState.data![index].name.toString(), lastMessage: '',
+           lastMessageTime: '', chatId: '',mobileNumber: ""),user1: validationService2.listUserProfileGeneralState.data!.idModify,));
      }
     },
     child: Container(

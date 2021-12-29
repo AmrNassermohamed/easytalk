@@ -5,12 +5,12 @@ import 'package:translationchat/models/roommodel.dart';
 import 'package:translationchat/provider/chatprovider.dart';
 import 'package:translationchat/provider/userprovider.dart';
 import 'package:translationchat/shared/components/displaysnackbar.dart';
-import 'package:translationchat/shared/components/textglobal.dart';
-import 'package:translationchat/shared/widgets/circleavatatimage.dart';
 
+import 'package:translationchat/shared/widgets/circleavatatimage.dart';
+import 'package:translationchat/shared/text_global.dart';
 import 'buttonglobal.dart';
 
-bottomSheetGlobal({required BuildContext context}) {
+bottomSheetGlobal({required BuildContext context,user1,chatId}) {
   showModalBottomSheet(
 
       isScrollControlled: true,
@@ -33,14 +33,15 @@ bottomSheetGlobal({required BuildContext context}) {
 
 
   child:ListView.builder(
-      itemCount: validationService.lang.length,
+      itemCount: validationService.langList.length,
       itemBuilder: (context, index) {
-   return FlatButton(onPressed: (){
-     validationService.chosenLang=validationService.lang[index];
-     validationService.notifyListeners();
+   return FlatButton(onPressed: () async {
+    validationService.chosenLangIndex=validationService.langList[index];
+    await  validationService.updateLang(langModel:validationService.chosenLangIndex,user:user1,chatId: chatId );
+    // validationService.notifyListeners();
 //displaySnackBar(context, validationService.chosenLang);
          Navigator.of(context).pop();
-   },child: Padding(padding: EdgeInsets.only(top: 20,bottom: 10),child: buttonGlobal(context: context,text: validationService.lang[index])));
+   },child: Padding(padding: EdgeInsets.only(top: 20,bottom: 10),child: buttonGlobal(context: context,text: validationService.langList[index].lang)));
    },))
 
 

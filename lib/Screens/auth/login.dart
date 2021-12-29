@@ -10,7 +10,8 @@ import 'package:translationchat/shared/components/displaysnackbar.dart';
 import 'package:translationchat/shared/components/navigator.dart';
 import 'package:translationchat/shared/components/sizedboxglobal.dart';
 import 'package:translationchat/shared/components/textfieldglobal.dart';
-import 'package:translationchat/shared/components/textglobal.dart';
+
+import 'package:translationchat/shared/text_global.dart';
 import 'package:translationchat/utils/sharedprefence.dart';
 
 import 'codenumber.dart';
@@ -50,6 +51,8 @@ class LoginState extends State<Login> {
                         //emailSend(context,(){}),
                         //sizedBoxGlobalHeight10(),
                         phoneSend(context,() async {
+
+
                           validationService.mobileNumber=controller.text;
 
                          var result =await validationService.mobileIsExist(controller.text);

@@ -31,7 +31,8 @@ class Init {
     String? token=await SharedPreferenceHandler.getToken();
     if(token!=null){
 validationServiceUser.loginOrNot=true;
-      await    validationServiceUser.getUserProfile();
+        validationServiceUser.getUserProfile();
+     //     validationServiceUser.userIsOLine();
       print("%%%%%%%%%%%");
       print(validationServiceUser.listUserProfileGeneralState.hasData);
 

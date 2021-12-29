@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart' show BorderRadius, BoxDecoration, BoxFit, BuildContext, Center, Column, Container, DecorationImage, EdgeInsets, ExactAssetImage, Expanded, Key, MainAxisAlignment, MediaQuery, Radius, Row, SingleChildScrollView, State, StatefulWidget, TextEditingController, Widget;
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_barcodes/barcodes.dart';
+import 'package:translationchat/Screens/qr_code/qr_scanner.dart';
 import 'package:translationchat/constants/colors.dart';
 import 'package:translationchat/constants/images.dart';
+import 'package:translationchat/provider/userprovider.dart';
 import 'package:translationchat/shared/components/buttonglobal.dart';
 import 'package:translationchat/shared/components/sizedboxglobal.dart';
-import 'package:translationchat/shared/components/textglobal.dart';
+import 'package:translationchat/shared/text_global.dart';
 
 
 
@@ -21,6 +24,8 @@ class CheckNumberPhoneState extends State<CheckNumberPhone> {
   late final TextEditingController controller =TextEditingController();
   @override
   Widget build(BuildContext context) {
+
+
     return  Scaffold(
         body:SingleChildScrollView(
             padding: const EdgeInsets.all(0),
@@ -42,17 +47,26 @@ class CheckNumberPhoneState extends State<CheckNumberPhone> {
                       Expanded(child: Container()),
                     ],),
                     ),
-                    Expanded(child: Container()),
-                        SizedBox(
-                          height: 200,
 
-                          child: SfBarcodeGenerator(
+    Expanded(child: Container()),
+    Consumer<UserProvider>(
+    builder: (context, provider, child) {
+    if (provider.listUserProfileGeneralState.hasData) {
 
-                            value: 'www.syncfusion.com',
-                            symbology: QRCode(),
-                            showValue: false,
-                          ),
-                        ),
+    return SizedBox(
+    height: 200,
+
+    child: SfBarcodeGenerator(
+
+    value: provider.listUserProfileGeneralState.data!.mobileNumber.toString(),
+    symbology: QRCode(),
+    showValue: false,
+    ),
+    );
+    }else{
+  return const SizedBox(height: 0,);
+    }
+    }),
                     Expanded(child: Container()),
                         Padding(
                           padding: EdgeInsets.all(10),
@@ -64,7 +78,11 @@ class CheckNumberPhoneState extends State<CheckNumberPhone> {
 
                           ],),
                         ),
-                        buttonGlobal(context: context,text: "مرر")
+                        GestureDetector(onTap: (){
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const QRViewExample(),
+                          ));
+                        },child: buttonGlobal(context: context,text: "مرر"))
 
                     ,Expanded(child: Container()),
 

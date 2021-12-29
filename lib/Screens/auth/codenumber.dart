@@ -7,7 +7,8 @@ import 'package:translationchat/shared/components/buttonglobal.dart';
 import 'package:translationchat/shared/components/displaysnackbar.dart';
 import 'package:translationchat/shared/components/navigator.dart';
 import 'package:translationchat/shared/components/sizedboxglobal.dart';
-import 'package:translationchat/shared/components/textglobal.dart';
+import 'package:translationchat/shared/text_global.dart';
+
 import 'components/pincodenumber.dart';
 
 class CodeNumber extends StatefulWidget {
@@ -46,7 +47,12 @@ class CodeNumberState extends State<CodeNumber> {
                          ],),
 
                       codeNumber(context: context,controller: controller),
-                     // textGlobalBlackBold16(context: context,text: "اعاده ارسال الرمز"),
+                     GestureDetector(
+                     onTap:(){
+validationService.sendMobileNumber(mobileNumber: validationService.mobileNumber.toString());
+                     },
+                   child:   textGlobalBlackBold16(context: context,text: "اعاده ارسال الرمز"),
+                     ),
                        sizedBoxGlobalHeight40(),
                       sizedBoxGlobalHeight40(),
                     GestureDetector(onTap: () async {

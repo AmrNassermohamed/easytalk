@@ -1,12 +1,13 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:date_format/date_format.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
-import 'package:flutter/cupertino.dart' show   BuildContext, Center, Column, EdgeInsets,Key, State, StatefulWidget, TextEditingController, Widget;
+import 'package:flutter/cupertino.dart' show BuildContext, Center, Column, CupertinoSwitch, EdgeInsets, Key, State, StatefulWidget, TextEditingController, Widget;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:translationchat/Screens/chat/roomscreen.dart';
+import 'package:translationchat/Screens/room/roomscreen.dart';
 import 'package:translationchat/constants/colors.dart';
 import 'package:translationchat/constants/strring.dart';
 import 'package:translationchat/models/roommodel.dart';
@@ -14,21 +15,23 @@ import 'package:translationchat/provider/chatprovider.dart';
 import 'package:translationchat/shared/components/bottomsheetglobal.dart';
 import 'package:translationchat/shared/components/sizedboxglobal.dart';
 import 'package:translationchat/shared/components/textfieldglobal.dart';
-import 'package:translationchat/shared/components/textglobal.dart';
+
+import 'package:translationchat/shared/emojy_list.dart';
+import 'package:translationchat/shared/text_global.dart';
 import 'package:translationchat/shared/widgets/circleavatatimage.dart';
 
 
-class ChatScreen extends StatefulWidget {
+class ChatScreeng extends StatefulWidget {
   RoomModel? roomModel;
   String user1="";
   bool roomBool;
 
-   ChatScreen({Key? key,this.roomModel,required this.user1,required this.roomBool}) : super(key: key);
+   ChatScreeng({Key? key,this.roomModel,required this.user1,required this.roomBool}) : super(key: key);
   @override
   ChatScreenState createState() => ChatScreenState ();
 }
 
-class ChatScreenState extends State<ChatScreen> {
+class ChatScreenState extends State<ChatScreeng> {
   // const _SignUpState({Key? key}) : super(key: key);const MyHomePage({Key? key, required this.title}) : super(key: key);
   ScrollController ? _controller;
   String? x;
@@ -54,8 +57,20 @@ final TextEditingController controller = TextEditingController();
   }
 
 
-  _onBackspacePressed() {
+  _onBackspacePressed() async {
+    if(emojiShowing==true) {
+     setState(() {
+       emojiShowing=false;
+     });
+    }else{
+      var data = await
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => RoomScreen()),
+      );
 
+      return data;
+    }
   }
 
 
@@ -79,15 +94,10 @@ final TextEditingController controller = TextEditingController();
     final validationService = Provider.of<ChatProvider>(context);
     return WillPopScope(
       onWillPop: () async {
-
+_onBackspacePressed();
+return true;
           // return  validationService.getChats();
-          var data = await
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => RoomScreen()),
-          );
 
-          return data;
 
       },
       child: SafeArea(
@@ -113,7 +123,24 @@ final TextEditingController controller = TextEditingController();
                             Navigator.of(context).pop();
                           }, child: const Icon(Icons.arrow_back_ios,
                             color: Colors.white,)),
-                 GestureDetector(onTap:(){
+                          CupertinoSwitch(
+                            trackColor: Colors.white,
+                            activeColor: yellow,
+                            value: validationService.settingLang,
+                            onChanged: (value) {
+                              setState(() {
+
+                                if(validationService.settingLang==true){
+                                  validationService.settingLang=false;
+                                }else{
+                                  validationService.settingLang=true;
+                                }
+                              });
+                            },
+                          ),
+
+
+                 /*GestureDetector(onTap:(){
                    setState(() {
 
                      if(validationService.settingLang==true){
@@ -122,7 +149,11 @@ final TextEditingController controller = TextEditingController();
                        validationService.settingLang=true;
                      }
                    });
-                 } ,child: validationService.settingLang==true? Image.asset("assests/Group 1344.png"):Image.asset("assests/Group 1345.png")),
+                 } ,
+                     child:
+                     validationService.settingLang==true?
+                     Image.asset("assests/Group 1344.png"):
+                     Image.asset("assests/Group 1345.png"))*/
                         ],),
                     ),
                     sizedBoxGlobalHeight10(),
@@ -139,15 +170,16 @@ final TextEditingController controller = TextEditingController();
                         textGlobalDarkCyanBold13(context: context,
                             text: widget.roomModel!.name),
                         // textGlobalDarkCyanBold13(context: context,text: "كان نشطامنذ خمس دقائق"),
-                        GestureDetector(
+                        validationService.settingLang==true?               GestureDetector(
                           onTap: () {
-                            bottomSheetGlobal(context: context);
+                            bottomSheetGlobal(context: context,user1: widget.user1,chatId: widget.roomModel!.fireBaseChatId);
                           }
                           , child: Directionality(
                           textDirection: TextDirection.rtl,
                           child: Center(
                             child: Container(
-                              width: 150,
+                              width: 200,
+
                               padding: const EdgeInsets.only(left: 12.0),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15.0),
@@ -159,13 +191,24 @@ final TextEditingController controller = TextEditingController();
                                 const Icon(Icons.keyboard_arrow_down,
                                   color: Colors.white,),
 
-    Consumer<ChatProvider>(
+    StreamBuilder<DocumentSnapshot>(
+    stream: validationService.getLang(
+    widget.roomModel!.fireBaseChatId),
+    builder: (BuildContext context,
+    AsyncSnapshot<DocumentSnapshot> snapshot)
+    {
+    //  validationService.getLangList(snapshot, widget.user1);
+      return                            textGlobalWhiteNormal16(
+          context: context, text: validationService.user.lang.toString());
+    }),
+
+    /*Consumer<ChatProvider>(
     builder: (context, provider, child) {
 
 
     return                            textGlobalWhiteNormal16(
-                                    context: context, text: provider.chosenLang);
-    }),
+                                    context: context, text: provider.chosenLangIndex.lang);
+    })*/
                                 sizedBoxGlobalWidth20(),
                                 const Icon(Icons.map, color: Colors.white,),
 
@@ -173,7 +216,8 @@ final TextEditingController controller = TextEditingController();
                               ],),),
                           ),
                         ),
-                        ),
+                        ):const SizedBox(height: 20),
+
                         StreamBuilder<DocumentSnapshot>(
                             stream: validationService.getMessage(
                                 widget.roomModel!.fireBaseChatId),
@@ -213,7 +257,7 @@ final TextEditingController controller = TextEditingController();
                                           child: Directionality(
                                             textDirection: validationService
                                                 .messageList[index].from
-                                                .toString() == widget.user1
+                                                .toString() == widget.user1.toString()
                                                 ? TextDirection.rtl
                                                 : TextDirection
                                                 .ltr,
@@ -225,7 +269,7 @@ final TextEditingController controller = TextEditingController();
                                                 Column(children: [
 
                                     Row(children: [Expanded(child:  message(index,true))],),
-                                                  validationService.settingLang==true?GestureDetector(onTap: () async {
+                /*                                  validationService.settingLang==true?GestureDetector(onTap: () async {
 
 
   //translateWord(index,context);
@@ -233,13 +277,14 @@ final TextEditingController controller = TextEditingController();
   String word = await validationService
       .translateWord(
       target: validationService
-          .chosenLang,
+          .chosenLangIndex.code,
       message: validationService
           .messageList[index]
           .message);
 
   validationService
       .addMessage(
+    translate: word,
       addOrUpdate: false,
       text: word,
       type: 2,
@@ -259,9 +304,13 @@ final TextEditingController controller = TextEditingController();
     radius: 13,
  child: Padding(padding: EdgeInsets.all(10),child: Image.asset("assests/Iconmaterial-translate.png",width: 40,height: 20,),),
   ),
-)):SizedBox(),
-                                        validationService.settingLang==true?          Row(children: [Expanded(child:  message(index,false))],):SizedBox(height: 0,),
-
+)):SizedBox(),*/
+                                        /*validationService.settingLang==true?          Row(children:
+                                        [Expanded(child:  message(index,false))],):SizedBox(height: 0,),*/
+textGlobalBlackBold16(text:
+formatDate(validationService
+    .messageList[index]
+    .creationDt,[dd, '/', mm, '/', yyyy, ' ', HH, ':' , nn]),context: context),
                                                 ],)
 
                                                ),
@@ -277,7 +326,28 @@ final TextEditingController controller = TextEditingController();
                             }),
 
                         comButton(context),
-        // emojyPicker(),
+         emojyPicker(),
+                   /* Padding(padding:const EdgeInsets.all(10),child:
+                        GridView.count(
+                          shrinkWrap: true,
+                          physics: new NeverScrollableScrollPhysics(),
+                          crossAxisCount: 5,
+                          childAspectRatio: 1.1,
+                          children: Emojy.emojy
+                              .map<Widget>(
+                                (e) => GestureDetector(
+                              child: Text(e.emoji),
+                              onTap: () {
+                              _onEmojiSelected(e.emoji); // Navigator.pushNamed(context, "episode", arguments: e);
+                              },
+                            ),
+                          )
+                              .toList(),
+                        ),
+                    )*/
+
+
+                        
                       ],),)),
 
                   ],),
@@ -289,7 +359,7 @@ final TextEditingController controller = TextEditingController();
 
   Widget comButton(BuildContext context) {
     final validationService = Provider.of<ChatProvider>(context);
-    TextEditingController controller = TextEditingController(text: "");
+
     return Padding(
       padding: const EdgeInsets.only(
           left: 20, right: 20, bottom: 10.0, top: 10.0),
@@ -328,10 +398,17 @@ final TextEditingController controller = TextEditingController();
             print(validationService.messageList.length);
             if (validationService.messageList.isNotEmpty) {
               if(widget.roomBool==true){
-                appl.chatId=int.parse( widget.roomModel!.chatId);
+             //   appl.chatId=int.parse( widget.roomModel!.chatId);
               }
-              validationService.addMessage(addOrUpdate: true,
+              String word = await validationService
+                  .translateWord(
+                  target: validationService
+                      .anotherUser.code,
+                  message: appl.message);
+print(word);
+            validationService.addMessage(addOrUpdate: true,
                   text: appl.message,
+                  translate: word,
                   type: 0,
                   from: int.parse(widget.user1),
                   to: int.parse(widget.roomModel!.user2Id),
@@ -346,6 +423,7 @@ final TextEditingController controller = TextEditingController();
                   widget.user1,widget. roomModel!.user2Id,widget. roomModel!.fireBaseChatId);
               validationService.addMessage(addOrUpdate: true,
                   text: appl.message,
+                  translate: appl.message,
                   type: 0,
                   from: int.parse(widget.user1),
                   to: int.parse(widget.roomModel!.user2Id),
@@ -398,6 +476,8 @@ message(index,bool checkMessage){
               ?
           textGlobalDarkCyanBold13(
               context: context,
+
+
               text: checkMessage==true?validationService
                   .messageList[index]
                   .message:validationService.messageList[index].translateMessage)
@@ -405,7 +485,7 @@ message(index,bool checkMessage){
               context: context,
               text: checkMessage==true?validationService
                   .messageList[index]
-                  .message:validationService.messageList[index].translateMessage)));
+                  .translateMessage:validationService.messageList[index].translateMessage)));
 }
   emojyPicker(){
    return Offstage(

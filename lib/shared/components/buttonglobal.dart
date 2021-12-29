@@ -2,7 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:translationchat/constants/colors.dart';
-import 'package:translationchat/shared/components/textglobal.dart';
+import 'package:translationchat/shared/text_global.dart';
 
 Widget buttonGlobal({required BuildContext context,text,expanded}){
 return  Padding(

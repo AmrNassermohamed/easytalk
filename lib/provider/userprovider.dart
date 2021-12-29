@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:translationchat/data/userdata.dart';
@@ -35,6 +36,22 @@ class UserProvider extends ChangeNotifier {
       rethrow;
     }
   }
+
+  getMobileToken()
+  async{
+    try {
+      String? token = await FirebaseMessaging.instance.getToken();
+      print("/////////////////////////////////////////////");
+      print (token);
+      return token;
+
+    }catch(ex){
+rethrow;
+    }
+
+
+  }
+
 
 
   sendMobileNumber({required String mobileNumber}) {
@@ -161,6 +178,13 @@ userData.uploadImage(mainImage);
           ProviderGeneralState(data: userModel, hasData: true);
       notifyListeners();
     } catch (ex) {
+      rethrow;
+    }
+  }
+  userIsOLine(){
+    try {
+      return userData.userIsOLine();
+    }catch(ex){
       rethrow;
     }
   }

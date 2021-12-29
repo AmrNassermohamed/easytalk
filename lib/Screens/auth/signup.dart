@@ -10,8 +10,8 @@ import 'package:translationchat/shared/components/displaysnackBar.dart';
 import 'package:translationchat/shared/components/navigator.dart';
 import 'package:translationchat/shared/components/sizedboxglobal.dart';
 import 'package:translationchat/shared/components/textfieldglobal.dart';
-import 'package:translationchat/shared/components/textglobal.dart';
 
+import 'package:translationchat/shared/text_global.dart';
 import 'codenumber.dart';
 import 'components/buttonsendemail.dart';
 
