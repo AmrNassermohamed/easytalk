@@ -13,6 +13,7 @@ import 'package:translationchat/constants/strring.dart';
 import 'package:translationchat/models/roommodel.dart';
 import 'package:translationchat/provider/chatprovider.dart';
 import 'package:translationchat/shared/components/bottomsheetglobal.dart';
+import 'package:translationchat/shared/components/progress.dart';
 import 'package:translationchat/shared/components/sizedboxglobal.dart';
 import 'package:translationchat/shared/components/textfieldglobal.dart';
 
@@ -104,14 +105,18 @@ class ChatScreen extends StatelessWidget {
                             Navigator.of(context).pop();
                           }, child: const Icon(Icons.arrow_back_ios,
                             color: Colors.white,)),
-                          CupertinoSwitch(
+                            Consumer<ChatProvider>(
+    builder: (context, provider, child)
+    {
+    return                      CupertinoSwitch(
                             trackColor: Colors.white,
                             activeColor: yellow,
                             value: validationService.settingLang,
                             onChanged: (value) {
+                       print(validationService.settingLang);
                               validationService.changeLang();
                             },
-                          ),
+                          );}),
 
 
                           /*GestureDetector(onTap:(){
@@ -144,57 +149,69 @@ class ChatScreen extends StatelessWidget {
                         textGlobalDarkCyanBold13(context: context,
                             text: roomModel!.name),
                         // textGlobalDarkCyanBold13(context: context,text: "كان نشطامنذ خمس دقائق"),
-                        validationService.settingLang == true ? GestureDetector(
-                          onTap: () {
-                            bottomSheetGlobal(context: context,
-                                user1: user1,
-                                chatId: roomModel!.fireBaseChatId);
-                          }
-                          , child: Directionality(
-                          textDirection: TextDirection.rtl,
-                          child: Center(
-                            child: Container(
-                              width: 200,
+    Consumer<ChatProvider>(
+    builder: (context, provider, child)
+    {
+    if(validationService.settingLang==true){
+    return GestureDetector(
+    onTap: () {
+    bottomSheetGlobal(context: context,
+    user1: user1,
+    chatId: roomModel!.fireBaseChatId);
+    }
+    , child: Directionality(
+    textDirection: TextDirection.rtl,
+    child: Center(
+    child: Container(
+    width: 200,
 
-                              padding: const EdgeInsets.only(left: 12.0),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15.0),
-                                color: cyan,
-                              ),
-                              child: Row(mainAxisAlignment: MainAxisAlignment
-                                  .spaceBetween, children: [
-                                sizedBoxGlobalWidth20(),
-                                const Icon(Icons.keyboard_arrow_down,
-                                  color: Colors.white,),
+    padding: const EdgeInsets.only(left: 12.0),
+    decoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(15.0),
+    color: cyan,
+    ),
+    child: Row(mainAxisAlignment: MainAxisAlignment
+        .spaceBetween, children: [
+    sizedBoxGlobalWidth20(),
+    const Icon(Icons.keyboard_arrow_down,
+    color: Colors.white,),
 
-                                StreamBuilder<DocumentSnapshot>(
-                                    stream: validationService.getLang(
-                                        roomModel!.fireBaseChatId),
-                                    builder: (BuildContext context,
-                                        AsyncSnapshot<
-                                            DocumentSnapshot> snapshot) {
-                                      //validationService.getLangList(snapshot, user1);
-                                      return textGlobalWhiteNormal16(
-                                          context: context,
-                                          text: validationService.user.lang
-                                              .toString());
-                                    }),
+    StreamBuilder<DocumentSnapshot>(
+    stream: validationService.getLang(
+    roomModel!.fireBaseChatId),
+    builder: (BuildContext context,
+    AsyncSnapshot<
+    DocumentSnapshot> snapshot) {
+    validationService.getLangList(snapshot, user1);
+    return textGlobalWhiteNormal16(
+    context: context,
+    text: validationService.user.lang
+        .toString());
+    }),
 
-                                /*Consumer<ChatProvider>(
+    /*Consumer<ChatProvider>(
     builder: (context, provider, child) {
 
 
     return                            textGlobalWhiteNormal16(
                                     context: context, text: provider.chosenLangIndex.lang);
     })*/
-                                sizedBoxGlobalWidth20(),
-                                const Icon(Icons.map, color: Colors.white,),
+    sizedBoxGlobalWidth20(),
+    const Icon(Icons.map, color: Colors.white,),
 
 
-                              ],),),
-                          ),
-                        ),
-                        ) : const SizedBox(height: 20),
+    ],),),
+    ),
+    ),
+    );
+    }else{
+    return SizedBox(height: 20);
+    }
+
+    }),
+
+
+
 
                         StreamBuilder<DocumentSnapshot>(
                             stream: validationService.getMessage(
@@ -202,14 +219,7 @@ class ChatScreen extends StatelessWidget {
                             builder: (BuildContext context,
                                 AsyncSnapshot<DocumentSnapshot> snapshot) {
                               if (!snapshot.hasData) {
-                                return const Center(
-                                  child: CircularProgressIndicator(
-                                    backgroundColor: Colors.green,
-                                    // #to_do handling the progess bar to be stop if there no connecction
-                                    // or error happened
-                                  ),
-
-                                );
+                                return Expanded(child: Container(color: Colors.white,child: progress()));
                               } //end
                               else if (snapshot.hasError) {
                                 return new Text("");
@@ -222,8 +232,10 @@ class ChatScreen extends StatelessWidget {
                                   validationService.printMessage(snapshot);
 
                                   return Expanded(child: ListView.builder(
-                                      shrinkWrap: true,
-                                      reverse: true,
+                                     // shrinkWrap: true,
+
+                                 //     physics: ScrollPhysics(),
+                                     reverse: true,
                                       controller: _controller,
                                       padding: const EdgeInsets.all(10),
                                       itemCount: validationService.messageList

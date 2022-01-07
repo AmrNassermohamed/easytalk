@@ -38,7 +38,7 @@ if(response==200||response==201){
 
   @override
   Widget build(BuildContext context) {
-    final validationService = Provider.of<UserProvider>(context);
+    final validationService = Provider.of<UserProvider>(context,listen: false);
     return  SafeArea(
       child: Scaffold(
           body:SingleChildScrollView(

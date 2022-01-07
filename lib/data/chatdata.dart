@@ -56,7 +56,7 @@ ServicesHandler service = ServicesHandler();
     fireStoreServices.updateCollection(map: data,
 
         doc: chatId,
-        docField:user1,
+        docField:user1.toString(),
         collectionName: "lang");
   }
 

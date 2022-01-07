@@ -56,19 +56,26 @@ bottomSheetGlobadl({required BuildContext context,required Widget body,required 
       elevation: 0,
       barrierColor: Colors.black.withAlpha(1),
       backgroundColor: Colors.transparent,
-      builder: (context) =>
-          Container(
-              height:height,
 
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius:BorderRadius.all(Radius.circular(25.0)) ,
-              ),
-              child: Center(
-                child: SingleChildScrollView(
-                    child:body
+      builder: (context) =>
+          Padding(
+            padding: MediaQuery.of(context).viewInsets,
+            child: Container(
+                height:height,
+
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius:BorderRadius.all(Radius.circular(25.0)) ,
                 ),
-              )
+                child: Center(
+                  child: SingleChildScrollView(
+                      child:Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children:[
+                            body])
+                  ),
+                )
+            ),
           ));
 
 }

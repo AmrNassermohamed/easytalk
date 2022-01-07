@@ -39,10 +39,12 @@ class ChatProvider extends ChangeNotifier{
   changeLang(){
     if(settingLang==true){
       settingLang=false;
+      notifyListeners();
     }else{
       settingLang=true;
+      notifyListeners();
     }
-    notifyListeners();
+
   }
 
   emojShowingBoolean(){
@@ -89,19 +91,22 @@ print(translate);
     }
   }
 
- /* getLangList( documentSnapshot,userOne) async {
+ getLangList( documentSnapshot,userOne) async {
+
     if (documentSnapshot.data != null) {
-      await documentSnapshot.data.data().forEach((key, value) {
-        if (key == userOne.toString()) {
-          user = LangModel(code: value["code"], lang: value["lang"]);
-       print(user);
-        } else {
-          anotherUser = LangModel(code: value["code"], lang: value["lang"]);
-       print(anotherUser);
-        }
-      });
+      if (documentSnapshot.data.data() != null) {
+        await documentSnapshot.data.data().forEach((key, value) {
+          if (key == userOne.toString()) {
+            user = LangModel(code: value["code"], lang: value["lang"]);
+            print(user);
+          } else {
+            anotherUser = LangModel(code: value["code"], lang: value["lang"]);
+            print(anotherUser);
+          }
+        });
+      }
     }
-  }*/
+  }
   changeSwitch(){
     if(switchRoom==true){
       switchRoom=false;

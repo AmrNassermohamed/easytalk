@@ -20,13 +20,13 @@ import 'package:translationchat/shared/utils/firebase_messaging.dart';
 
 
 
-class RoomScreen extends StatefulWidget {
+class RoomScreen extends StatefulWidget  {
   const RoomScreen({Key? key}) : super(key: key);
   @override
   RoomScreenState createState() => RoomScreenState();
 }
 
-class RoomScreenState extends State<RoomScreen> {
+class RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
   // const _SignUpState({Key? key}) : super(key: key);const MyHomePage({Key? key, required this.title}) : super(key: key);
 
   late final TextEditingController controller = TextEditingController();
@@ -59,10 +59,49 @@ class RoomScreenState extends State<RoomScreen> {
     });
   }
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    print("dispose");
+    WidgetsBinding.instance!.removeObserver(this);
+    super.dispose();
+  }
+
+
+
+  void didChangeAppLifecycleState(AppLifecycleState state)   async {
+    final validationService2 = Provider.of<UserProvider>(context,listen: false);
+
+    switch (state) {
+      case AppLifecycleState.resumed:
+        print("offline");
+await validationService2.userIsOLine();
+        break;
+      case AppLifecycleState.inactive:
+        print("offline");
+        await      validationService2.userIsOLine();
+        break;
+      case AppLifecycleState.paused:
+        print("online");
+        await     validationService2.userIsOffLine();
+        break;
+      case AppLifecycleState.detached:
+        print("dectected");
+        await   validationService2.userIsOffLine();
+       break;
+
+    }
+  }
+@override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+  super.didChangeDependencies();
+  }
 
   @override
   void initState() {
     // TODO: implement initState
+    WidgetsBinding.instance!.addObserver(this);
     super.initState();
     init();
   }

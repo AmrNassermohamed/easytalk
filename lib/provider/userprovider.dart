@@ -188,6 +188,14 @@ userData.uploadImage(mainImage);
       rethrow;
     }
   }
+  userIsOffLine(){
+    try {
+      return userData.userIsOffline();
+    }catch(ex){
+      rethrow;
+    }
+
+  }
 
   void setWaiting(index) {
     switch (index) {

@@ -27,6 +27,7 @@ userIsOLine();
 
 
   userIsOLine() async {
+    print("gggggg");
     String token=await SharedPreferenceHandler.getToken();
     var headers = {
       'Accept':"application/json",

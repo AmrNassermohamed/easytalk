@@ -1,22 +1,15 @@
-
 import 'package:country_picker/country_picker.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:translationchat/Screens/auth/sucesscode.dart';
-import 'package:translationchat/Screens/chat/chatscreen.dart';
 import 'package:translationchat/Screens/room/roomscreen.dart';
 import 'package:translationchat/provider/chatprovider.dart';
 import 'package:translationchat/provider/userprovider.dart';
-import 'Screens/about_us/aboutus.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'Screens/auth/login.dart';
-import 'Screens/auth/signup.dart';
-import 'Screens/chat/contactscreen.dart';
-import 'Screens/settings/settings.dart';
 import 'Screens/splashScreen/splash.dart';
-import 'contacts/contacts.dart';
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

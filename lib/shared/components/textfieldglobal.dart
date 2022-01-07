@@ -18,7 +18,8 @@ class TextFieldGlobal extends StatelessWidget{
     return Directionality(
     textDirection: TextDirection.rtl,
       child:
-       TextFormField(
+       TextField(
+
 //textInputAction: TextInputAction.next,
 
         style:GoogleFonts.cairo(fontSize: 10,color:Colors.black,fontWeight: FontWeight.bold),
@@ -45,6 +46,7 @@ class TextFieldGlobal extends StatelessWidget{
        hoverColor: darkCyan,
        fillColor: darkCyan,
             focusColor: darkCyan,
+
             hintText: hint,
         ),
 
