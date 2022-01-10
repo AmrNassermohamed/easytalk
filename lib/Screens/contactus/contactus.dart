@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:translationchat/constants/colors.dart';
 import 'package:translationchat/constants/images.dart';
 import 'package:translationchat/provider/userprovider.dart';
+import 'package:translationchat/shared/components/back.dart';
 import 'package:translationchat/shared/components/buttonglobal.dart';
 import 'package:translationchat/shared/components/displaysnackbar.dart';
 import 'package:translationchat/shared/components/sizedboxglobal.dart';
@@ -35,6 +36,12 @@ class ContactUsState extends State<ContactUs> {
               height: MediaQuery.of(context).size.height,
                 child: Center(
                     child: Column(children: [
+                      Padding(
+                        padding: EdgeInsets.all(20),
+                        child: Row(mainAxisAlignment: MainAxisAlignment.start,children: [
+                          Back()
+                        ],),
+                      ),
                       sizedBoxGlobalHeight20(),
                      Row(mainAxisAlignment: MainAxisAlignment.end,children: [
                       textGlobalBlack20(context: context,text: "اتصل بنا")
@@ -53,10 +60,10 @@ class ContactUsState extends State<ContactUs> {
                          textGlobalBlackBold13
                            (context: context,text: "في اقرب وقت ممكن"),
 
-                          TextFieldGlobal(controller:nameController ,hint: "الاسم باللغه العربيه كاملا",label: darkCyan,widthBorder: 2.0,),
-                          TextFieldGlobal(controller:emailController ,hint: "البريد الالكتروني",label: darkCyan,widthBorder: 2.0,),
+                          TextFieldGlobal(keyboardType: TextInputType.text,controller:nameController ,hint: "الاسم باللغه العربيه كاملا",label: darkCyan,widthBorder: 2.0,),
+                          TextFieldGlobal(keyboardType: TextInputType.text,controller:emailController ,hint: "البريد الالكتروني",label: darkCyan,widthBorder: 2.0,),
 
-                        TextFieldGlobal(controller:messageController ,
+                        TextFieldGlobal(controller:messageController ,keyboardType: TextInputType.text,
                             hint:"ماذا تريد ان تخبرنا", label: darkCyan,widthBorder: 2.0,),
                         //  Expanded(child: Container()),
                           sizedBoxGlobalHeight40(),

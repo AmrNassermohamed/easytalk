@@ -6,9 +6,10 @@ import 'package:translationchat/constants/colors.dart';
 
 
 class TextFieldGlobal extends StatelessWidget{
-  TextFieldGlobal({Key? key,  required this.controller,required this.hint,required this.label,required this .widthBorder}) : super(key: key);
+  TextFieldGlobal({Key? key,  required this.keyboardType ,required this.controller,required this.hint,required this.label,required this .widthBorder}) : super(key: key);
   final TextEditingController controller ;
   final String hint;
+  final keyboardType;
   final double widthBorder;
   final Color label;
   late FocusNode myFocusNode=FocusNode();
@@ -27,7 +28,7 @@ class TextFieldGlobal extends StatelessWidget{
        // autocorrect: true,
         focusNode: myFocusNode,
           cursorColor: darkCyan,
-
+keyboardType:keyboardType,
           controller: controller,
         decoration:  InputDecoration(
           hintStyle: GoogleFonts.cairo(fontSize: 13,color:Colors.black12,fontWeight: FontWeight.bold),

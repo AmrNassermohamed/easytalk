@@ -20,7 +20,7 @@ Widget textFieldPhoneNumber(TextEditingController controller,BuildContext contex
 
       //   SizedBox(width: 20,),
 
-      Flexible(child:  TextFieldGlobal(label: Colors.black12,
+      Flexible(child:  TextFieldGlobal(keyboardType: TextInputType.number,label: Colors.black12,
         controller:controller ,hint: " +02 01150061654",widthBorder:2.0)),
       Icon(Icons.keyboard_arrow_down_sharp,color: black,),
       sizedBoxGlobalWidth10(),

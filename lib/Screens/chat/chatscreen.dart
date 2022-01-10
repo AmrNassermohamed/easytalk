@@ -327,6 +327,7 @@ formatDate(validationService
 
                         comButton(context),
          emojyPicker(),
+
                    /* Padding(padding:const EdgeInsets.all(10),child:
                         GridView.count(
                           shrinkWrap: true,
@@ -383,7 +384,7 @@ formatDate(validationService
           },child: Image.asset("assests/Iconfeather-smile.png", width: 20,)),
 
 
-          Expanded(child: TextFieldGlobal(controller: controller,
+          Expanded(child: TextFieldGlobal(keyboardType: TextInputType.text,controller: controller,
             label: darkCyan,
             hint: '',
             widthBorder: 0.0,)),

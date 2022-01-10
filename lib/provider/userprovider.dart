@@ -11,6 +11,8 @@ import 'package:translationchat/models/usermodel.dart';
 
 class UserProvider extends ChangeNotifier {
   late ProviderGeneralState<UserModel> listUserProfileGeneralState;
+  late ProviderGeneralState<String> listUserProfileInformationState;
+
   UserData userData=UserData();
   String? mobileNumber;
   var countryCode="20";
@@ -24,6 +26,7 @@ class UserProvider extends ChangeNotifier {
       return 1;
     }
   }
+
 
 
   checkCode(smsCode) async {
@@ -52,6 +55,21 @@ rethrow;
 
   }
 
+updateNumber(){
+  try {
+    return userData.updateNumber(mobileNumber);
+  } catch (ex) {
+    rethrow;
+  }
+}
+  disableAccount(){
+    try {
+      return userData.disableAccount();
+    } catch (ex) {
+      rethrow;
+    }
+  }
+
 
 
   sendMobileNumber({required String mobileNumber}) {
@@ -63,6 +81,19 @@ rethrow;
         return 1;
       }
     } catch (ex) {
+      rethrow;
+    }
+  }
+
+  getInformation(key) async {
+    try {
+      String x;
+      setWaiting(1);
+      x= await userData.getInformation(key);
+      listUserProfileInformationState =
+          ProviderGeneralState(data: x, hasData: true);
+      notifyListeners();
+    }catch(ex){
       rethrow;
     }
   }
@@ -201,6 +232,9 @@ userData.uploadImage(mainImage);
     switch (index) {
       case 0:
         listUserProfileGeneralState = ProviderGeneralState(waiting: true);
+        break;
+      case 1:
+        listUserProfileInformationState = ProviderGeneralState(waiting: true);
         break;
     }
   }

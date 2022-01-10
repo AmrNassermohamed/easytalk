@@ -5,6 +5,7 @@ import 'package:translationchat/models/roommodel.dart';
 import 'package:translationchat/provider/chatprovider.dart';
 import 'package:translationchat/provider/userprovider.dart';
 import 'package:translationchat/shared/components/displaysnackbar.dart';
+import 'package:translationchat/shared/components/progress.dart';
 
 import 'package:translationchat/shared/widgets/circleavatatimage.dart';
 import 'package:translationchat/shared/text_global.dart';
@@ -32,21 +33,37 @@ bottomSheetGlobal({required BuildContext context,user1,chatId}) {
 
 
 
-  child:ListView.builder(
-      itemCount: validationService.langList.length,
+  child:
+  Consumer<ChatProvider>(
+    builder: (context, provider, child){
+  if(provider.listLangGeneralState.hasData==true) {
+    return ListView.builder(
+      itemCount: provider.listLangGeneralState.data!.length,
       itemBuilder: (context, index) {
-   return FlatButton(onPressed: () async {
-    validationService.chosenLangIndex=validationService.langList[index];
-    await  validationService.updateLang(langModel:validationService.chosenLangIndex,user:user1,chatId: chatId );
-    // validationService.notifyListeners();
+        return FlatButton(onPressed: () async {
+          validationService.chosenLangIndex =
+          provider.listLangGeneralState.data![index];
+          await validationService.updateLang(
+              langModel: validationService.chosenLangIndex,
+              user: user1,
+              chatId: chatId);
+          // validationService.notifyListeners();
 //displaySnackBar(context, validationService.chosenLang);
-         Navigator.of(context).pop();
-   },child: Padding(padding: EdgeInsets.only(top: 20,bottom: 10),child: buttonGlobal(context: context,text: validationService.langList[index].lang)));
-   },))
+          Navigator.of(context).pop();
+        },
+            child: Padding(padding: EdgeInsets.only(top: 20, bottom: 10),
+                child: buttonGlobal(context: context,
+                    text: provider.listLangGeneralState.data![index].lang)));
+      },);
+  }else{
+    return progress();
+        }
+  }
+ )
 
 
 
-  );});
+  ));});
 }
 bottomSheetGlobadl({required BuildContext context,required Widget body,required height}) {
   showModalBottomSheet(
@@ -96,17 +113,27 @@ buttonAddImage(BuildContext context,icon,text){
 
 
 
-Widget addCamera( {required BuildContext context,required bool mainImage}){
+Widget addCamera( {required BuildContext context,required bool mainImage,required sortUploadImage}){
 
   final validationService = Provider.of<UserProvider>(
+      context, listen: false);
+  final validationService2 = Provider.of<ChatProvider>(
       context, listen: false);
   return Column(
       children: [
         GestureDetector( onTap: (){
-          validationService.uploadImage(true);
+          if(sortUploadImage==true) {
+            validationService.uploadImage(true);
+          }else{
+           validationService2.uploadImage(true);
+          }
         },child:  buttonAddImage(context,Icons.camera,"اضافه عبر الكاميرا"), ),
         GestureDetector(onTap: (){
-          validationService.uploadImage(false);
+          if(sortUploadImage==true) {
+            validationService.uploadImage(false);
+          }else{
+            validationService2.uploadImage(false);
+          }
         },child:buttonAddImage(context,Icons.filter,"اضافه من الاستديو")),
       ]);
 }

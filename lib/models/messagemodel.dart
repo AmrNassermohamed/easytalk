@@ -1,5 +1,5 @@
 class Message implements Comparable<Message>{
-String? message;
+String? message="";
 DateTime creationDt;
 String? type;
 int ? from;

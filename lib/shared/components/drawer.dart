@@ -123,7 +123,7 @@ Widget createImageItem(
     title: Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-       circleAvatarImage(null,false),
+       circleAvatarImage(validationService2.listUserProfileGeneralState.data!.imagePath,false),
         Padding(
           padding:const EdgeInsets.only(left: 35.0),
           child: textGlobalWhiteBold14(context: context,text: validationService2.listUserProfileGeneralState.data!.name),

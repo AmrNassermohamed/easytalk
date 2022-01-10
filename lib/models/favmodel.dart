@@ -21,7 +21,7 @@ return FavModel(
       fireBaseChatId: json["firebase_chat_id"],
       email: json["favorite"]["email"],
       favoriteId: ["id"], chatId: json["firebase_chat_id"], imageUrl:
-      "",//json["favorite"]["image_url"],
+      json["favorite"]["image_url"],
       lastMessageTime: '', name: json["favorite"]["name"], lastMessage: '', mobileNumber: '',
 
     ) );

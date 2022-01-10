@@ -39,7 +39,10 @@ class FavMessageWidget extends StatelessWidget {
                   child: Column(
                     children: [
                       circleAvatarImage(
-                          null, false),
+                          provider
+                              .listFavGeneralState
+                              .data![index].roomModel
+                              .imageUrl, false),
                       textGlobalNormalWhite14(
                           context: context,
                           text: provider

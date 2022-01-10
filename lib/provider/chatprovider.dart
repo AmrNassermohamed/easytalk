@@ -21,14 +21,16 @@ class ChatProvider extends ChangeNotifier{
   bool isKeyboardVisible = false;
   List <Message>   messageList = [];
   bool settingLang=true;
-  List <LangModel> langList=[LangModel(lang: "française", code: "fr"),LangModel(lang: "English",code: "en"),LangModel(lang: "العربيه", code: "ar"),LangModel(lang: "Idioma italiano",code: "it")];
+  //List <LangModel> langList=[LangModel(lang: "française", code: "fr"),LangModel(lang: "English",code: "en"),LangModel(lang: "العربيه", code: "ar"),LangModel(lang: "Idioma italiano",code: "it")];
   LangModel chosenLangIndex=LangModel(lang: "العربيه", code: "ar");
   late LangModel user=chosenLangIndex;
   late LangModel anotherUser=chosenLangIndex;
   bool switchRoom=false;
+  late Message message;
   
   late ProviderGeneralState<List <ContactModel>> listContactsGeneralState=ProviderGeneralState(waiting: true);
   late ProviderGeneralState<List <RoomModel>> listRoomsGeneralState;
+  late ProviderGeneralState<List <LangModel>> listLangGeneralState;
   late ProviderGeneralState<List <FavModel>> listFavGeneralState=ProviderGeneralState(waiting: true);
   late ProviderGeneralState<List <RoomModel>> listActiveState;
   listen(){
@@ -45,6 +47,21 @@ class ChatProvider extends ChangeNotifier{
       notifyListeners();
     }
 
+  }
+
+  File? mainImage;
+  Future  uploadImage(bool cameraORGallery) async {
+    final picker = ImagePicker();
+    ImagePicker _picker = ImagePicker();
+    final PickedFile? file = await _picker.getImage(
+        source: cameraORGallery == true ? ImageSource.camera : ImageSource.gallery,
+        imageQuality: 50);
+    File tmpFile = File(file!.path);
+    print(tmpFile.path);
+    mainImage = tmpFile;
+ var response  =await  chatData.uploadImage(mainImage);
+addMessage(translate: response, addOrUpdate:true, text: response, type: 1, from:int.parse( message.from.toString()), to:int.parse( message.to.toString()), documentId: message.documentId, docField: "");
+   // notifyListeners();
   }
 
   emojShowingBoolean(){
@@ -78,6 +95,21 @@ print(translate);
       rethrow;
     }
   }
+
+  getLangauge() async {
+
+      try {
+        List <LangModel> getLang = [];
+        setWaiting(4);
+        getLang = await chatData.getLangauge();
+        listLangGeneralState =
+            ProviderGeneralState(data: getLang, hasData: true);
+        notifyListeners();
+      }catch(ex){
+        rethrow;
+      }
+    }
+
 
 
 
@@ -251,7 +283,9 @@ getChats() async {
       case 3:
         listActiveState = ProviderGeneralState(waiting: true);
         break;
-
+      case 4:
+        listLangGeneralState = ProviderGeneralState(waiting: true);
+        break;
 
     }
   }

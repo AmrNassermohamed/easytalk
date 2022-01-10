@@ -61,7 +61,7 @@ class LoginState extends State<Login> {
                            var response   = validationService.sendMobileNumber
                              (mobileNumber: controller.text);
                            if(response==0) {
-                             AppNavigator.navigateTo(context, const CodeNumber());
+                             AppNavigator.navigateTo(context,  CodeNumber(route: 0,));
                            }else{
                              displaySnackBar(context, "يرجي مراجعه رقم التليقون");
                            }

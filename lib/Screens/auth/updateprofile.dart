@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:translationchat/constants/colors.dart';
 import 'package:translationchat/constants/images.dart';
 import 'package:translationchat/provider/userprovider.dart';
+import 'package:translationchat/shared/components/back.dart';
 import 'package:translationchat/shared/components/bottomsheetglobal.dart';
 import 'package:translationchat/shared/components/buttonglobal.dart';
 import 'package:translationchat/shared/components/displaysnackbar.dart';
@@ -51,10 +52,17 @@ if(response==200||response==201){
     if (provider.listUserProfileGeneralState.hasData) {
                      return Column(children: [
 
-
+                       Padding(
+                         padding: EdgeInsets.all(20),
+                         child: Row(mainAxisAlignment: MainAxisAlignment.start,children: [
+                           Back()
+                         ],),
+                       ),
                         sizedBoxGlobalHeight20(),
 
-                        circleAvatarImage(provider.listUserProfileGeneralState.data!.imagePath,true),
+                        GestureDetector(onTap: (){
+                          bottomSheetGlobadl(context: context, body: addCamera(context: context, mainImage: true,sortUploadImage: true), height:200.0);
+                        },child: circleAvatarImage(provider.listUserProfileGeneralState.data!.imagePath,true)),
                        const SizedBox(height: 20,),
                        field("الاسم", provider.listUserProfileGeneralState.data!.name, true),
                       const SizedBox(height: 10,),
@@ -99,7 +107,7 @@ if(response==200||response==201){
     return Column(children: [
 
       textGlobalBlackBold16(context: context,text: key),
-      Padding(padding: EdgeInsets.all(10),child: TextFieldGlobal(controller:nameController ,hint:name,label: darkCyan,widthBorder: 2.0,)),
+      Padding(padding: EdgeInsets.all(10),child: TextFieldGlobal(keyboardType: TextInputType.text,controller:nameController ,hint:name,label: darkCyan,widthBorder: 2.0,)),
                                                 //  Expanded(child: Container()),
                             sizedBoxGlobalHeight40(),
                             GestureDetector(onTap: () async {

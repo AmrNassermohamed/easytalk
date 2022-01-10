@@ -16,7 +16,7 @@ Widget circleAvatarImage(imageUrl,bool? big){
       radius:big==false? 25.0:50.0,
       child: CircleAvatar(
 
-          backgroundImage: NetworkImage("https://56a5-156-213-149-48.ngrok.io/storage/profile_images/0A9ukszakiixHnFr0cFUGyUIjIUXbPbNFV9HI64n.jpg"),
+          backgroundImage: NetworkImage(imageUrl),
         radius: big==false? 23.0:45.0,
       ),
     );

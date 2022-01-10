@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart' show   BuildContext, Center, Column, Con
 import 'package:flutter/material.dart';
 import 'package:translationchat/constants/colors.dart';
 import 'package:translationchat/constants/images.dart';
+import 'package:translationchat/shared/components/back.dart';
 
 import 'package:translationchat/shared/components/sizedboxglobal.dart';
 import 'package:translationchat/shared/text_global.dart';
@@ -27,10 +28,16 @@ class AboutUsState extends State<AboutUs> {
         backgroundColor: white,
           body:SingleChildScrollView(
               padding: const EdgeInsets.all(10),
-              child:   SizedBox(
-                height: MediaQuery.of(context).size.height,
+
                 child: Center(
                     child: Column(children: [
+                      Padding(
+                        padding: EdgeInsets.all(20),
+                        child: Row(mainAxisAlignment: MainAxisAlignment.start,children: [
+                          Back()
+                        ],),
+                      ),
+
                       Container(
                         padding:const EdgeInsets.all(20),
                         width: MediaQuery.of(context).size.width,
@@ -66,8 +73,8 @@ Padding(padding: const EdgeInsets.only(left: 10,right: 10),child: Divider(color:
                       //GlobalTextField(controller: controller, hint: hint)
 
                     ],)),
-              ))),
-    );
+              )));
+
 
   }
 

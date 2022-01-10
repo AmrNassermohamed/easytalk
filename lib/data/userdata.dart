@@ -34,16 +34,28 @@ userIsOLine();
       'Authorization': 'Bearer ${token.toString()}'
     };
     var response= await ServicesHandler().getService(urlSuffix:"online", ex: true,headers: headers);
-return response;
+print(response);
+    return response;
   }
+
+  getInformation(key) async {
+    String token=await SharedPreferenceHandler.getToken();
+    var headers = {
+      'Accept':"application/json",
+      'Authorization': 'Bearer ${token.toString()}'
+    };
+    var response= await ServicesHandler().getService(urlSuffix:"information", ex: true,headers: headers);
+    return response["information"]["${key.toString()}"];
+  }
+
   userIsOffline() async {
     String token=await SharedPreferenceHandler.getToken();
     var headers = {
       'Accept':"application/json",
       'Authorization': 'Bearer ${token.toString()}'
     };
-    var response= await ServicesHandler().getService(urlSuffix:"offline", ex: true,);
-    return response;
+     await ServicesHandler().getService(urlSuffix:"offline", ex: true,headers: headers);
+
   }
 
 
@@ -55,6 +67,22 @@ try{
   rethrow;
 }
 
+}
+
+updateNumber(mobileNumber) async {
+  try{
+    String token=await SharedPreferenceHandler.getToken();
+    var headers = {
+      'Accept':"application/json",
+      'Authorization': 'Bearer ${token.toString()}'
+    };
+    var response = await service.
+  postService(urlSuffix: "update-number?mobile_number=${mobileNumber.toString()}",headers: headers,
+      returnBody: false).then((value) => value);
+  return response;
+}catch(ex){
+  rethrow;
+  }
 }
 
 checkCode({smsCode}) async{
@@ -82,9 +110,26 @@ checkCode({smsCode}) async{
    }
 
  }
+
+  disableAccount() async {
+    try {
+      String token=await SharedPreferenceHandler.getToken();
+      var headers = {
+        'Accept':"application/json",
+        'Authorization': 'Bearer ${token.toString()}'
+      };
+      var response = await service.
+      postService(urlSuffix: "disable-user",
+          returnBody: false,headers: headers).then((value) => value);
+      return response;
+    }catch(ex){
+      rethrow;
+    }
+
+  }
   uploadImage(imageUrl) async {
     try {
-      var response = await service.uploadImage(imageUrl);
+      var response = await service.uploadImage(imageUrl,"update-profile?");
       return response;
     }catch(ex){
       rethrow;

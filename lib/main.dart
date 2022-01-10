@@ -8,6 +8,7 @@ import 'package:translationchat/provider/chatprovider.dart';
 import 'package:translationchat/provider/userprovider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'Screens/auth/login.dart';
+import 'Screens/settings/settings.dart';
 import 'Screens/splashScreen/splash.dart';
 
 

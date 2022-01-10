@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart' show   BuildContext, Center, Column, Con
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:translationchat/Screens/auth/sucesscode.dart';
+import 'package:translationchat/Screens/room/roomscreen.dart';
 import 'package:translationchat/provider/userprovider.dart';
 import 'package:translationchat/shared/components/buttonglobal.dart';
 import 'package:translationchat/shared/components/displaysnackbar.dart';
@@ -12,7 +13,8 @@ import 'package:translationchat/shared/text_global.dart';
 import 'components/pincodenumber.dart';
 
 class CodeNumber extends StatefulWidget {
-  const CodeNumber({Key? key}) : super(key: key);
+ late int route;
+   CodeNumber({Key? key,required this.route}) : super(key: key);
 
 
   @override
@@ -59,9 +61,19 @@ validationService.sendMobileNumber(mobileNumber: validationService.mobileNumber.
 
                     var value  =await validationService.checkCode(controller.text);
                     if(value==true) {
-                      AppNavigator.navigateTo(
-                          context, SucCode(mobileNumber: "",));
-                    }else{
+                      if(widget.route==0) {
+                        AppNavigator.navigateTo(
+                            context, SucCode(mobileNumber: "",));
+                      }else{
+                        var respone=await validationService.updateNumber();
+                        if(respone==200) {
+                          AppNavigator.navigateTo(
+                              context, const RoomScreen());
+                        }else{
+                          displaySnackBar(context,"يرجي محاوله مره اخري");
+                        }
+                      }
+                      }else{
                     displaySnackBar(context, "يرجي مراجعه الكود");
                     }
                     },child: buttonGlobalText(context: context,text: "ارسل"))

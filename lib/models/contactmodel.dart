@@ -5,20 +5,20 @@ class ContactModel {
   late String mobileNumber;
  // late String imagePath;
   late int id;
-  late bool isBanned;
-  late bool isActive;
+ // late int isBanned;
+  late int isActive;
 
   ContactModel({required this.name,required this.email,required
   this.mobileNumber,required this.id,
    // required this.imagePath
-    required this.isActive,required this.isBanned});
+    required this.isActive});
 
   factory ContactModel.fromJson(Map<String, dynamic> json){
 
     return ContactModel(name: json["name"], email: json["email"],
         id: json["id"],
         mobileNumber: json["mobile_number"],
-        isBanned: json["is_banned"],
+        //isBanned: json["is_banned"],
        // imagePath: json["image_path"],
         isActive: json["is_active"]);
 

@@ -10,8 +10,10 @@ import 'package:provider/provider.dart';
 import 'package:translationchat/Screens/room/roomscreen.dart';
 import 'package:translationchat/constants/colors.dart';
 import 'package:translationchat/constants/strring.dart';
+import 'package:translationchat/models/messagemodel.dart';
 import 'package:translationchat/models/roommodel.dart';
 import 'package:translationchat/provider/chatprovider.dart';
+import 'package:translationchat/provider/userprovider.dart';
 import 'package:translationchat/shared/components/bottomsheetglobal.dart';
 import 'package:translationchat/shared/components/progress.dart';
 import 'package:translationchat/shared/components/sizedboxglobal.dart';
@@ -21,17 +23,22 @@ import 'package:translationchat/shared/components/textfieldglobal.dart';
 import 'package:translationchat/shared/text_global.dart';
 import 'package:translationchat/shared/widgets/circleavatatimage.dart';
 
+import 'components/message.dart';
+
 final TextEditingController controller = TextEditingController();
-
-class ChatScreen extends StatelessWidget {
-  // const _SignUpState({Key? key}) : super(key: key);const MyHomePage({Key? key, required this.title}) : super(key: key);
-
+class ChatScreen extends StatefulWidget {
   RoomModel? roomModel;
   int user1;
   bool roomBool;
 
-  ChatScreen(
-      {Key? key, this.roomModel, required this.user1, required this.roomBool});
+  ChatScreen({Key? key,this.roomModel,required this.user1,required this.roomBool}) : super(key: key);
+  @override
+  ChatScreenState createState() => ChatScreenState ();
+}
+
+class ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver{
+  // const _SignUpState({Key? key}) : super(key: key);const MyHomePage({Key? key, required this.title}) : super(key: key);
+
 
   ScrollController ? _controller;
   String? x;
@@ -40,6 +47,39 @@ class ChatScreen extends StatelessWidget {
   //bool emojiShowing = false;
 //  bool isKeyboardVisible = false;
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    print("dispose");
+    WidgetsBinding.instance!.removeObserver(this);
+    super.dispose();
+  }
+
+
+
+  void didChangeAppLifecycleState(AppLifecycleState state)   async {
+    final validationService2 = Provider.of<UserProvider>(context,listen: false);
+
+    switch (state) {
+      case AppLifecycleState.resumed:
+        print("oline");
+        await validationService2.userIsOLine();
+        break;
+      case AppLifecycleState.inactive:
+        print("offline");
+        await      validationService2.userIsOLine();
+        break;
+      case AppLifecycleState.paused:
+        print("online");
+        await     validationService2.userIsOffLine();
+        break;
+      case AppLifecycleState.detached:
+        print("dectected");
+        await   validationService2.userIsOffLine();
+        break;
+
+    }
+  }
 
   on(BuildContext context) {
     final validationService = Provider.of<ChatProvider>(context, listen: false);
@@ -51,6 +91,21 @@ class ChatScreen extends StatelessWidget {
 
 
   }
+  @override
+  void initState() {
+    WidgetsBinding.instance!.addObserver(this);
+    // TODO: implement initState
+   // WidgetsBinding.instance!.addObserver(this);
+    super.initState();
+    init();
+  }
+  init() async {
+    final validationService = Provider.of<ChatProvider>(context, listen: false);
+ await  validationService.getLangauge();
+
+  }
+
+
   Future toggleEmojiKeyboard(BuildContext context) async {
     final validationService = Provider.of<ChatProvider>(context, listen: false);
     if (validationService.isKeyboardVisible) {
@@ -60,11 +115,13 @@ class ChatScreen extends StatelessWidget {
     validationService.emojShowingBoolean();
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     final validationService = Provider.of<ChatProvider>(context, listen: false);
 
-
+    final validationService2 = Provider.of<UserProvider>(context, listen: false);
     return WillPopScope(
       onWillPop: () async {
         if (validationService.emojiShowing == false) {
@@ -101,8 +158,10 @@ class ChatScreen extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          GestureDetector(onTap: () {
-                            Navigator.of(context).pop();
+                          GestureDetector(onTap: () async {
+                            var data = await
+                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => RoomScreen(),), (route) => false);
+                            return data;
                           }, child: const Icon(Icons.arrow_back_ios,
                             color: Colors.white,)),
                             Consumer<ChatProvider>(
@@ -119,20 +178,6 @@ class ChatScreen extends StatelessWidget {
                           );}),
 
 
-                          /*GestureDetector(onTap:(){
-                   setState(() {
-
-                     if(validationService.settingLang==true){
-                       validationService.settingLang=false;
-                     }else{
-                       validationService.settingLang=true;
-                     }
-                   });
-                 } ,
-                     child:
-                     validationService.settingLang==true?
-                     Image.asset("assests/Group 1344.png"):
-                     Image.asset("assests/Group 1345.png"))*/
                         ],),
                     ),
                     sizedBoxGlobalHeight10(),
@@ -147,7 +192,7 @@ class ChatScreen extends StatelessWidget {
                       child: Column(children: [
                         sizedBoxGlobalHeight20(),
                         textGlobalDarkCyanBold13(context: context,
-                            text: roomModel!.name),
+                            text:widget.roomModel!.name),
                         // textGlobalDarkCyanBold13(context: context,text: "كان نشطامنذ خمس دقائق"),
     Consumer<ChatProvider>(
     builder: (context, provider, child)
@@ -156,8 +201,8 @@ class ChatScreen extends StatelessWidget {
     return GestureDetector(
     onTap: () {
     bottomSheetGlobal(context: context,
-    user1: user1,
-    chatId: roomModel!.fireBaseChatId);
+    user1:widget. user1,
+    chatId:widget. roomModel!.fireBaseChatId);
     }
     , child: Directionality(
     textDirection: TextDirection.rtl,
@@ -178,17 +223,19 @@ class ChatScreen extends StatelessWidget {
 
     StreamBuilder<DocumentSnapshot>(
     stream: validationService.getLang(
-    roomModel!.fireBaseChatId),
+ widget.   roomModel!.fireBaseChatId),
     builder: (BuildContext context,
     AsyncSnapshot<
     DocumentSnapshot> snapshot) {
-    validationService.getLangList(snapshot, user1);
-    return textGlobalWhiteNormal16(
+    validationService.getLangList(snapshot,widget. user1);
+    return Expanded(child:  textGlobalWhiteNormal16(
     context: context,
     text: validationService.user.lang
-        .toString());
+        .toString()));
     }),
 
+
+    
     /*Consumer<ChatProvider>(
     builder: (context, provider, child) {
 
@@ -215,7 +262,7 @@ class ChatScreen extends StatelessWidget {
 
                         StreamBuilder<DocumentSnapshot>(
                             stream: validationService.getMessage(
-                                roomModel!.fireBaseChatId),
+                               widget.roomModel!.fireBaseChatId),
                             builder: (BuildContext context,
                                 AsyncSnapshot<DocumentSnapshot> snapshot) {
                               if (!snapshot.hasData) {
@@ -247,19 +294,22 @@ class ChatScreen extends StatelessWidget {
                                           child: Directionality(
                                             textDirection: validationService
                                                 .messageList[index].from
-                                                == user1
+                                                == widget.user1
                                                 ? TextDirection.rtl
                                                 : TextDirection
                                                 .ltr,
                                             child: Row(children: [
-                                              circleAvatarImage(null, false),
+                                              validationService
+                                                  .messageList[index].from
+                                                  == widget.user1?    circleAvatarImage(validationService2.listUserProfileGeneralState.data!.imagePath, false):circleAvatarImage(widget.roomModel!.imageUrl, false),
                                               sizedBoxGlobalWidth10(),
+
                                               Expanded(
                                                   child:
                                                   Column(children: [
 
                                                     Row(children: [
-                                                      Expanded(child: Message(index: index,checkMessage: true,user1: user1,))
+                                                      Expanded(child: MessageComponents(index: index,checkMessage: true,user1: widget.user1,))
                                                     ],),
                                                     /*                                  validationService.settingLang==true?GestureDetector(onTap: () async {
 
@@ -327,18 +377,11 @@ class ChatScreen extends StatelessWidget {
                               }
                             }),
 
-                        ActionButton(roomBool: roomBool,
-                          roomModel: roomModel,
-                          user1: user1,),
-                        /*  Consumer<ChatProvider>(
-                            builder: (context, provider, child) {
-                              if (provider.isKeyboardVisible == true) {
-                                return const Expanded(
-                                    child: SizedBox(height: 1000,));
-                              } else {
-                                return const SizedBox(height: 10,);
-                              }
-                            }),*/
+
+
+                        ActionButton(roomBool:widget. roomBool,
+                          roomModel: widget.roomModel,
+                          user1:widget.user1,),
                         EmojyPicker(),
 
 
@@ -353,68 +396,11 @@ class ChatScreen extends StatelessWidget {
 
 
 
-  messagfe(index, bool checkMessage, BuildContext context) {
 
-
-  }
 }
 
 
-class Message extends StatelessWidget {
 
-  int index;
-  bool checkMessage;
-  int user1;
-  Message({ required this.index, required this.checkMessage,required this.user1});
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    final validationService = Provider.of<ChatProvider>(context, listen: false);
-
-    return Container(
-    decoration: BoxDecoration(
-    color: validationService
-        .messageList[index].from
-    ==
-    user1
-    ? Colors.white
-        : lightCyan,
-    borderRadius: const BorderRadius
-        .only(
-    bottomLeft: Radius
-        .circular(15),
-    topRight: Radius
-        .circular(15)),
-    ),
-    child:
-
-
-    Padding(
-    padding: const EdgeInsets
-        .all(10.0),
-    child: validationService.
-    messageList[index].from
-    ==
-    user1
-
-    ?
-    textGlobalDarkCyanBold13(
-  context: context,
-
-
-  text: checkMessage == true ? validationService
-      .messageList[index]
-      .message : validationService.messageList[index]
-      .translateMessage)
-      : textGlobalWhiteBold14(
-  context: context,
-  text: checkMessage == true ? validationService
-      .messageList[index]
-      .translateMessage : validationService.messageList[index]
-      .translateMessage)));
-  }
-  }
 
 
 
@@ -513,12 +499,18 @@ class ActionButton extends StatelessWidget {
                 }, icon: Image.asset("assests/Iconfeather-smile.png", width: 20,)),
 
 
-                Expanded(child: TextFieldGlobal(controller: controller,
+                Expanded(child: TextFieldGlobal(keyboardType: TextInputType.text,controller: controller,
                   label: darkCyan,
                   hint: '',
                   widthBorder: 0.0,)),
                 sizedBoxGlobalWidth10(),
-                const Icon(Icons.image, color: Colors.white,),
+                InkWell(onTap: (){
+                  validationService.message= Message(type: 1.toString(), message: '',
+                    from: user1,
+                    to: int.parse(roomModel!.user2Id),
+                    documentId:roomModel!.fireBaseChatId, creationDt: DateTime.now(), translateMessage: '');
+                  bottomSheetGlobadl(context: context, body: addCamera(context: context, mainImage: true,sortUploadImage: false), height:200.0);
+                },child:Icon(Icons.image, color: Colors.white,)),
                 sizedBoxGlobalWidth10(),
                 IconButton(onPressed: () async {
                   appl.message = controller.text;
@@ -545,7 +537,7 @@ class ActionButton extends StatelessWidget {
                         documentId:roomModel!.fireBaseChatId,
                         docField: "ff");
                     validationService.updateLastMessage
-                      (appl.message, appl.chatId.toString());
+                      (appl.message, roomModel!.fireBaseChatId.toString());
                   } else {
                     final response = await validationService.addChat(
                         user1, roomModel!.user2Id,
@@ -566,7 +558,7 @@ class ActionButton extends StatelessWidget {
                 });
 */
                     appl.chatId = response;
-                    validationService.updateLastMessage(appl.message, response);
+                    validationService.updateLastMessage(appl.message, roomModel!.fireBaseChatId);
                   }
                 },
                     icon: Image.asset(

@@ -42,7 +42,7 @@ class ContactScreenState extends State<ContactScreen> {
         context, listen: false);
     final validationService2 = Provider.of<UserProvider>(
         context, listen: false);
-    validationService2.getUserProfile();
+    //validationService2.getUserProfile();
 var c=await validationService.getContact();
    await validationService.getListContacts(c);
 
@@ -88,10 +88,10 @@ var c=await validationService.getContact();
 if(int.parse(validationService2.listUserProfileGeneralState
     .data!.id)>provider.listContactsGeneralState.data![index]!.id){
  firebaseChatId= validationService2.listUserProfileGeneralState
-      .data!.id + "ccc" +
+      .data!.id + "_" +
       provider.listContactsGeneralState.data![index]!.id.toString();
 }else{
-    firebaseChatId=provider.listContactsGeneralState.data![index]!.id.toString()  + "ccc"
+    firebaseChatId=provider.listContactsGeneralState.data![index]!.id.toString()  + "_"
     +validationService2.listUserProfileGeneralState
         .data!.id;
     }
@@ -149,7 +149,7 @@ if(int.parse(validationService2.listUserProfileGeneralState
     }
     ),);
     }else{
-      return progress();
+      return Center(child: progress());
     }
     }
                         ),

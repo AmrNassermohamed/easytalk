@@ -79,7 +79,7 @@ class LastMessageComponents extends StatelessWidget {
                 Row(children: [   GestureDetector(onTap: (){
                   bottomSheetProfile( context: context,roomModel:  roomModel);
 
-                },child: circleAvatarImage(null,false)),
+                },child: circleAvatarImage(roomModel.imageUrl,false)),
                   sizedBoxGlobalWidth10(),
                   Column(children: [
                     textGlobalLightCyanNormal12(context: context,text: roomModel.name),

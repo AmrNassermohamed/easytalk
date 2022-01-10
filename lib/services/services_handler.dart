@@ -10,7 +10,7 @@ import 'package:translationchat/utils/sharedprefence.dart';
 
 
 class ServicesHandler {
-  String baseUrl="https://sheltered-savannah-98002.herokuapp.com/api/v1/";
+  String baseUrl="https://easytalk.discussion-app.com/api/v1/";
   Future<dynamic> getService(
       {String? urlSuffix,
         Map<String, String>? headers,
@@ -64,7 +64,7 @@ class ServicesHandler {
       throw Exception(["Please check your internet connection"]);
     } catch (error) {
       print(error.toString() + 'llllllllllllllllllllllllllll');
-      throw Exception(["oops! Something wrong happened!"]);
+      throw Exception(error);
     }
   }
 
@@ -176,21 +176,21 @@ class ServicesHandler {
     }
   }
 
-uploadImage(File imageUrl) async {
+uploadImage(File imageUrl,url) async {
 
   String token=await SharedPreferenceHandler.getToken();
   var headers = {
     'Accept':"application/json",
     'Authorization': 'Bearer ${token.toString()}'
   };
-  var request = http.MultipartRequest('POST', Uri.parse('https://sheltered-savannah-98002.herokuapp.com/api/v1/update-profile'));
+  var request = http.MultipartRequest('POST', Uri.parse('https://easytalk.discussion-app.com/api/v1/${url.toString()}'));
   request.files.add(await http.MultipartFile.fromPath('image_path', imageUrl.path));
   request.headers.addAll(headers);
 
   http.StreamedResponse response = await request.send();
-
-  if (response.statusCode == 200) {
-  print(await response.stream.bytesToString());
+  var responsee = await http.Response.fromStream(response);
+  if (responsee.statusCode == 200) {
+    return json.decode(responsee.body);
   }
   else {
   print(response.reasonPhrase);

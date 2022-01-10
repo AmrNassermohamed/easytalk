@@ -5,9 +5,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:translationchat/constants/colors.dart';
 
 Widget textGlobal({text,required BuildContext context,double? fontSize,required Color color,required bool bold ,lines }){
-  return  AutoSizeText(text
-    , style: GoogleFonts.cairo(
+  return  AutoSizeText(text,
+    textAlign: TextAlign.center,
+     style: GoogleFonts.cairo(
       color: color,
+
       fontWeight: bold==true? FontWeight.bold:FontWeight.normal,
       fontSize: fontSize,
 
@@ -115,10 +117,10 @@ textGlobalBlackBold10({required BuildContext context,text}){
   return textGlobal(text:text ,context: context,fontSize: 10.0,color:blueDark,bold: true);
 }
 textGlobalBlackNormal16({required BuildContext context,text}){
-  return textGlobal(text:text ,context: context,fontSize: 16.0,color:blueDark,bold: false);
+  return textGlobal(text:text ,context: context,fontSize: 16.0,color:blueDark,bold: false,lines: 40);
 }
 textGlobalBlackNormal13({required BuildContext context,text}){
-  return textGlobal(text:text ,context: context,fontSize: 13.0,color:blueDark,bold: false);
+  return textGlobal(text:text ,context: context,fontSize: 13.0,color:blueDark,bold: false,lines: 10);
 }
 textGlobalWhiteNormal16({required BuildContext context,text}){
   return textGlobal(text:text ,context: context,fontSize: 16.0,color:white2,bold: false);

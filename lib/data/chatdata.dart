@@ -102,8 +102,8 @@ updateLastMessage(String lastMessage,chatId) async {
   var headers = {
     'Authorization': 'Bearer ${token.toString()}'
   };
-  var response= await service.putService
-  (headers: headers,urlSuffix: "chats/${chatId.toString()}?last_message_received=${lastMessage.toString()}").then((value) => value);
+  var response= await service.postService(
+  headers: headers,urlSuffix: "update-last-message?firebase_chat_id=${chatId.toString()}&last_message_received=${lastMessage.toString()}").then((value) => value);
   return response;
 
 }
@@ -116,6 +116,18 @@ addChat({user1,user2,chatId}) async {
     (returnBody: true,headers: headers,urlSuffix: "chats?user1=${user1.toString()}&user2=${user2.toString()}&firebase_chat_id=${chatId.toString()}").then((value) => value);
   return response["chat"]["firebase_chat_id"];
 }
+
+uploadImage(imageUrl) async {
+  try {
+    var response = await service.uploadImage(imageUrl,"upload-image");
+   print(response);
+    return response["image_url"];
+  }catch(ex){
+    rethrow;
+  }
+}
+
+
 
 getContacts(contacts) async {
 
@@ -151,6 +163,23 @@ getChats() async {
   });
     return listRoom;
   }
+
+
+getLangauge() async {
+  String token=await SharedPreferenceHandler.getToken();
+  var headers = {
+    'Authorization': 'Bearer ${token.toString()}'
+  };
+  List <LangModel> listFav=[];
+
+  var response= await ServicesHandler().
+  getService(urlSuffix:"languages",
+       ex: true,headers: headers);
+
+  print(response);
+  response["languages"].forEach((k, v) => listFav.add(LangModel(lang:k, code: v)));
+  return listFav;
+}
 
 getActives() async {
   List <RoomModel> listRoom=[];

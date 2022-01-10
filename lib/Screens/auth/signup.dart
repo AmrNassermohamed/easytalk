@@ -53,8 +53,8 @@ class SignUpState extends State<SignUp> {
  Container(
    padding: const EdgeInsets.only(left: 30,right: 30),
    child: Column(children: [
-     TextFieldGlobal(controller:nameController ,hint: "الاسم باللغه العربيه كاملا",label: darkCyan,widthBorder: 2.0,),
-     TextFieldGlobal(controller:emailController ,hint: "البريد الالكتروني",label: darkCyan,widthBorder: 2.0,),
+     TextFieldGlobal(keyboardType: TextInputType.text,controller:nameController ,hint: "الاسم باللغه العربيه كاملا",label: darkCyan,widthBorder: 2.0,),
+     TextFieldGlobal(keyboardType: TextInputType.text,controller:emailController ,hint: "البريد الالكتروني",label: darkCyan,widthBorder: 2.0,),
      textFieldPhoneNumber(mobileNumberController,context),
     // sizedBoxGlobalHeight10(),
     // emailSend(context,(){}),
@@ -67,7 +67,7 @@ class SignUpState extends State<SignUp> {
 
        validationService.sendMobileNumber(mobileNumber:
        mobileNumberController.text.trim());
-       AppNavigator.navigateOfAll(context,const CodeNumber());
+       AppNavigator.navigateOfAll(context, CodeNumber(route: 0,));
      }else if(response==1){
 displaySnackBar(context, " يرجي مراجعه الايميل ورقم التليفون");
      }

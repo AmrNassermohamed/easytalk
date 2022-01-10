@@ -8,6 +8,7 @@ const String backGround="assests/Group23.png";
 const String iconActive="assests/Group715.png";
 const String setting="assests/Group 877.png";
 const String logo="assests/ic_launcher.png";
+const String logo2="android/app/src/main/res/mipmap-mdpi/ic_launcher.png";
 const String logoCompany="assests/Group 1337.png";
 const String logoFace="assests/Group 1332.png";
 const String logoTwitter="assests/Group 1334.png";
