@@ -59,9 +59,9 @@ class SignUpState extends State<SignUp> {
     // sizedBoxGlobalHeight10(),
     // emailSend(context,(){}),
      sizedBoxGlobalHeight10(),
-     phoneSend(context,(){
+     phoneSend(context,() async {
        validationService.mobileNumber=mobileNumberController.text;
-     var response  =validationService.signUp(name: nameController.text, email: emailController.text, mobileNumber: mobileNumberController.text);
+     var response  =await validationService.signUp(name: nameController.text, email: emailController.text, mobileNumber: mobileNumberController.text);
      if(response==0){
        displaySnackBar(context, "تم التسجيل");
 

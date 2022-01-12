@@ -193,7 +193,8 @@ class ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver{
                         sizedBoxGlobalHeight20(),
                         textGlobalDarkCyanBold13(context: context,
                             text:widget.roomModel!.name),
-                        // textGlobalDarkCyanBold13(context: context,text: "كان نشطامنذ خمس دقائق"),
+                        widget.roomModel!.isActive==0? 
+                        textGlobalDarkCyanBold13(context: context,text: "${widget.roomModel!.updatedAt}كان نشطامنذ "):textGlobalDarkCyanBold13(context: context,text: "نشط الان"),
     Consumer<ChatProvider>(
     builder: (context, provider, child)
     {

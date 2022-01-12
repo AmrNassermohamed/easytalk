@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>779256341790-bac2aaeu57fjmqhdprtmoif0vhkgh55r.apps.googleusercontent.com</string>
+	<string>779256341790-cav2i8b4nm5vjd9bs7b6u0as49eq3stg.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.779256341790-bac2aaeu57fjmqhdprtmoif0vhkgh55r</string>
+	<string>com.googleusercontent.apps.779256341790-cav2i8b4nm5vjd9bs7b6u0as49eq3stg</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>779256341790-2p9kdua03ci76qcvrq4bp8nnmhr3nei5.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.translationchat</string>
+	<string>com.easytalk.easytalk</string>
 	<key>PROJECT_ID</key>
 	<string>easy-talk-329310</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:779256341790:ios:8b1f09590083b9fba9d50f</string>
+	<string>1:779256341790:ios:814fdc8cc44031b4a9d50f</string>
 </dict>
 </plist>

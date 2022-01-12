@@ -129,7 +129,7 @@ checkCode({smsCode}) async{
   }
   uploadImage(imageUrl) async {
     try {
-      var response = await service.uploadImage(imageUrl,"update-profile?");
+      var response = await service.uploadImage(imageUrl,"update-profile?",false);
       return response;
     }catch(ex){
       rethrow;

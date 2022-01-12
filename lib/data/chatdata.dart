@@ -119,7 +119,7 @@ addChat({user1,user2,chatId}) async {
 
 uploadImage(imageUrl) async {
   try {
-    var response = await service.uploadImage(imageUrl,"upload-image");
+    var response = await service.uploadImage(imageUrl,"upload-image",true);
    print(response);
     return response["image_url"];
   }catch(ex){

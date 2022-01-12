@@ -123,14 +123,18 @@ updateNumber(){
 
 
   signUp(
-      {required String name, required String email, required String mobileNumber}) {
+      {required String name, required String email, required String mobileNumber}) async {
     try {
 
 email.trim();
 if(validateEmail(email.replaceAll(" ", ""))&&validateMobile(mobileNumber.replaceAll(" ", ""))) {
-  userData.signUp(
+ var response=await userData.signUp(
       name: name, email: email.replaceAll(' ', ''), mobileNumber: mobileNumber);
-return 0;
+if(response==200||response==201) {
+  return 0;
+}else{
+  return 1;
+}
 }else{
   return 1;
 }
@@ -149,7 +153,10 @@ return 0;
     File tmpFile = File(file!.path);
     print(tmpFile.path);
     mainImage = tmpFile;
-userData.uploadImage(mainImage);
+   var response = await userData.uploadImage(mainImage);
+if(response==200){
+  getUserProfile();
+}
     notifyListeners();
   }
   contactUS(

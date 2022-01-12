@@ -98,7 +98,14 @@ if(int.parse(validationService2.listUserProfileGeneralState
 
 
       AppNavigator.navigateTo(
-          context, ChatScreen(roomBool: false,roomModel: RoomModel(favoriteId: 0,imageUrl: "",email: "",user2Id: provider
+          context, ChatScreen(roomBool: false,roomModel: RoomModel(
+          updatedAt: provider
+              .listContactsGeneralState.data![index].updatedAt,
+isActive: provider
+    .listContactsGeneralState.data![index].isActive,
+
+          favoriteId: 0,imageUrl: provider
+          .listContactsGeneralState.data![index].imageUrl,email: "",user2Id: provider
           .listContactsGeneralState.data![index].id.toString()
           ,
           fireBaseChatId: firebaseChatId,
@@ -120,8 +127,9 @@ if(int.parse(validationService2.listUserProfileGeneralState
      String  firebaseChatId = validationService2.listUserProfileGeneralState.data!.id+"_"+provider.listContactsGeneralState.data![index]!.id.toString();
        AppNavigator.navigateTo(
            context, ChatScreen(roomBool: false,roomModel:
-       RoomModel(favoriteId:0 ,imageUrl: "",email: "",
+       RoomModel(updatedAt: provider.listContactsGeneralState.data![index].updatedAt,isActive:provider.listContactsGeneralState.data![index].isActive ,favoriteId:0 ,imageUrl:provider.listContactsGeneralState.data![index].imageUrl.toString() ,email: "",
            user2Id:provider.listContactsGeneralState.data![index].id.toString()
+
            ,fireBaseChatId:firebaseChatId,
            name: provider.listContactsGeneralState.data![index].name.toString(), lastMessage: '',
            lastMessageTime: '', chatId: '',mobileNumber: ""),user1: validationService2.listUserProfileGeneralState.data!.idModify,));
@@ -129,7 +137,7 @@ if(int.parse(validationService2.listUserProfileGeneralState
     },
     child: Container(
     child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [
-    Row(children: [ circleAvatarImage(null,false),
+    Row(children: [ circleAvatarImage(provider.listContactsGeneralState.data![index].imageUrl,false),
     sizedBoxGlobalWidth10(),
     Column(children: [
     textGlobalLightCyanNormal12(context: context,text: validationService.listContactsGeneralState.data![index].name),

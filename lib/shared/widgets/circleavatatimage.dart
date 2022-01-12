@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 Widget circleAvatarImage(imageUrl,bool? big){
-  if(imageUrl==null) {
+  if(imageUrl==null||imageUrl=="") {
     return  CircleAvatar(
       backgroundColor: Colors.black,
       radius:big==false? 25.0:50.0,

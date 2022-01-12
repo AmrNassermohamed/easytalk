@@ -7,6 +7,94 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:779256341790:android:258d7211ca0bb168a9d50f",
+        "android_client_info": {
+          "package_name": "com.easytalk.easytalk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "779256341790-d8ilggpn97jbhdmeijtd2s16prot27o1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.easytalk.easytalk",
+            "certificate_hash": "02aa91a0cc3821d010a29c0ffc2c948bf1a8cec8"
+          }
+        },
+        {
+          "client_id": "779256341790-hljundv268tlrbcvilufms9btn22efvf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwqbKm1z2VQcAdL68lI0TTHAbZqsh3-dc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "779256341790-hljundv268tlrbcvilufms9btn22efvf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "779256341790-58lqfr30j2rqoe5b25pelicuks0bkoj0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.easytalk"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:779256341790:android:830bf84b2a3addf6a9d50f",
+        "android_client_info": {
+          "package_name": "com.example.easy_talk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "779256341790-2p9kdua03ci76qcvrq4bp8nnmhr3nei5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.easy_talk",
+            "certificate_hash": "02aa91a0cc3821d010a29c0ffc2c948bf1a8cec8"
+          }
+        },
+        {
+          "client_id": "779256341790-hljundv268tlrbcvilufms9btn22efvf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwqbKm1z2VQcAdL68lI0TTHAbZqsh3-dc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "779256341790-hljundv268tlrbcvilufms9btn22efvf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "779256341790-58lqfr30j2rqoe5b25pelicuks0bkoj0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.easytalk"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:779256341790:android:e5e314085c88386ea9d50f",
         "android_client_info": {
           "package_name": "com.example.translationchat"
@@ -29,6 +117,13 @@
             {
               "client_id": "779256341790-hljundv268tlrbcvilufms9btn22efvf.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "779256341790-58lqfr30j2rqoe5b25pelicuks0bkoj0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.easytalk"
+              }
             }
           ]
         }

@@ -1,4 +1,4 @@
-package com.example.translationchat;
+package com.easytalk.easytalk;
 
 import io.flutter.embedding.android.FlutterActivity;
 

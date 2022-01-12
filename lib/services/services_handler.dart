@@ -176,7 +176,7 @@ class ServicesHandler {
     }
   }
 
-uploadImage(File imageUrl,url) async {
+uploadImage(File imageUrl,url,returnbody) async {
 
   String token=await SharedPreferenceHandler.getToken();
   var headers = {
@@ -190,7 +190,11 @@ uploadImage(File imageUrl,url) async {
   http.StreamedResponse response = await request.send();
   var responsee = await http.Response.fromStream(response);
   if (responsee.statusCode == 200) {
-    return json.decode(responsee.body);
+    if(returnbody==true) {
+      return json.decode(responsee.body);
+    }else{
+      return 200;
+    }
   }
   else {
   print(response.reasonPhrase);
