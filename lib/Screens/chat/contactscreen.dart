@@ -6,6 +6,7 @@ import 'package:translationchat/constants/colors.dart';
 import 'package:translationchat/models/roommodel.dart';
 import 'package:translationchat/provider/chatprovider.dart';
 import 'package:translationchat/provider/userprovider.dart';
+import 'package:translationchat/shared/components/back.dart';
 import 'package:translationchat/shared/components/drawer.dart';
 import 'package:translationchat/shared/components/navigator.dart';
 import 'package:translationchat/shared/components/progress.dart';
@@ -67,7 +68,12 @@ var c=await validationService.getContact();
               child: Padding(
                 padding: const EdgeInsets.only(top: 20,left: 0,right: 0),
                 child: Column(children: [
-
+                  Padding(
+                    padding: EdgeInsets.all(20),
+                    child: Row(mainAxisAlignment: MainAxisAlignment.start,children: [
+                      Back()
+                    ],),
+                  ),
                   Expanded(
                     child: Container(color: Colors.white,width: MediaQuery.of(context).size.width,child: Directionality(
                       textDirection: TextDirection.rtl,

@@ -51,7 +51,7 @@ class ChangePhoneNumber extends StatelessWidget {
                     GestureDetector(onTap: () async {
                       validationService.mobileNumber=controller.text;
 
-                      var response   = validationService.sendMobileNumber
+                      var response   = await validationService.sendMobileNumber
     (mobileNumber: controller.text);
     if(response==0) {
 

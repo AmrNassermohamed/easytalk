@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
 import 'package:intro_slider/scrollbar_behavior_enum.dart';
+import 'package:translationchat/Screens/auth/login.dart';
 import 'package:translationchat/constants/colors.dart';
 
 import 'package:translationchat/shared/text_global.dart';
@@ -21,8 +22,10 @@ class IntroScreen extends StatefulWidget {
 
 class IntroScreenState extends State<IntroScreen> {
   List<Slide> slides = [];
+  List <String> text=["ايزي توك يسهل لك التواصل",
+    "لن تحتاج الي تعلم لغات جديده لتواصل معهم","تمتع بمزايا عديده اخري للتطبيق"];
 
-  @override
+    @override
   void initState() {
     super.initState();
 for(int i=0;i<3;i++) {
@@ -32,7 +35,7 @@ for(int i=0;i<3;i++) {
 
         pathImage: "assests/Group 911.png",
         description:
-        "لن تحتاج الي تعلم لغات جديده لتواصل معهم",
+        text[i],
         styleDescription:
          GoogleFonts.cairo(
             color: Colors.black,
@@ -55,10 +58,10 @@ backgroundColor: Colors.white,
 
   void onDonePress() {
     // Do what you want
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(builder: (context) => HomeScreen()),
-    // );
+     Navigator.push(
+       context,
+       MaterialPageRoute(builder: (context) => Login()),
+     );
   }
 
   Widget renderNextBtn() {

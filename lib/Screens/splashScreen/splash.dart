@@ -27,7 +27,7 @@ class Init {
   Future initialize(BuildContext context) async {
 
     final validationServiceUser = Provider.of<UserProvider>(context,listen: false);
-
+    //await SharedPreferenceHandler.setToken("Bearer 13|kLvxplZXW2DsKbNQ9qcaUsLtY6SxHRW7iMkj4N8F");
     String? token=await SharedPreferenceHandler.getToken();
     if(token!=null){
 validationServiceUser.loginOrNot=true;

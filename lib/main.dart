@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,8 @@ import 'package:translationchat/provider/chatprovider.dart';
 import 'package:translationchat/provider/userprovider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'Screens/auth/login.dart';
+import 'Screens/introSlider/introslider.dart';
+import 'Screens/qr_code/qr_scanner.dart';
 import 'Screens/settings/settings.dart';
 import 'Screens/splashScreen/splash.dart';
 
@@ -35,6 +38,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final validationServiceUser = Provider.of<UserProvider>(context,listen: false);
+
+
     return FutureBuilder(
       future: Init.instance.initialize(context),
       builder: (context, AsyncSnapshot snapshot) {
@@ -74,13 +79,37 @@ class MyApp extends StatelessWidget {
                 GlobalCupertinoLocalizations.delegate,
                 GlobalWidgetsLocalizations.delegate,
               ],
-            home:  validationServiceUser.loginOrNot==true?RoomScreen():Login(),
+            home:  validationServiceUser.loginOrNot==true?const RoomScreen():
+            const IntroScreen (),
               debugShowCheckedModeBanner: false
           );
         }
       },
     );
   }
+}
+class x extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Scaffold(
+        body: StreamBuilder(
+          stream: FirebaseFirestore.instance
+              .collection('user')
+              .snapshots(),
+          builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+
+            return ListView.builder(
+              itemCount: streamSnapshot.data!.docs.length,
+              itemBuilder: (ctx, index) =>
+                  Text(streamSnapshot.data!.docs[index]["age"].toString()!=null?streamSnapshot.data!.docs[index]["age"].toString():""),
+            );
+          },
+        ));
+  }
+
+
+
 }
 
 

@@ -30,6 +30,7 @@ class _QRViewExampleState extends State<QRViewExample> {
     controller!.resumeCamera();
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,6 +85,10 @@ class _QRViewExampleState extends State<QRViewExample> {
     setState(() {
       this.controller = controller;
     });
+
+
+
+
     controller.scannedDataStream.listen((scanData) {
       /*setState(() {
         result = scanData;

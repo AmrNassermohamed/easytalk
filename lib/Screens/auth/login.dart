@@ -38,7 +38,7 @@ class LoginState extends State<Login> {
               child:   Center(
                   child: Column(children: [
               sizedBoxGlobalHeight20(),
-                  textGlobalBlackBold16(context: context,text: "اهلا بعودتك"),
+                  textGlobalBlackBold16(context: context,text: "اهلا بك"),
                     sizedBoxGlobalHeight20(),
                     Image.asset(logoLogin,height: 150,),
                     Container(

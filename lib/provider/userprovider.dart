@@ -75,6 +75,7 @@ updateNumber(){
   sendMobileNumber({required String mobileNumber}) {
     try {
       if (validateMobile(mobileNumber)) {
+        print("///////////");
         userData.getMobileNumber(mobileNumber: mobileNumber,countryCode:countryCode );
         return 0;
       } else {
