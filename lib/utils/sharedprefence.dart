@@ -41,8 +41,29 @@ class SharedPreferenceHandler {
     }
   }
 
+  static setIntro() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString("Intro", "Intro");
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 
+  static getIntro() async {
+    try {
+      //SharedPreferences.setMockInitialValues({});
+      SharedPreferences  prefs = await SharedPreferences.getInstance();
 
+      if(prefs!=null){
+        return prefs.getString('Intro');
+      }else{
+        return "null";
+      }
+    } catch (e) {
+      print("get token err :$e");
+    }
+  }
 
   static getVerificationId() async {
     try {

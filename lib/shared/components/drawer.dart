@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:syncfusion_flutter_barcodes/barcodes.dart';
 import 'package:translationchat/Screens/auth/login.dart';
 import 'package:translationchat/Screens/auth/updateprofile.dart';
 
@@ -77,7 +79,34 @@ context: context,
 
               ),
             ),
-            
+            GestureDetector(
+              onTap: (){
+
+              },
+              child: createDrawerBodyItem(
+                  context: context,
+                  icon: Icons.share,
+                  text: 'مشاركه التطبيق ',
+                  onTap: (){
+                    Share.shareFiles(["https://apps.apple.com/eg/app/easytalk-%D8%A7%D9%8A%D8%B2%D9%8A-%D8%AA%D9%88%D9%83/id1605351891","https://apps.apple.com/eg/app/easytalk-%D8%A7%D9%8A%D8%B2%D9%8A-%D8%AA%D9%88%D9%83/id1605351891"]);
+
+                  }
+
+              ),
+            ),
+          SizedBox(height: 10,),
+          SizedBox(
+            height: 200,
+
+            child: SfBarcodeGenerator(
+barColor: Colors.white,
+              value:"https://apps.apple.com/eg/app/easytalk-%D8%A7%D9%8A%D8%B2%D9%8A-%D8%AA%D9%88%D9%83/id1605351891",
+              symbology: QRCode(),
+              showValue: false,
+            ),
+          ),
+
+
             Expanded(child: Container()),
             createDrawerBodyItem(
                 context: context,
@@ -85,7 +114,8 @@ context: context,
                 text: 'تسجيل الخروج',
                 onTap: () async {
                   final pref = await SharedPreferences.getInstance();
-                await pref.clear();
+                await pref.remove("TOKEN");
+                  await pref.clear();
                   Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Login(),), (route) => false);
 
                 }

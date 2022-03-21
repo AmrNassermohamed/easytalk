@@ -18,6 +18,8 @@ class UserData {
        returnBody: true).then((value) => value);
    String token = response["token"];
    await SharedPreferenceHandler.setToken(token);
+
+   await SharedPreferenceHandler.setIntro();
 userIsOLine();
    return 0;
  }catch(ex){
@@ -181,6 +183,25 @@ checkCode({smsCode}) async{
      var response = await service.
      postService(urlSuffix: "register?fcm_token=${tokenFcm.toString()}&name=${name.toString()}&email=${email.toString()}&mobile_number=${mobileNumber.toString()}",
          returnBody: false).then((value) => value);
+     print(response);
+     if(response!=200&&response!=201){
+       if(response["errors"]["email"]!=null){
+         List v=response["errors"]["email"];
+         if(v.contains("The email has already been taken.")){
+           return 4;
+       }else{
+           return 5;
+         }
+         }else  if(response["errors"]["mobile_number"]!=null){
+         List v=response["errors"]["mobile_number"];
+         if(v.contains("The mobile number has already been taken.")){
+           return 6;
+         }else{
+           return 7;
+         }
+       }
+     }
+
      return response;
    }catch(ex){
      rethrow;
@@ -195,6 +216,7 @@ checkCode({smsCode}) async{
 
       var response = await service.
       postService(headers: headers,urlSuffix: "contact-us?name=${name.toString()}&email=${email.toString()}&message=${message.toString()}", returnBody: false).then((value) => value);
+
       return response;
     }catch(ex){
       rethrow;

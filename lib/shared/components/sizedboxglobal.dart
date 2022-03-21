@@ -21,6 +21,9 @@ Widget sizedBoxGlobal({index,height,width}){
 Widget sizedBoxGlobalHeight20(){
   return sizedBoxGlobal(index: 0,height: 20.0);
 }
+Widget sizedBoxGlobalHeight80(){
+  return sizedBoxGlobal(index: 0,height: 80.0);
+}
 Widget sizedBoxGlobalHeight40(){
   return sizedBoxGlobal(index: 0,height: 40.0);
 }

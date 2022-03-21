@@ -5,22 +5,30 @@ class FirebaseHandler{
   FirebaseAuth auth = FirebaseAuth.instance;
 
   Future phoneAuth( number) async {
+   try{
+
     String ? verificationIdd;
+    print(".................");
     print(number);
+
     await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: number,
       verificationCompleted: (PhoneAuthCredential credential) {
 
       },
-      verificationFailed: (FirebaseAuthException e) {},
+      verificationFailed: (FirebaseAuthException e) {
+        print(e);
+      },
 
       codeAutoRetrievalTimeout: (String verificationId) {},
       codeSent: (String verificationId, int? forceResendingToken) async {
         print(verificationId);
-         await SharedPreferenceHandler.setVerificationId(verificationId);
+        await SharedPreferenceHandler.setVerificationId(verificationId);
+      });
+        }catch(ex){
+     rethrow;
+    }
 
-      },
-    );
 
 
   }

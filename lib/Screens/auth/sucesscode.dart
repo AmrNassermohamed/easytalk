@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart' show   BuildContext, Center, Column, Container, Key, MainAxisAlignment, State, StatefulWidget, TextEditingController, Widget;
 import 'package:flutter/material.dart';
+//import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:translationchat/Screens/room/roomscreen.dart';
@@ -53,7 +54,7 @@ padding: const EdgeInsets.all(20),
                 ),child: Column(children: [
                     sizedBoxGlobalHeight30(),
                      Image.asset(iconActive),
-                     textGlobalBlackBold16(context: context,text: "تم التحقق الرمز بالنجاح"),
+                     textGlobalBlackBold16(context: context,text: "تم التحقق   من الرمز بالنجاح"),
                      sizedBoxGlobalHeight30(),
                     // textGlobalBlackBold13(context: context,text: "تم التاكيد علي حساب الجديد بالتطبيق"),
                      textGlobalBlackBold16(context: context,text: " شكرا .."),
@@ -67,8 +68,8 @@ padding: const EdgeInsets.all(20),
 
                      TweenAnimationBuilder<Duration>(
 
-                         duration: Duration(seconds:15 ),
-                         tween: Tween(begin: Duration(seconds:15
+                         duration: Duration(seconds:3 ),
+                         tween: Tween(begin: Duration(seconds:3
                          ), end:Duration.zero,
 
 
@@ -112,6 +113,9 @@ padding: const EdgeInsets.all(20),
   }
   goToAction() async {
     final validationService = Provider.of<UserProvider>(context,listen: false);
+//Position s=await   _determinePosition();
+//print(".vvvvvvvvv");
+//print(s.timestamp);
     var x     =     await validationService.getToken(validationService.mobileNumber);
     if(x==0){
       await validationService.getUserProfile();
@@ -122,3 +126,4 @@ padding: const EdgeInsets.all(20),
   }
 
 }
+

@@ -7,6 +7,7 @@ import 'package:translationchat/Screens/auth/login.dart';
 import 'package:translationchat/constants/colors.dart';
 
 import 'package:translationchat/shared/text_global.dart';
+import 'package:translationchat/utils/sharedprefence.dart';
 
 
 
@@ -22,8 +23,8 @@ class IntroScreen extends StatefulWidget {
 
 class IntroScreenState extends State<IntroScreen> {
   List<Slide> slides = [];
-  List <String> text=["ايزي توك يسهل لك التواصل",
-    "لن تحتاج الي تعلم لغات جديده لتواصل معهم","تمتع بمزايا عديده اخري للتطبيق"];
+  List <String> text=["Connect with the world in your own language   تواصل مع العالم  بلغتك ",
+    "You don't need to learn new languages                         لن تحتاج الي تعلم لغات جديده","ايزي توك يجعل التواصل بكل لغات بين يديك      EasyTalk puts communication in all languages ​​at your fingertips "];
 
     @override
   void initState() {
@@ -33,9 +34,10 @@ for(int i=0;i<3;i++) {
       Slide(
 
 
-        pathImage: "assests/Group 911.png",
+        pathImage: "assests/ic_launcher.png",
         description:
         text[i],
+
         styleDescription:
          GoogleFonts.cairo(
             color: Colors.black,
@@ -56,8 +58,9 @@ backgroundColor: Colors.white,
 
   }
 
-  void onDonePress() {
+  Future<void> onDonePress() async {
     // Do what you want
+    await SharedPreferenceHandler.setIntro();
      Navigator.push(
        context,
        MaterialPageRoute(builder: (context) => Login()),
@@ -69,6 +72,7 @@ backgroundColor: Colors.white,
   }
 
   Widget renderDoneBtn() {
+
     return textGlobalWhiteBold14(context: context,text: "انهاء");
   }
 

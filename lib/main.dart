@@ -80,7 +80,7 @@ class MyApp extends StatelessWidget {
                 GlobalWidgetsLocalizations.delegate,
               ],
             home:  validationServiceUser.loginOrNot==true?const RoomScreen():
-            const IntroScreen (),
+        validationServiceUser.introScreen==true?    const IntroScreen ():Login(),
               debugShowCheckedModeBanner: false
           );
         }

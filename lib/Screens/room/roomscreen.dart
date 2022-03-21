@@ -40,7 +40,7 @@ class RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
     await FirebaseMessaging.instance.getInitialMessage();
       FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
 
-          RoomModel roomModel = RoomModel(favoriteId: 0,isActive: message.data["user2_is_active"],
+          RoomModel roomModel = RoomModel(favoriteId: 0,isActive:int.parse( message.data["user2_is_active"].toString()),
      updatedAt: message.data["user2_updated_at"],
      imageUrl: "", user2Id:message.data["user2_id"], chatId: "",
       lastMessageTime: "", name: message.data["user2_name"], email: "",

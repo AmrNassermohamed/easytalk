@@ -54,7 +54,7 @@ class SettingsState extends State<Settings> {
                         )  ,
                         sizedBoxGlobalHeight20(),
 
-                        Image.asset("assests/Group 911.png",height: 150,)
+                        Image.asset("assests/ic_launcher.png",height: 150,)
                         ,
                         InkWell(onTap: (){
                           AppNavigator.navigateTo(context, Information(k: "privacy", title: "الخصوصيه"));

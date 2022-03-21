@@ -22,6 +22,22 @@
           }
         },
         {
+          "client_id": "779256341790-ioo5sg47u26g7mnhv1a4m8pcreegm3il.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.easytalk.easytalk",
+            "certificate_hash": "e7384f6bdcac00c7a3d43b4428e825dfb2efac30"
+          }
+        },
+        {
+          "client_id": "779256341790-rp8010oogn9ind3bk9vf4en9euld5qds.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.easytalk.easytalk",
+            "certificate_hash": "886500d9e5af894a415c47174dec50ccfae7edf2"
+          }
+        },
+        {
           "client_id": "779256341790-hljundv268tlrbcvilufms9btn22efvf.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -39,10 +55,10 @@
               "client_type": 3
             },
             {
-              "client_id": "779256341790-58lqfr30j2rqoe5b25pelicuks0bkoj0.apps.googleusercontent.com",
+              "client_id": "779256341790-4qetkhb6fevd2fottrp0ugejegs4v2je.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.easytalk"
+                "bundle_id": "com.easytalk.easytalkk"
               }
             }
           ]
@@ -83,10 +99,10 @@
               "client_type": 3
             },
             {
-              "client_id": "779256341790-58lqfr30j2rqoe5b25pelicuks0bkoj0.apps.googleusercontent.com",
+              "client_id": "779256341790-4qetkhb6fevd2fottrp0ugejegs4v2je.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.easytalk"
+                "bundle_id": "com.easytalk.easytalkk"
               }
             }
           ]
@@ -119,10 +135,10 @@
               "client_type": 3
             },
             {
-              "client_id": "779256341790-58lqfr30j2rqoe5b25pelicuks0bkoj0.apps.googleusercontent.com",
+              "client_id": "779256341790-4qetkhb6fevd2fottrp0ugejegs4v2je.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.easytalk"
+                "bundle_id": "com.easytalk.easytalkk"
               }
             }
           ]

@@ -14,7 +14,7 @@ class FavMessageWidget extends StatelessWidget {
     final provider = Provider.of<ChatProvider>(context,listen: false);
     final validationService2 = Provider.of<UserProvider>(context,listen: false);
     return SizedBox(
-      height: 100,
+      height: 80,
       child: ListView.builder(
           shrinkWrap: true,
           scrollDirection: Axis.horizontal,
@@ -35,7 +35,7 @@ class FavMessageWidget extends StatelessWidget {
                 },
                 child: Padding(
                   padding:
-                  const EdgeInsets.all(5),
+                  const EdgeInsets.all(2),
                   child: Column(
                     children: [
                       circleAvatarImage(
@@ -43,12 +43,12 @@ class FavMessageWidget extends StatelessWidget {
                               .listFavGeneralState
                               .data![index].roomModel
                               .imageUrl, false),
-                      textGlobalNormalWhite14(
+               SizedBox(width:40 ,child:      textGlobalNormalWhite14(
                           context: context,
                           text: provider
                               .listFavGeneralState
                               .data![index].roomModel
-                              .name)
+                              .name))
                     ],
                   ),
                 ),

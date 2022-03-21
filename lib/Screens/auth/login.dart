@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:translationchat/Screens/auth/components/textfieldphonenumber.dart';
 import 'package:translationchat/Screens/auth/signup.dart';
+import 'package:translationchat/Screens/chat/chat_screen_copy.dart';
 import 'package:translationchat/constants/colors.dart';
 import 'package:translationchat/constants/images.dart';
 import 'package:translationchat/provider/userprovider.dart';
+import 'package:translationchat/shared/components/buttonglobal.dart';
 import 'package:translationchat/shared/components/displaysnackbar.dart';
 import 'package:translationchat/shared/components/navigator.dart';
 import 'package:translationchat/shared/components/sizedboxglobal.dart';
@@ -31,94 +33,115 @@ class LoginState extends State<Login> {
   Widget build(BuildContext context) {
 
      final validationService = Provider.of<UserProvider>(context);
-    return  SafeArea(
-      child: Scaffold(
-          body:SingleChildScrollView(
-              padding: const EdgeInsets.all(10),
-              child:   Center(
-                  child: Column(children: [
-              sizedBoxGlobalHeight20(),
-                  textGlobalBlackBold16(context: context,text: "اهلا بك"),
-                    sizedBoxGlobalHeight20(),
-                    Image.asset(logoLogin,height: 150,),
-                    Container(
-                      padding: const EdgeInsets.only(left: 30,right: 30),
-                      child: Column(children: [
-                    //    TextFieldGlobal(controller:controller ,hint: "الاسم باللغه العربيه كاملا",label: darkCyan,widthBorder: 2.0,),
-                      //  TextFieldGlobal(controller:controller ,hint: "البريد الالكتروني",label: darkCyan,widthBorder: 2.0,),
-                        textFieldPhoneNumber(controller,context),
-                        //sizedBoxGlobalHeight10(),
-                        //emailSend(context,(){}),
-                        //sizedBoxGlobalHeight10(),
-                        phoneSend(context,() async {
+    return
+       WillPopScope(
+         onWillPop: () async {
+           focusNode.unfocus();
+         return true;
+           },
+         child: Scaffold(
+            body:SingleChildScrollView(
+                padding: const EdgeInsets.all(10),
+                child:   Center(
+                    child: Column(children: [
 
-
-                          validationService.mobileNumber=controller.text;
-
-                         var result =await validationService.mobileIsExist(controller.text);
-                         print(result);
-                         if(result[0]=="success") {
-                           var response   = validationService.sendMobileNumber
-                             (mobileNumber: controller.text);
-                           if(response==0) {
-                             AppNavigator.navigateTo(context,  CodeNumber(route: 0,));
-                           }else{
-                             displaySnackBar(context, "يرجي مراجعه رقم التليقون");
-                           }
-                         }else{
-                           AppNavigator.navigateTo(context, const SignUp());
-                         }
-
-
-                        }),
-                        Divider(color: darkCyan,thickness: 5,),
-                      ],),
-
-
-                    ),
-
-
-
-
-
-
-
-
-
-
-
-                /*    GestureDetector(
-                    onTap: (){
-
-                  var response   = validationService.sendMobileNumber(mobileNumber: controller.text);
-                    if(response==0) {
-                      AppNavigator.navigateTo(context, const CodeNumber());
-                    }else{
-                      displaySnackBar(context, "يرجي مراجعه رقم التليقون");
-                    }
-                    },
-                      child: Padding(
+                      sizedBoxGlobalHeight80(),
+                    textGlobalBlackBold16(context: context,text: "اهلا بك"),
+                      sizedBoxGlobalHeight20(),
+                      Image.asset(logoLogin,height: 250,),
+                      Container(
                         padding: const EdgeInsets.only(left: 30,right: 30),
-                        child: Container(decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.all(Radius.circular(20)),
-                            color: darkCyan
-                        ),child: Padding(
-                          padding:const  EdgeInsets.all(10)         ,
-                          child: Row(mainAxisAlignment: MainAxisAlignment.center,children: [
+                        child: Column(children: [
+                      //    TextFieldGlobal(controller:controller ,hint: "الاسم باللغه العربيه كاملا",label: darkCyan,widthBorder: 2.0,),
+                        //  TextFieldGlobal(controller:controller ,hint: "البريد الالكتروني",label: darkCyan,widthBorder: 2.0,),
+                          textFieldPhoneNumber(controller,context),
+                          //sizedBoxGlobalHeight10(),
+                          //emailSend(context,(){}),
+                          //sizedBoxGlobalHeight10(),
 
-                            textGlobalWhiteBold14(context: context,text: "  تسجيل دخول"),
 
-                          ],),
-                        )),
+                          /*phoneSend(context,() async {
+
+
+
+
+                          }),*/
+                       //   Divider(color: darkCyan,thickness: 1,),
+
+                          InkWell(onTap: () async {
+                            validationService.mobileNumber=controller.text;
+
+                            var result =await validationService.mobileIsExist(controller.text);
+                            print(result);
+                            if(result[0]=="success") {
+                              var response   = validationService.sendMobileNumber
+                                (mobileNumber: controller.text);
+                              if(response==0) {
+                                AppNavigator.navigateTo(context,  CodeNumber(route: 0,));
+                              }else{
+                                displaySnackBar(context, "يرجي مراجعه رقم التليقون");
+                              }
+                            }else{
+                              AppNavigator.navigateTo(context, const SignUp());
+                            }
+
+                          },child: buttonGlobal(context: context,text: "تسجيل الدخول "))
+                       ,
+                          SizedBox(height: 20,),
+
+
+                        ],),
+
+
                       ),
-                    ),*/
-                    sizedBoxGlobalHeight10(),
-         GestureDetector(onTap: (){
-           AppNavigator.navigateTo(context, const SignUp());
-         },child:           textGlobalGreyBold13(context: context,text: "لا تمتلك حساب بالفعل سجل .... الدخول   ")
-           ),
-           ],)))),
-    );
+
+
+
+
+
+
+
+
+
+
+
+                  /*    GestureDetector(
+                      onTap: (){
+
+                    var response   = validationService.sendMobileNumber(mobileNumber: controller.text);
+                      if(response==0) {
+                        AppNavigator.navigateTo(context, const CodeNumber());
+                      }else{
+                        displaySnackBar(context, "يرجي مراجعه رقم التليقون");
+                      }
+                      },
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 30,right: 30),
+                          child: Container(decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.all(Radius.circular(20)),
+                              color: darkCyan
+                          ),child: Padding(
+                            padding:const  EdgeInsets.all(10)         ,
+                            child: Row(mainAxisAlignment: MainAxisAlignment.center,children: [
+
+                              textGlobalWhiteBold14(context: context,text: "  تسجيل دخول"),
+
+                            ],),
+                          )),
+                        ),
+                      ),*/
+                      sizedBoxGlobalHeight10(),
+           GestureDetector(onTap: (){
+             AppNavigator.navigateTo(context, const SignUp());
+           },child:   Row(mainAxisAlignment: MainAxisAlignment.center,children: [
+             textGlobalblueBold13(context: context,text: "تسجيل حساب جديد   "),
+             textGlobalGreyBold13(context: context,text: "لا تمتلك حساب بالفعل ؟   "),
+
+           ],),
+             ),
+             ],)))),
+       );
+
 
   }
 

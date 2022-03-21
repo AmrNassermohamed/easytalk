@@ -23,7 +23,7 @@ import 'components/buttonsendemail.dart';
 
 class ChangePhoneNumber extends StatelessWidget {
   // const _SignUpState({Key? key}) : super(key: key);const MyHomePage({Key? key, required this.title}) : super(key: key);
-
+  final focusNode = FocusNode();
   late final TextEditingController controller =TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,7 @@ class ChangePhoneNumber extends StatelessWidget {
 
                     SizedBox(height: 100,),
                     textGlobalBlackBold16(context: context,text: "تغيير رقم هاتفك"),
-                    Padding(padding: EdgeInsets.all(10),child: TextFieldGlobal(keyboardType: TextInputType.phone,controller:controller ,hint:"ادخل الرقم",
+                    Padding(padding: EdgeInsets.all(10),child: TextFieldGlobal(myFocusNode: focusNode,keyboardType: TextInputType.phone,controller:controller ,hint:"ادخل الرقم",
                       label: darkCyan,widthBorder: 2.0,)),
                     //  Expanded(child: Container()),
                     sizedBoxGlobalHeight40(),

@@ -43,7 +43,7 @@ Widget componentSend({required BuildContext context,icon,image,text,backgroundCo
         Image.asset(image),
         //   SizedBox(width: 20,),
         sizedBoxGlobalWidth20(),
-        textGlobalBlackBold13(context: context,text: text),
+       Expanded(child:  textGlobalBlackBold13(context: context,text: text)),
         sizedBoxGlobalWidth20(),
       const Icon(Icons.phone_android_sharp)
         //  Image.asset(phoneIcon,width: 50,height: 50,),
@@ -62,7 +62,7 @@ Widget emailSend(BuildContext context,Function callback){
 }
 Widget phoneSend(BuildContext context,Function callback){
   return componentSend2(context: context,icon: Icons.phone,image:emailIcon,
-    backgroundColor: white,text: "تسجيل عبر الهاتف المحمول" ,callBack: callback);
+    backgroundColor: white,text: " ارسال  رساله عبر الهاتف المحمول" ,callBack: callback);
 }
 
 

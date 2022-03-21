@@ -1,5 +1,7 @@
+//import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/cupertino.dart' show   BuildContext, Center, Column, EdgeInsets,Key, State, StatefulWidget, TextEditingController, Widget;
 import 'package:flutter/material.dart';
+import 'package:flutter_contacts/contact.dart';
 import 'package:provider/provider.dart';
 import 'package:translationchat/Screens/chat/chatscreen.dart';
 import 'package:translationchat/constants/colors.dart';
@@ -11,13 +13,9 @@ import 'package:translationchat/shared/components/drawer.dart';
 import 'package:translationchat/shared/components/navigator.dart';
 import 'package:translationchat/shared/components/progress.dart';
 import 'package:translationchat/shared/components/sizedboxglobal.dart';
-
 import 'package:translationchat/shared/text_global.dart';
 import 'package:translationchat/shared/widgets/circleavatatimage.dart';
-
 import 'chat_screen_copy.dart';
-
-
 
 
 class ContactScreen extends StatefulWidget {
@@ -46,12 +44,20 @@ class ContactScreenState extends State<ContactScreen> {
     //validationService2.getUserProfile();
 var c=await validationService.getContact();
    await validationService.getListContacts(c);
-
+//await _getContacts();
   }
+
+ /* _getContacts() async {
+    Future<List<Contact>> futureContacts = ContactsService.getContacts(withThumbnails: false)
+        .then((value) => value.map((e) => Contact.fromMap(e.toMap())).toList());
+    var contacts = await futureContacts.then((value) => value.map((e) => e.toMap()).toList());
+    print(contacts);
+
+  }*/
   @override
   Widget build(BuildContext context) {
-    final validationService = Provider.of<ChatProvider>(context);
-    final validationService2 = Provider.of<UserProvider>(context);
+    final validationService = Provider.of<ChatProvider>(context,listen: false);
+    final validationService2 = Provider.of<UserProvider>(context,listen: false);
     return  SafeArea(
       child: Scaffold(
         key: _scaffoldKey,
@@ -70,8 +76,11 @@ var c=await validationService.getContact();
                 child: Column(children: [
                   Padding(
                     padding: EdgeInsets.all(20),
-                    child: Row(mainAxisAlignment: MainAxisAlignment.start,children: [
-                      Back()
+                    child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [
+
+                      Back(),
+                    Expanded(child:   textGlobalWhiteBold18(context: context,text: "لمعرفه من لديهم حساب من معارفك "),
+                  ),
                     ],),
                   ),
                   Expanded(
@@ -85,61 +94,49 @@ var c=await validationService.getContact();
     return Expanded(child: ListView.builder(
     itemCount: validationService.listContactsGeneralState.data!.length,
     itemBuilder: (BuildContext context,int index){
-    return GestureDetector(
-    onTap: (){
-      String firebaseChatId ;
-      print(validationService2.listUserProfileGeneralState
-          .data!.id);
-    if(validationService2.listUserProfileGeneralState.hasData==true) {
-if(int.parse(validationService2.listUserProfileGeneralState
-    .data!.id)>provider.listContactsGeneralState.data![index]!.id){
- firebaseChatId= validationService2.listUserProfileGeneralState
-      .data!.id + "_" +
-      provider.listContactsGeneralState.data![index]!.id.toString();
-}else{
-    firebaseChatId=provider.listContactsGeneralState.data![index]!.id.toString()  + "_"
-    +validationService2.listUserProfileGeneralState
-        .data!.id;
-    }
-
-
-      AppNavigator.navigateTo(
-          context, ChatScreen(roomBool: false,roomModel: RoomModel(
-          updatedAt: provider
-              .listContactsGeneralState.data![index].updatedAt,
-isActive: provider
-    .listContactsGeneralState.data![index].isActive,
-
-          favoriteId: 0,imageUrl: provider
-          .listContactsGeneralState.data![index].imageUrl,email: "",user2Id: provider
-          .listContactsGeneralState.data![index].id.toString()
-          ,
-          fireBaseChatId: firebaseChatId,
-          name: '',
-          mobileNumber: "",
-          lastMessage: '',
-          lastMessageTime: '',
-          chatId: ''),
-        user1: validationService2.listUserProfileGeneralState.data!.idModify,));
-    }   //   AppNavigator.navigateTo(context,const ChatScreen());
-    },
-    child: Padding(
+  return   Padding(
     padding:const EdgeInsets.only(left: 15.0,right:15.0,top: 15.0 ),
     child: Column(children: [
     FlatButton(
     onPressed: (){
+      String firebaseChatId ;
+      print("///////////////////////////////");
+      print(validationService2.listUserProfileGeneralState
+          .data!.id);
+      print("///////////////////////////////");
+      if(validationService2.listUserProfileGeneralState.hasData==true) {
+        if(int.parse(validationService2.listUserProfileGeneralState
+            .data!.id)<provider.listContactsGeneralState.data![index]!.id){
+          firebaseChatId= validationService2.listUserProfileGeneralState
+              .data!.id + "_" +
+              provider.listContactsGeneralState.data![index]!.id.toString();
+        }else{
+          firebaseChatId=provider.listContactsGeneralState.data![index]!.id.toString()  + "_"
+              +validationService2.listUserProfileGeneralState
+                  .data!.id;
+        }
 
-     if(validationService2.listUserProfileGeneralState.hasData==true) {
-     String  firebaseChatId = validationService2.listUserProfileGeneralState.data!.id+"_"+provider.listContactsGeneralState.data![index]!.id.toString();
-       AppNavigator.navigateTo(
-           context, ChatScreen(roomBool: false,roomModel:
-       RoomModel(updatedAt: provider.listContactsGeneralState.data![index].updatedAt,isActive:provider.listContactsGeneralState.data![index].isActive ,favoriteId:0 ,imageUrl:provider.listContactsGeneralState.data![index].imageUrl.toString() ,email: "",
-           user2Id:provider.listContactsGeneralState.data![index].id.toString()
 
-           ,fireBaseChatId:firebaseChatId,
-           name: provider.listContactsGeneralState.data![index].name.toString(), lastMessage: '',
-           lastMessageTime: '', chatId: '',mobileNumber: ""),user1: validationService2.listUserProfileGeneralState.data!.idModify,));
-     }
+        AppNavigator.navigateTo(
+            context, ChatScreen(roomBool: false,roomModel: RoomModel(
+            updatedAt: provider
+                .listContactsGeneralState.data![index].updatedAt,
+            isActive: provider
+                .listContactsGeneralState.data![index].isActive,
+
+            favoriteId: 0,imageUrl: provider
+            .listContactsGeneralState.data![index].imageUrl,email: "",user2Id: provider
+            .listContactsGeneralState.data![index].id.toString()
+            ,
+            fireBaseChatId: firebaseChatId,
+            name: provider
+                .listContactsGeneralState.data![index].name,
+            mobileNumber: "",
+            lastMessage: '',
+            lastMessageTime: '',
+            chatId: ''),
+          user1: validationService2.listUserProfileGeneralState.data!.idModify,));
+      }
     },
     child: Container(
     child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [
@@ -158,7 +155,6 @@ isActive: provider
     )
     , const Divider(color: Colors.grey,thickness: 1,)
     ],),
-    ),
     );
     }
     ),);

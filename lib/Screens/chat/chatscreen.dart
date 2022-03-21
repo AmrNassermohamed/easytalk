@@ -49,7 +49,7 @@ final TextEditingController controller = TextEditingController();
   }
   bool emojiShowing = false;
   bool isKeyboardVisible = false;
-
+  final focusNode = FocusNode();
   _onEmojiSelected(String emoji) {
     setState(() {
       controller.text = controller.text + emoji;
@@ -328,24 +328,6 @@ formatDate(validationService
                         comButton(context),
          emojyPicker(),
 
-                   /* Padding(padding:const EdgeInsets.all(10),child:
-                        GridView.count(
-                          shrinkWrap: true,
-                          physics: new NeverScrollableScrollPhysics(),
-                          crossAxisCount: 5,
-                          childAspectRatio: 1.1,
-                          children: Emojy.emojy
-                              .map<Widget>(
-                                (e) => GestureDetector(
-                              child: Text(e.emoji),
-                              onTap: () {
-                              _onEmojiSelected(e.emoji); // Navigator.pushNamed(context, "episode", arguments: e);
-                              },
-                            ),
-                          )
-                              .toList(),
-                        ),
-                    )*/
 
 
                         
@@ -384,7 +366,7 @@ formatDate(validationService
           },child: Image.asset("assests/Iconfeather-smile.png", width: 20,)),
 
 
-          Expanded(child: TextFieldGlobal(keyboardType: TextInputType.text,controller: controller,
+          Expanded(child: TextFieldGlobal(myFocusNode: focusNode,keyboardType: TextInputType.text,controller: controller,
             label: darkCyan,
             hint: '',
             widthBorder: 0.0,)),

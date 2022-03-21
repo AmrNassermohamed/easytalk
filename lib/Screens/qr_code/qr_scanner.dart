@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:translationchat/shared/components/back.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class QRViewExample extends StatefulWidget {
@@ -24,7 +25,7 @@ class _QRViewExampleState extends State<QRViewExample> {
   @override
   void reassemble() {
     super.reassemble();
-    if (Platform.isAndroid) {
+    if (Platform.isAndroid||Platform.isIOS) {
       controller!.pauseCamera();
     }
     controller!.resumeCamera();
@@ -36,6 +37,14 @@ class _QRViewExampleState extends State<QRViewExample> {
     return Scaffold(
       body: Column(
         children: <Widget>[
+          SizedBox(height: 20,),
+          Padding(
+            padding: EdgeInsets.all(20),
+            child: Row(mainAxisAlignment: MainAxisAlignment.start,children: [
+              Back()
+            ],),
+          ),
+
           Expanded(flex: 4, child: _buildQrView(context)),
          /* Expanded(
             flex: 1,

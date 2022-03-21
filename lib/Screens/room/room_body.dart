@@ -92,19 +92,24 @@ class RoomBody extends StatelessWidget {
                               borderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(30.0),
                                   topRight: Radius.circular(30.0)),
-                              color: green,
+                             gradient:  LinearGradient(
+
+                                 colors: <Color>[gradint2,gradint2]),
                             ),
+
                             child: Directionality(
                               textDirection: TextDirection.rtl,
                               child: Column(
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.only(
-                                        top: 10, left: 20, right: 20, bottom: 10),
+                                        top:5, left: 20, right: 20, bottom: 5),
                                     child: Row(
                                       mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                       children: [
+
+
                                         textGlobalWhiteBold24(
                                             context: context, text: "..."),
                                         textGlobalWhiteNormal16(
@@ -118,7 +123,7 @@ class RoomBody extends StatelessWidget {
                                   Consumer<ChatProvider>(
     builder: (context, provider, child) {
     if (validationService.switchRoom==false) {
-      return const LastMessageRoom();
+      return  LastMessageRoom();
     }else{
       return const LastActiveRoom();
 
@@ -130,14 +135,36 @@ class RoomBody extends StatelessWidget {
                 ),
               ),
             )),
-        floatingActionButton: FloatingActionButton(
-            elevation: 0.0,
-            child: const Icon(Icons.chat_bubble),
-            backgroundColor: cyan,
-            onPressed: () async {
-              AppNavigator.navigateTo(context, const ContactScreen());
-              // await validationService.getContact();
-            }),
+          floatingActionButtonLocation:
+          FloatingActionButtonLocation.miniStartFloat,
+        floatingActionButton: Container(
+          
+          decoration: BoxDecoration(
+
+          borderRadius:BorderRadius.circular(55)
+
+          ,color:darkCyan ),
+          child: Padding(
+            padding: EdgeInsets.all(10),
+            child: InkWell(
+              onTap:  () async {
+                AppNavigator.navigateTo(context, const ContactScreen());
+                // await validationService.getContact();
+              },
+              child:  Container(
+                decoration: BoxDecoration(
+                    borderRadius:BorderRadius.circular(53)
+                    ,gradient:  LinearGradient(colors: [gradint1,gradint2])),
+                child: CircleAvatar(
+backgroundColor: Colors.transparent,
+                   radius: 25 ,
+                    child: Icon(Icons.chat_bubble,color: Colors.white,),
+
+                    ),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

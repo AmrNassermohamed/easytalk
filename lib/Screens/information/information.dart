@@ -47,14 +47,21 @@ class InformationState extends State<Information> {
                             Padding(
                               padding: EdgeInsets.all(20),
                               child: Row(mainAxisAlignment: MainAxisAlignment.start,children: [
-                                Back()
+                              SizedBox(width: 20,),
+                                Back(),
+                                SizedBox(width: 20,),
                               ],),
                             ),
                             const SizedBox(height: 20,),
                             textGlobalBlackBold16(context: context,text:widget.title),
                             const SizedBox(height: 20,),
-                            Row(children: [Expanded(child:        textGlobalBlackNormal16(context: context,text: provider.listUserProfileInformationState.data)
-                    )])
+                            Row(children: [
+                              const SizedBox(width: 10,),
+                              Expanded(child:        textGlobalBlackNormal16(context: context,text: provider.listUserProfileInformationState.data)
+
+                    ),
+                              const SizedBox(width: 10,),
+                            ])
 
                     ],));
                     }else{

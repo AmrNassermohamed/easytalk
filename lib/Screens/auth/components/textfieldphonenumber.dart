@@ -11,6 +11,7 @@ import 'package:translationchat/shared/text_global.dart';
 
 Widget textFieldPhoneNumber(TextEditingController controller,BuildContext context){
   final validationService = Provider.of<UserProvider>(context);
+  final focusNode = FocusNode();
   return   Container(decoration: const BoxDecoration(
     borderRadius: BorderRadius.all(Radius.circular(20)),
 
@@ -20,14 +21,27 @@ Widget textFieldPhoneNumber(TextEditingController controller,BuildContext contex
 
       //   SizedBox(width: 20,),
 
-      Flexible(child:  TextFieldGlobal(keyboardType: TextInputType.number,label: Colors.black12,
-        controller:controller ,hint: " +02 01150061654",widthBorder:2.0)),
+      Flexible(child:  TextFieldGlobal(myFocusNode: focusNode,keyboardType: TextInputType.number,label: Colors.black12,
+        controller:controller ,hint: "5xxxxxxx",widthBorder:2.0)),
       Icon(Icons.keyboard_arrow_down_sharp,color: black,),
       sizedBoxGlobalWidth10(),
       GestureDetector(onTap: (){
         showCountryPicker(
+
           context: context,
           showPhoneCode: true, // optional. Shows phone code before the country name.
+          countryListTheme: const CountryListThemeData(
+            // Optional. Sets the border radius for the bottomsheet.
+          inputDecoration: InputDecoration(
+          labelText: 'Search',
+          hintText: 'Start typing to search',
+          prefixIcon: const Icon(Icons.search),
+
+          ),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10.0),
+                topRight: Radius.circular(10.0),
+              )),
           onSelect: (Country country) {
             validationService.countryCode=country.phoneCode;
 validationService.countryName=country.countryCode;

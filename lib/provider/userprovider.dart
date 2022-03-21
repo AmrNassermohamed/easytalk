@@ -15,9 +15,10 @@ class UserProvider extends ChangeNotifier {
 
   UserData userData=UserData();
   String? mobileNumber;
-  var countryCode="20";
-  var countryName="eg";
+  var countryCode="966";
+  var countryName="SA";
   late bool loginOrNot;
+  late bool introScreen;
   getToken(mobileNumber) {
     try {
    final response  = userData.getToken(mobileNumber);
@@ -134,7 +135,7 @@ if(validateEmail(email.replaceAll(" ", ""))&&validateMobile(mobileNumber.replace
 if(response==200||response==201) {
   return 0;
 }else{
-  return 1;
+  return response;
 }
 }else{
   return 1;

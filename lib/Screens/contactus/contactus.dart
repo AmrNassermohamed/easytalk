@@ -21,7 +21,10 @@ class ContactUs extends StatefulWidget {
 
 class ContactUsState extends State<ContactUs> {
   // const _SignUpState({Key? key}) : super(key: key);const MyHomePage({Key? key, required this.title}) : super(key: key);
-
+  final focusNode = FocusNode();
+  final focusNode2 = FocusNode();
+  final focusNode3 = FocusNode();
+  final focusNode4 = FocusNode();
   late final TextEditingController nameController =TextEditingController();
   late final TextEditingController emailController =TextEditingController();
   late final TextEditingController messageController =TextEditingController();
@@ -60,14 +63,14 @@ class ContactUsState extends State<ContactUs> {
                          textGlobalBlackBold13
                            (context: context,text: "في اقرب وقت ممكن"),
 
-                          TextFieldGlobal(keyboardType: TextInputType.text,controller:nameController ,hint: "الاسم باللغه العربيه كاملا",label: darkCyan,widthBorder: 2.0,),
-                          TextFieldGlobal(keyboardType: TextInputType.text,controller:emailController ,hint: "البريد الالكتروني",label: darkCyan,widthBorder: 2.0,),
+                          TextFieldGlobal(myFocusNode: focusNode,keyboardType: TextInputType.text,controller:nameController ,hint: "الاسم باللغه العربيه كاملا",label: darkCyan,widthBorder: 2.0,),
+                          TextFieldGlobal(myFocusNode: focusNode2,keyboardType: TextInputType.text,controller:emailController ,hint: "البريد الالكتروني",label: darkCyan,widthBorder: 2.0,),
 
-                        TextFieldGlobal(controller:messageController ,keyboardType: TextInputType.text,
+                        TextFieldGlobal(myFocusNode: focusNode3,controller:messageController ,keyboardType: TextInputType.text,
                             hint:"ماذا تريد ان تخبرنا", label: darkCyan,widthBorder: 2.0,),
                         //  Expanded(child: Container()),
                           sizedBoxGlobalHeight40(),
-                          GestureDetector(onTap: () async {
+                          InkWell(onTap: () async {
 
                             var response  = await validationService.contactUS(name: nameController.text,
                                 email: emailController.text, message: messageController.text);

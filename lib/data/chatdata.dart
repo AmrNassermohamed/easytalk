@@ -30,7 +30,17 @@ ServicesHandler service = ServicesHandler();
       "to": to,
     }:type==2?{
       "translateMessage":text,
-    }:{} ;
+    }:type==3?{
+      "message": text,
+    }:type==4?{
+      "creationDt": DateTime.now(),
+      "type": "map",
+      "message": text,
+      "from": from,
+      "to": to,
+    }
+    :{} ;
+
 
     if(text.toString().isNotEmpty) {
 

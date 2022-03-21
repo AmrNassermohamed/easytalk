@@ -24,7 +24,7 @@ class UpdateProfile extends StatefulWidget {
 
 class UpdateProfileState extends State<UpdateProfile> {
   // const _SignUpState({Key? key}) : super(key: key);const MyHomePage({Key? key, required this.title}) : super(key: key);
-
+  final focusNode = FocusNode();
   late final TextEditingController nameController =TextEditingController();
 updateProfileFunction(key) async {
   final validationService = Provider.of<UserProvider>(context,listen: false);
@@ -107,7 +107,7 @@ if(response==200||response==201){
     return Column(children: [
 
       textGlobalBlackBold16(context: context,text: key),
-      Padding(padding: EdgeInsets.all(10),child: TextFieldGlobal(keyboardType: TextInputType.text,controller:nameController ,hint:name,label: darkCyan,widthBorder: 2.0,)),
+      Padding(padding: EdgeInsets.all(10),child: TextFieldGlobal(myFocusNode: focusNode,keyboardType: TextInputType.text,controller:nameController ,hint:name,label: darkCyan,widthBorder: 2.0,)),
                                                 //  Expanded(child: Container()),
                             sizedBoxGlobalHeight40(),
                             GestureDetector(onTap: () async {

@@ -29,16 +29,25 @@ class Init {
     final validationServiceUser = Provider.of<UserProvider>(context,listen: false);
     //await SharedPreferenceHandler.setToken("Bearer 13|kLvxplZXW2DsKbNQ9qcaUsLtY6SxHRW7iMkj4N8F");
     String? token=await SharedPreferenceHandler.getToken();
+    String ? intro=await SharedPreferenceHandler.getIntro();
     if(token!=null){
-validationServiceUser.loginOrNot=true;
-        validationServiceUser.getUserProfile();
-     //     validationServiceUser.userIsOLine();
+      validationServiceUser.loginOrNot=true;
+      validationServiceUser.getUserProfile();
+      validationServiceUser.userIsOLine();
       print("%%%%%%%%%%%");
       print(validationServiceUser.listUserProfileGeneralState.hasData);
 
     }else{
+
       validationServiceUser.loginOrNot=false;
+      if(intro==null){
+        print("fffff");
+        validationServiceUser.introScreen=true;
+      }else{
+print("ggggggg");
+        validationServiceUser.introScreen=false;
+      }
     }
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 1));
   }
 }

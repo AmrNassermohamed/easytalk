@@ -75,21 +75,47 @@ class LastMessageComponents extends StatelessWidget {
 
             },
             child: Container(
-              child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [
-                Row(children: [   GestureDetector(onTap: (){
-                  bottomSheetProfile( context: context,roomModel:  roomModel);
+              child:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [
+                Row(children: [
+                  GestureDetector(onTap: (){
+                    bottomSheetProfile( context: context,roomModel:  roomModel);
 
-                },child: circleAvatarImage(roomModel.imageUrl,false)),
-                  sizedBoxGlobalWidth10(),
+                  },child: circleAvatarImage(roomModel.imageUrl,false)),
+                  sizedBoxGlobalWidth20(),
                   Column(children: [
-                    textGlobalLightCyanNormal12(context: context,text: roomModel.name),
-                    Row(children: [ SizedBox(width: MediaQuery.of(context).size.width-200,child: textGlobalBlackBold13(context: context,text: roomModel.lastMessage),
+                    Row(children: [
+                      Directionality(textDirection: TextDirection.rtl, child:
+                      SizedBox(width:
+                      MediaQuery.of(context).size.width-250,
+                          child: textGlobalLightCyanNormal12(context: context,text: roomModel.name),),
+                      )]),
+
+
+
+
+
+                    Row(children: [
+                      Directionality(textDirection: TextDirection.rtl, child:
+                      SizedBox(width:
+                    MediaQuery.of(context).size.width-250,
+                      child: textGlobalBlackBold13(context: context,text: roomModel.lastMessage)),
                     )]),
-                  ],)
+                  ],),
+
+
+
                 ]),
 
+
+                textGlobalGreyNormal13(context: context,text: roomModel.lastMessageTime),
+              ],)
+
+
+
+
                 // textGlobalBlackNormal13(context: context,text: provider.listRoomsGeneralState.data![index].lastMessageTime),
-              ],),
+
             ),
           )
           , const Divider(color: Colors.grey,thickness: 1,)

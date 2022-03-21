@@ -6,6 +6,7 @@ import 'package:translationchat/Screens/qr_code/qr_scanner.dart';
 import 'package:translationchat/constants/colors.dart';
 import 'package:translationchat/constants/images.dart';
 import 'package:translationchat/provider/userprovider.dart';
+import 'package:translationchat/shared/components/back.dart';
 import 'package:translationchat/shared/components/buttonglobal.dart';
 import 'package:translationchat/shared/components/sizedboxglobal.dart';
 import 'package:translationchat/shared/text_global.dart';
@@ -41,6 +42,14 @@ class CheckNumberPhoneState extends State<CheckNumberPhone> {
                         color: lightCyan,
                         image: const DecorationImage(image: ExactAssetImage(map2), fit: BoxFit.cover,),
                       ),child: Column(children: [
+
+                      SizedBox(height: 20,),
+                      Padding(
+                        padding: EdgeInsets.all(20),
+                        child: Row(mainAxisAlignment: MainAxisAlignment.start,children: [
+                          Back()
+                        ],),
+                      ),
                       Expanded(child: Container()),
                       textGlobalWhiteBold18(context: context,text: "مرر شاشه هاتفك"),
                       textGlobalWhiteBold14(context: context,text: "ضع كاميرا هاتفك اعلي الكود ثم مرر هاتفك"),
